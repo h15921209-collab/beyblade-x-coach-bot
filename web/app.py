@@ -76,6 +76,32 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Loaded {len(db.blades)} blades, {len(db.ratchets)} ratchets, {len(db.bits)} bits into registry.")
+
+    # 雲端自動綁定：若在 Render 等雲端平台運行，啟動時自動向 LINE 官方回報 Webhook 網址，免手動設定！
+    import os
+    external_url = os.getenv("RENDER_EXTERNAL_URL") or os.getenv("SERVICE_URL")
+    if external_url and settings.LINE_CHANNEL_ACCESS_TOKEN:
+        try:
+            clean_url = external_url.strip().rstrip("/")
+            webhook_url = f"{clean_url}/callback"
+            logger.info(f"檢測到雲端部署環境！正在全自動綁定 LINE Webhook: {webhook_url} ...")
+            import requests
+            res = requests.put(
+                "https://api.line.me/v2/bot/channel/webhook/endpoint",
+                headers={
+                    "Authorization": f"Bearer {settings.LINE_CHANNEL_ACCESS_TOKEN}",
+                    "Content-Type": "application/json"
+                },
+                json={"endpoint": webhook_url},
+                timeout=10
+            )
+            if res.status_code == 200:
+                logger.info(f"🎉 LINE Webhook 全自動綁定成功: {webhook_url}")
+            else:
+                logger.warning(f"LINE Webhook 綁定回傳: {res.status_code} - {res.text}")
+        except Exception as e:
+            logger.warning(f"LINE Webhook 自動綁定失敗: {e}")
+
     yield
 
 app = FastAPI(title="Beyblade X Tactical Coach LINE Bot", lifespan=lifespan)
