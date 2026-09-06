@@ -28,38 +28,148 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
             ReplyMessageRequest,
             TextMessage,
             FlexMessage,
-            FlexContainer
+            FlexContainer,
+            QuickReply,
+            QuickReplyItem,
+            MessageAction
         )
         from linebot.v3.webhooks import MessageEvent, TextMessageContent
+        from core.flex_builder import FlexMessageBuilder
 
         line_webhook_handler = WebhookHandler(settings.LINE_CHANNEL_SECRET)
         configuration = Configuration(access_token=settings.LINE_CHANNEL_ACCESS_TOKEN)
+
+        def make_quick_reply(items_list):
+            """Creates a QuickReply object from a list of (label, text) tuples."""
+            items = [QuickReplyItem(action=MessageAction(label=lbl[:20], text=txt)) for lbl, txt in items_list]
+            return QuickReply(items=items)
+
+        def get_combos_stats(combos_list):
+            res = []
+            for b_id, r_id, bit_id in combos_list:
+                b = db.find_blade(b_id)
+                r = db.find_ratchet(r_id)
+                bit = db.find_bit(bit_id)
+                if b and r and bit:
+                    res.append(db.calculate_combo_stats(b, r, bit))
+            return res
 
         @line_webhook_handler.add(MessageEvent, message=TextMessageContent)
         def handle_text_message(event):
             user_msg = event.message.text.strip()
             logger.info(f"Received message from user: {user_msg}")
-            
-            result = coach_engine.analyze(user_msg)
             reply_messages = []
 
-            # 1. Add Flex Message card if combo or part was recognized
-            if result.get("flex_message"):
-                try:
-                    flex_payload = result["flex_message"]
-                    container = FlexContainer.from_dict(flex_payload["contents"])
-                    reply_messages.append(
-                        FlexMessage(
-                            alt_text=flex_payload.get("altText", "戰鬥陀螺 X 戰報"),
-                            contents=container
-                        )
-                    )
-                except Exception as flex_err:
-                    logger.error(f"Error packing Flex Message: {flex_err}")
+            # --- A. Rich Menu Dedicated Handlers ---
+            if user_msg in ["【賽事頂級主流】", "賽事頂級主流", "主流推薦"]:
+                meta_combos = [("Phoenix Wing", "9-60", "O"), ("Wizard Rod", "7-60", "B"), ("Dran Buster", "1-60", "F")]
+                stats = get_combos_stats(meta_combos)
+                carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "賽事頂級主流王者")
+                container = FlexContainer.from_dict(carousel_payload["contents"])
+                reply_messages.append(FlexMessage(alt_text="🔥 賽事頂級三大王者配置", contents=container))
+                
+                qr = make_quick_reply([
+                    ("🔥 鳳凰羽翼 9-60O", "鳳凰羽翼 9-60O"),
+                    ("🛡️ 魔導權杖 7-60B", "魔導權杖 7-60B"),
+                    ("⚡ 龍之爆裂 1-60F", "龍之爆裂 1-60F"),
+                    ("🔄 改裝 5-60 差異", "若把鳳凰羽翼 9-60O 改為 5-60 有何差異？"),
+                    ("🛠️ 自訂組合健檢", "【自訂組合健檢】")
+                ])
+                reply_messages.append(TextMessage(
+                    text="選手，這是當前職業大賽勝率最高的三大王者配置！左右滑動上方圖卡查看四維雷達，點選下方泡泡或直接提問微調細節：",
+                    quick_reply=qr
+                ))
 
-            # 2. Add full detailed coach analysis text
-            text_body = result.get("reply_text") or "選手，戰術分析完成。"
-            reply_messages.append(TextMessage(text=text_body))
+            elif user_msg in ["【極限攻擊刺客】", "極限攻擊刺客", "攻擊推薦"]:
+                atk_combos = [("Dran Buster", "1-60", "F"), ("Shark Edge", "3-60", "LF"), ("Cobalt Dragoon", "2-60", "C")]
+                stats = get_combos_stats(atk_combos)
+                carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "極限攻擊突襲配置")
+                container = FlexContainer.from_dict(carousel_payload["contents"])
+                reply_messages.append(FlexMessage(alt_text="⚡ 極限攻擊流王者推薦", contents=container))
+                
+                qr = make_quick_reply([
+                    ("⚡ 龍之爆裂 1-60F", "龍之爆裂 1-60F"),
+                    ("🦈 鯊魚之刃 3-60LF", "鯊魚之刃 3-60LF"),
+                    ("🐉 蒼白龍騎士 2-60C", "蒼白龍騎士 2-60C"),
+                    ("🎯 攻擊型發射角度", "極限攻擊型陀螺如何透過 Banked Launch 斜射發射壓制對手？")
+                ])
+                reply_messages.append(TextMessage(
+                    text="選手，極限攻擊流核心在於前兩波 X-Dash 軌道衝刺與一擊 Over Finish！左右滑動查看刺客配置：",
+                    quick_reply=qr
+                ))
+
+            elif user_msg in ["【持久防禦要塞】", "持久防禦要塞", "持久推薦", "防禦推薦"]:
+                def_combos = [("Wizard Rod", "7-60", "B"), ("Hells Chain", "5-60", "HT"), ("Tyranno Beat", "4-70", "B")]
+                stats = get_combos_stats(def_combos)
+                carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "持久防禦定點要塞")
+                container = FlexContainer.from_dict(carousel_payload["contents"])
+                reply_messages.append(FlexMessage(alt_text="🛡️ 持久防禦流配置推薦", contents=container))
+                
+                qr = make_quick_reply([
+                    ("🛡️ 魔導權杖 7-60B", "魔導權杖 7-60B"),
+                    ("⛓️ 地獄狂鐮 5-60HT", "地獄狂鐮 5-60HT"),
+                    ("🦖 暴龍重擊 4-70B", "暴龍重擊 4-70B"),
+                    ("🌀 持久型防被挑飛技巧", "持久型面對鯊魚之刃等低位挑擊，該如何防守化解？")
+                ])
+                reply_messages.append(TextMessage(
+                    text="選手，持久防禦流講求外圍飛輪慣性、極致圓形減阻與承受衝擊穩定性！左右滑動查看要塞配置：",
+                    quick_reply=qr
+                ))
+
+            elif user_msg in ["【核心零件百科】", "核心零件百科", "零件庫"]:
+                qr = make_quick_reply([
+                    ("9-60 墊片", "9-60"),
+                    ("7-60 墊片", "7-60"),
+                    ("2-60 墊片", "2-60"),
+                    ("Ball (球軸)", "Ball"),
+                    ("Cyclone (旋風軸)", "Cyclone"),
+                    ("魔導權杖 刃", "魔導權杖")
+                ])
+                reply_messages.append(TextMessage(
+                    text="選手，已開啟《戰鬥陀螺 X》核心零件資料庫！\n請直接點選下方快捷泡泡，或輸入任意零件名稱（例如：`9-60`、`Ball`、`Cyclone`、`魔導權杖`），教練立即調出官方物理規格、重量與改裝適配性：",
+                    quick_reply=qr
+                ))
+
+            elif user_msg in ["【自訂組合健檢】", "自訂組合健檢", "健檢指引"]:
+                qr = make_quick_reply([
+                    ("鳳凰羽翼 9-60O", "鳳凰羽翼 9-60O"),
+                    ("魔導權杖 7-60B", "魔導權杖 7-60B"),
+                    ("龍之爆裂 1-60F", "龍之爆裂 1-60F"),
+                    ("蒼白龍騎士 2-60C", "蒼白龍騎士 2-60C"),
+                    ("鯊魚之刃 3-60LF", "鯊魚之刃 3-60LF")
+                ])
+                reply_messages.append(TextMessage(
+                    text="選手，想測試你的獨創改裝嗎？\n\n【發送格式範例】：\n• `鳳凰羽翼 9-60O`\n• `Wizard Rod 7-60B`\n• `龍之爆裂 1-60F`\n• `鯊魚之刃 3-60LF`\n\n只要輸入「刃 + 墊片 + 軸心」，教練立即啟動實體遙測，計算攻擊/持久/防禦/X-Dash 四維雷達與賽事勝率！點選下方範例立即實測：",
+                    quick_reply=qr
+                ))
+
+            # --- B. Standard Combo Analysis / Single Part / AI Coach Inquiry ---
+            else:
+                result = coach_engine.analyze(user_msg)
+
+                # 1. Add Flex Message card if combo or part was recognized
+                if result.get("flex_message"):
+                    try:
+                        flex_payload = result["flex_message"]
+                        container = FlexContainer.from_dict(flex_payload["contents"])
+                        reply_messages.append(
+                            FlexMessage(
+                                alt_text=flex_payload.get("altText", "戰鬥陀螺 X 戰報"),
+                                contents=container
+                            )
+                        )
+                    except Exception as flex_err:
+                        logger.error(f"Error packing Flex Message: {flex_err}")
+
+                # 2. Add full detailed coach analysis text with dynamic Quick Reply
+                text_body = result.get("reply_text") or "選手，戰術分析完成。"
+                default_qr = make_quick_reply([
+                    ("🔄 改裝 5-60 差異", f"如果把剛才討論的組合墊片改為 5-60，物理表現有何改變？"),
+                    ("🎯 對戰 Wizard Rod", "這套搭配面對賽事大熱門 Wizard Rod 9-60B 勝率與打法如何？"),
+                    ("🚀 推薦發射手法", "請教練傳授這套搭配在世界大賽中的最佳發射手勢與進軌策略！"),
+                    ("🔥 賽事頂級主流", "【賽事頂級主流】")
+                ])
+                reply_messages.append(TextMessage(text=text_body, quick_reply=default_qr))
 
             with ApiClient(configuration) as api_client:
                 line_bot = MessagingApi(api_client)
@@ -103,6 +213,24 @@ async def lifespan(app: FastAPI):
                 logger.warning(f"LINE Webhook 綁定回傳: {res.status_code} - {res.text}")
         except Exception as e:
             logger.warning(f"LINE Webhook 自動綁定失敗: {e}")
+
+    # 自動校驗 LINE 圖文選單 (Rich Menu)
+    if settings.LINE_CHANNEL_ACCESS_TOKEN:
+        try:
+            import requests
+            check_rm = requests.get(
+                "https://api.line.me/v2/bot/user/all/richmenu",
+                headers={"Authorization": f"Bearer {settings.LINE_CHANNEL_ACCESS_TOKEN}"},
+                timeout=5
+            )
+            if check_rm.status_code == 200 and check_rm.json().get("richMenuId"):
+                logger.info(f"🎉 LINE 圖文選單 (Rich Menu) 正常啟用中: {check_rm.json().get('richMenuId')}")
+            else:
+                logger.info("未檢測到全域預設圖文選單，正在全自動合成並綁定...")
+                from scripts.setup_rich_menu import OUTPUT_IMG, upload_and_set_rich_menu
+                upload_and_set_rich_menu(OUTPUT_IMG)
+        except Exception as rm_err:
+            logger.warning(f"LINE 圖文選單校驗警告: {rm_err}")
 
     yield
 
@@ -717,6 +845,17 @@ def simulate_coach_analysis(req: SimRequest):
     """
     result = coach_engine.analyze(req.message)
     return result
+
+@app.post("/api/admin/setup-rich-menu")
+def admin_setup_rich_menu():
+    try:
+        from scripts.setup_rich_menu import OUTPUT_IMG, create_rich_menu_image, upload_and_set_rich_menu
+        create_rich_menu_image()
+        upload_and_set_rich_menu(OUTPUT_IMG)
+        return {"status": "ok", "message": "Rich Menu generated and applied successfully"}
+    except Exception as e:
+        logger.error(f"Error setting up rich menu: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn

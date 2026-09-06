@@ -353,3 +353,156 @@ class FlexMessageBuilder:
             }
         }
         return {"type": "flex", "altText": f"部件圖鑑：{name}", "contents": bubble}
+
+    @classmethod
+    def build_combos_carousel(
+        cls,
+        combos_stats: List[Dict[str, Any]],
+        category_title: str = "熱門戰術推薦"
+    ) -> Dict[str, Any]:
+        """
+        Builds a Carousel Flex Message containing multiple combo bubbles.
+        """
+        bubbles = []
+        for combo_stats in combos_stats:
+            combo_name = combo_stats.get("combo_name", "")
+            combo_name_zh = combo_stats.get("combo_name_zh", "")
+            total_weight = combo_stats.get("total_weight_g", 0.0)
+            scores = combo_stats.get("scores", {"attack": 70, "stamina": 70, "defense": 70, "xdash": 70})
+            blade = combo_stats.get("blade", {})
+            ratchet = combo_stats.get("ratchet", {})
+            bit = combo_stats.get("bit", {})
+
+            hero_img = blade.get("card_image_url") or combo_stats.get("hero_image_url") or "https://beyblade-x-coach-bot.onrender.com/static/images/blade_phoenix_wing.png"
+            if hero_img.startswith("/"):
+                hero_img = f"https://beyblade-x-coach-bot.onrender.com{hero_img}"
+
+            bubble = {
+                "type": "bubble",
+                "size": "mega",
+                "styles": {
+                    "header": {"backgroundColor": "#0F141C"},
+                    "hero": {"backgroundColor": "#0A0D14"},
+                    "body": {"backgroundColor": "#131822"},
+                    "footer": {"backgroundColor": "#0F141C"}
+                },
+                "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {"type": "text", "text": category_title.upper(), "weight": "bold", "color": "#00E5FF", "size": "xxs"},
+                                {"type": "text", "text": f"總重 {total_weight}g", "color": "#FFD700", "size": "xxs", "align": "end", "weight": "bold"}
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": combo_name.upper(),
+                            "weight": "bold",
+                            "size": "md",
+                            "color": "#FFFFFF",
+                            "margin": "xs"
+                        },
+                        {
+                            "type": "text",
+                            "text": combo_name_zh,
+                            "size": "xxs",
+                            "color": "#94A3B8"
+                        }
+                    ]
+                },
+                "hero": {
+                    "type": "image",
+                    "url": hero_img,
+                    "size": "full",
+                    "aspectRatio": "16:11",
+                    "aspectMode": "fit",
+                    "action": {"type": "uri", "uri": hero_img}
+                },
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        cls._create_bar("攻擊破壞力", scores.get("attack", 70), "#FF3B30"),
+                        cls._create_bar("極致持久力", scores.get("stamina", 70), "#34C759"),
+                        cls._create_bar("防禦抗爆力", scores.get("defense", 70), "#007AFF"),
+                        cls._create_bar("X-Dash 突襲率", scores.get("xdash", 70), "#FF9500"),
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "margin": "md",
+                            "contents": [
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "backgroundColor": "#1A202C",
+                                    "cornerRadius": "4px",
+                                    "paddingAll": "4px",
+                                    "margin": "xs",
+                                    "flex": 1,
+                                    "contents": [
+                                        {"type": "text", "text": "刃", "size": "xxs", "color": "#718096"},
+                                        {"type": "text", "text": f"{blade.get('name_zh', blade.get('name', ''))[:5]}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"}
+                                    ]
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "backgroundColor": "#1A202C",
+                                    "cornerRadius": "4px",
+                                    "paddingAll": "4px",
+                                    "margin": "xs",
+                                    "flex": 1,
+                                    "contents": [
+                                        {"type": "text", "text": "墊片", "size": "xxs", "color": "#718096"},
+                                        {"type": "text", "text": f"{ratchet.get('name', '')}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"}
+                                    ]
+                                },
+                                {
+                                    "type": "box",
+                                    "layout": "vertical",
+                                    "backgroundColor": "#1A202C",
+                                    "cornerRadius": "4px",
+                                    "paddingAll": "4px",
+                                    "margin": "xs",
+                                    "flex": 1,
+                                    "contents": [
+                                        {"type": "text", "text": "軸點", "size": "xxs", "color": "#718096"},
+                                        {"type": "text", "text": f"{bit.get('name', '').split()[0]}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"}
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "footer": {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                        {
+                            "type": "button",
+                            "style": "primary",
+                            "color": "#0284C7",
+                            "height": "sm",
+                            "action": {
+                                "type": "message",
+                                "label": "⚡ 深入剖析這組戰術",
+                                "text": f"選手，請為我深入拆解【{combo_name}】在現行賽事中的打法與發射手法！"
+                            }
+                        }
+                    ]
+                }
+            }
+            bubbles.append(bubble)
+
+        return {
+            "type": "flex",
+            "altText": f"【戰術輪播】：{category_title}",
+            "contents": {
+                "type": "carousel",
+                "contents": bubbles
+            }
+        }
