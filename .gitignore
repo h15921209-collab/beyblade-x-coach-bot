@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+live_url.txt
+cloudflared.exe
+.DS_Store
+*.log
