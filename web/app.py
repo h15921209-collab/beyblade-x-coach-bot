@@ -1,7 +1,8 @@
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, HTTPException, Header, BackgroundTasks
-from fastapi.responses import JSONResponse, HTMLResponse
+from pathlib import Path
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 
@@ -352,14 +353,20 @@ LANDING_HTML = """<!DOCTYPE html>
         </div>
 
         <div class="line-box">
-            <h2 style="font-size: 18px; margin-bottom: 6px;">📲 選手請先由此加入 LINE 官方帳號</h2>
-            <p style="font-size: 13px; color: #CBD5E1;">點擊下方綠色按鈕，即可直接在手機 LINE 中召喚教練！</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px;">
+                <img src="/avatar.jpg" alt="戰術教練頭像" style="width: 84px; height: 84px; border-radius: 50%; border: 2.5px solid var(--neon-gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.45); object-fit: cover;">
+                <div style="text-align: left;">
+                    <div style="font-size: 18px; font-weight: bold; color: #FFFFFF;">《戰鬥陀螺 X》戰術教練</div>
+                    <div style="font-size: 13px; color: var(--text-sub);">LINE 專屬 ID：<span style="color: var(--neon-gold); font-weight: bold;">@866sqrgq</span></div>
+                    <a href="/avatar.jpg" download="beyblade_coach_avatar.jpg" style="display: inline-block; margin-top: 4px; font-size: 12px; color: var(--neon-blue); text-decoration: underline; font-weight: bold;">📥 點此下載這張專屬電競頭像</a>
+                </div>
+            </div>
             <a href="https://line.me/R/ti/p/@866sqrgq" target="_blank" class="line-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.185 1.039.646 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.899 2.572-5.991"/></svg>
                 開啟 LINE 加入戰術教練
             </a>
-            <div class="line-id-tip">
-                官方帳號名稱：<span>Newsbot</span>（可在 LINE 官方後台更名）| LINE ID：<span>@866sqrgq</span>
+            <div style="margin-top: 14px; font-size: 13px; color: #CBD5E1;">
+                ⚙️ 更名與換頭像直達：<a href="https://manager.line.biz/account/@866sqrgq/setting" target="_blank" style="color: var(--neon-gold); text-decoration: underline; font-weight: bold;">前往 LINE 官方帳號設定中心</a>
             </div>
         </div>
 
@@ -471,6 +478,13 @@ LANDING_HTML = """<!DOCTYPE html>
 @app.get("/", response_class=HTMLResponse)
 def index():
     return LANDING_HTML
+
+@app.get("/avatar.jpg")
+def get_avatar_image():
+    avatar_file = Path(__file__).resolve().parent / "avatar.jpg"
+    if avatar_file.exists():
+        return FileResponse(avatar_file, media_type="image/jpeg")
+    raise HTTPException(status_code=404, detail="Avatar image not found")
 
 @app.get("/api/status")
 def status_info():
