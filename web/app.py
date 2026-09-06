@@ -112,7 +112,7 @@ LANDING_HTML = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>戰鬥陀螺 X 職業聯賽戰術教練 | 24H 雲端整備區</title>
+    <title>陀螺配置助手 | BEYBLADE X 24H 雲端整備區</title>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -348,22 +348,22 @@ LANDING_HTML = """<!DOCTYPE html>
     <div class="container">
         <div class="header">
             <div class="badge"><span class="status-dot"></span> 24H 雲端整備區 LIVE (SINGAPORE)</div>
-            <h1>BEYBLADE X TACTICAL COACH</h1>
-            <div class="subtitle">全球頂尖《戰鬥陀螺 X》職業聯賽戰術教練與改裝大師</div>
+            <h1>BEYBLADE X 陀螺配置助手</h1>
+            <div class="subtitle">全球頂尖《戰鬥陀螺 X》改裝工程與四維戰術拆解</div>
         </div>
 
         <div class="line-box">
             <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px;">
-                <img src="/avatar.jpg" alt="戰術教練頭像" style="width: 84px; height: 84px; border-radius: 50%; border: 2.5px solid var(--neon-gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.45); object-fit: cover;">
+                <img src="/avatar.jpg" alt="陀螺配置助手頭像" style="width: 88px; height: 88px; border-radius: 20px; border: 2.5px solid var(--neon-blue); box-shadow: 0 0 20px rgba(0, 229, 255, 0.45); object-fit: cover;">
                 <div style="text-align: left;">
-                    <div style="font-size: 18px; font-weight: bold; color: #FFFFFF;">《戰鬥陀螺 X》戰術教練</div>
+                    <div style="font-size: 19px; font-weight: bold; color: #FFFFFF;">陀螺配置助手</div>
                     <div style="font-size: 13px; color: var(--text-sub);">LINE 專屬 ID：<span style="color: var(--neon-gold); font-weight: bold;">@426cdouo</span></div>
-                    <a href="/avatar.jpg" download="beyblade_coach_avatar.jpg" style="display: inline-block; margin-top: 4px; font-size: 12px; color: var(--neon-blue); text-decoration: underline; font-weight: bold;">📥 點此下載這張專屬電競頭像</a>
+                    <a href="/avatar.jpg" download="beyblade_assistant_avatar.jpg" style="display: inline-block; margin-top: 4px; font-size: 12px; color: var(--neon-blue); text-decoration: underline; font-weight: bold;">📥 點此下載這張專業版頭像</a>
                 </div>
             </div>
             <a href="https://line.me/R/ti/p/@426cdouo" target="_blank" class="line-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.185 1.039.646 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.899 2.572-5.991"/></svg>
-                開啟 LINE 加入戰術教練
+                開啟 LINE 加入陀螺配置助手
             </a>
             <div style="margin-top: 14px; font-size: 13px; color: #CBD5E1;">
                 ⚙️ 更名與換頭像直達：<a href="https://manager.line.biz/account/@426cdouo/setting" target="_blank" style="color: var(--neon-gold); text-decoration: underline; font-weight: bold;">前往 LINE 官方帳號設定中心</a>
