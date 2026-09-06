@@ -136,23 +136,28 @@ class BeybladeCoachEngine:
             }
 
         # Step 2: Check if user is asking about a single component
-        for candidate_token in user_text.split():
-            single_part = db.find_part(candidate_token)
-            if single_part:
-                prompt = (
-                    f"選手正在詢問部件：{single_part.get('name')} {single_part.get('name_zh', '')}\n"
-                    f"規格資料：重量 {single_part.get('weight_g')}g, 類型 {single_part.get('type')}, 描述：{single_part.get('description', '')}\n"
-                    f"選手原話：{user_text}\n"
-                    f"請以改裝大師的身分深度剖析這個部件在現行賽事環境中的改裝適配性與戰術定位。"
-                )
-                coach_text = self._call_gemini_api(prompt)
-                flex_msg = FlexMessageBuilder.build_part_card(single_part)
-                return {
-                    "reply_text": coach_text,
-                    "flex_message": flex_msg,
-                    "combo_stats": None,
-                    "part_info": single_part
-                }
+        single_part = db.find_part(user_text.strip())
+        if not single_part:
+            for candidate_token in user_text.split():
+                single_part = db.find_part(candidate_token)
+                if single_part:
+                    break
+
+        if single_part:
+            prompt = (
+                f"選手正在詢問部件：{single_part.get('name')} {single_part.get('name_zh', '')}\n"
+                f"規格資料：重量 {single_part.get('weight_g')}g, 類型 {single_part.get('type')}, 描述：{single_part.get('description', '')}\n"
+                f"選手原話：{user_text}\n"
+                f"請以改裝大師的身分深度剖析這個部件在現行賽事環境中的改裝適配性與戰術定位。"
+            )
+            coach_text = self._call_gemini_api(prompt)
+            flex_msg = FlexMessageBuilder.build_part_card(single_part)
+            return {
+                "reply_text": coach_text,
+                "flex_message": flex_msg,
+                "combo_stats": None,
+                "part_info": single_part
+            }
 
         # Step 3: General strategic guidance or tactical inquiry
         coach_text = self._call_gemini_api(user_text)

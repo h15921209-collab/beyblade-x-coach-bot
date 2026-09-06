@@ -1,6 +1,7 @@
 import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, HTTPException, Header, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from pydantic import BaseModel
@@ -106,6 +107,11 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="Beyblade X Tactical Coach LINE Bot", lifespan=lifespan)
+
+# Mount static files directory for local reference images
+static_dir = Path(__file__).resolve().parent / "static"
+static_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 LANDING_HTML = """<!DOCTYPE html>
 <html lang="zh-TW">
@@ -267,15 +273,17 @@ LANDING_HTML = """<!DOCTYPE html>
         .tag {
             background: #1E293B;
             color: #CBD5E1;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
             border: 1px solid #334155;
+            transition: all 0.15s;
         }
         .tag:hover {
             border-color: var(--neon-blue);
             color: var(--neon-blue);
+            background: rgba(0, 229, 255, 0.1);
         }
         #result-box {
             display: none;
@@ -293,6 +301,7 @@ LANDING_HTML = """<!DOCTYPE html>
             background: #111827;
             padding: 10px;
             border-radius: 8px;
+            border: 1px solid #1F2937;
         }
         .stat-header {
             display: flex;
@@ -310,6 +319,7 @@ LANDING_HTML = """<!DOCTYPE html>
         .bar-fill {
             height: 100%;
             border-radius: 3px;
+            transition: width 0.4s ease-out;
         }
         .coach-review {
             background: #111827;
@@ -320,14 +330,83 @@ LANDING_HTML = """<!DOCTYPE html>
             line-height: 1.6;
             color: #E2E8F0;
             white-space: pre-wrap;
+            border-top: 1px solid #1F2937;
+            border-right: 1px solid #1F2937;
+            border-bottom: 1px solid #1F2937;
         }
-        .beyblade-preview-img {
+        .beyblade-hero-img {
             width: 100%;
             max-height: 220px;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 14px;
-            background: #000000;
+            background: radial-gradient(circle, #1E293B 0%, #0A0D14 80%);
+            border: 1px solid #334155;
+            padding: 8px;
+        }
+        .parts-trio {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .part-card {
+            background: #111827;
+            border: 1px solid #1E293B;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+        }
+        .part-card-label {
+            font-size: 10px;
+            color: var(--neon-blue);
+            font-weight: bold;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+        .part-card-img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin: 0 auto 4px auto;
+            display: block;
+            background: #0A0D14;
+            border-radius: 6px;
+            border: 1px solid #1F2937;
+            padding: 2px;
+        }
+        .part-card-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #FFFFFF;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .part-card-spec {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+        .single-part-view {
+            background: #111827;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .single-part-img {
+            width: 96px;
+            height: 96px;
+            object-fit: contain;
+            background: #0A0D14;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            padding: 4px;
+            flex-shrink: 0;
         }
         .status-dot {
             width: 8px;
@@ -373,7 +452,7 @@ LANDING_HTML = """<!DOCTYPE html>
         <div class="sim-card">
             <div class="sim-title">⚡ 線上即時戰術模擬測試台</div>
             <div class="input-group">
-                <input type="text" id="comboInput" value="Phoenix Wing 9-60O" placeholder="例如：Phoenix Wing 9-60O 或 魔導權杖 7-60B">
+                <input type="text" id="comboInput" value="Phoenix Wing 9-60O" placeholder="例如：Phoenix Wing 9-60O 或 魔導權杖 7-60B 或 單零件 9-60">
                 <button class="analyze-btn" id="analyzeBtn" onclick="runAnalysis()">開始拆解</button>
             </div>
             <div class="quick-tags">
@@ -382,6 +461,9 @@ LANDING_HTML = """<!DOCTYPE html>
                 <span class="tag" onclick="quickFill('Dran Buster 1-60F')">龍之爆裂 1-60F</span>
                 <span class="tag" onclick="quickFill('Cobalt Dragoon 2-60C')">蒼白龍騎士 2-60C</span>
                 <span class="tag" onclick="quickFill('Shark Edge 3-60LF')">鯊魚之刃 3-60LF</span>
+                <span class="tag" onclick="quickFill('9-60')">部件：9-60</span>
+                <span class="tag" onclick="quickFill('魔導權杖')">部件：魔導權杖</span>
+                <span class="tag" onclick="quickFill('Cyclone')">部件：旋風軸</span>
             </div>
 
             <div id="loading" style="display: none; text-align: center; color: var(--neon-blue); padding: 20px;">
@@ -389,29 +471,82 @@ LANDING_HTML = """<!DOCTYPE html>
             </div>
 
             <div id="result-box">
-                <img id="comboImg" class="beyblade-preview-img" src="" alt="陀螺參考圖">
-                <h3 id="comboName" style="color: var(--neon-gold); font-size: 20px; margin-bottom: 4px;"></h3>
-                <div id="comboSub" style="color: var(--text-sub); font-size: 13px; margin-bottom: 12px;"></div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-header"><span>一、攻擊破壞力</span><span id="atkVal" style="color: #FF3B30; font-weight: bold;"></span></div>
-                        <div class="bar-bg"><div id="atkBar" class="bar-fill" style="background: #FF3B30;"></div></div>
+                <!-- Combo View Container -->
+                <div id="comboContainer" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+                        <h3 id="comboName" style="color: var(--neon-gold); font-size: 22px; font-weight: 700;"></h3>
+                        <span id="comboWeightBadge" class="badge" style="border-color: var(--neon-gold); color: var(--neon-gold); background: rgba(255, 215, 0, 0.1);"></span>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-header"><span>二、極致持久力</span><span id="staVal" style="color: #34C759; font-weight: bold;"></span></div>
-                        <div class="bar-bg"><div id="staBar" class="bar-fill" style="background: #34C759;"></div></div>
+                    <div id="comboSub" style="color: var(--text-sub); font-size: 13px; margin-bottom: 14px;"></div>
+
+                    <img id="comboImg" class="beyblade-hero-img" src="" alt="陀螺全貌參考" onerror="this.style.display='none'">
+
+                    <!-- 3-Piece Visual Breakdown (Blade, Ratchet, Bit) -->
+                    <div style="font-size: 13px; font-weight: bold; color: var(--neon-blue); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <span>🧩</span> 實體組件拆解遙測
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-header"><span>三、防禦抗爆力</span><span id="defVal" style="color: #007AFF; font-weight: bold;"></span></div>
-                        <div class="bar-bg"><div id="defBar" class="bar-fill" style="background: #007AFF;"></div></div>
+                    <div class="parts-trio">
+                        <div class="part-card">
+                            <div class="part-card-label">刃 (BLADE)</div>
+                            <img id="bladeImg" class="part-card-img" src="" alt="刃" onerror="this.style.display='none'">
+                            <div id="bladeName" class="part-card-name">-</div>
+                            <div id="bladeSpec" class="part-card-spec">-</div>
+                        </div>
+                        <div class="part-card">
+                            <div class="part-card-label">墊片 (RATCHET)</div>
+                            <img id="ratchetImg" class="part-card-img" src="" alt="墊片" onerror="this.style.display='none'">
+                            <div id="ratchetName" class="part-card-name">-</div>
+                            <div id="ratchetSpec" class="part-card-spec">-</div>
+                        </div>
+                        <div class="part-card">
+                            <div class="part-card-label">軸點 (BIT)</div>
+                            <img id="bitImg" class="part-card-img" src="" alt="軸點" onerror="this.style.display='none'">
+                            <div id="bitName" class="part-card-name">-</div>
+                            <div id="bitSpec" class="part-card-spec">-</div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-header"><span>四、X-Dash 突襲率</span><span id="xdashVal" style="color: #FF9500; font-weight: bold;"></span></div>
-                        <div class="bar-bg"><div id="xdashBar" class="bar-fill" style="background: #FF9500;"></div></div>
+
+                    <!-- 4-Dimension Stats -->
+                    <div style="font-size: 13px; font-weight: bold; color: var(--neon-blue); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <span>📊</span> 四維實體物理雷達
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-header"><span>一、攻擊破壞力</span><span id="atkVal" style="color: #FF3B30; font-weight: bold;"></span></div>
+                            <div class="bar-bg"><div id="atkBar" class="bar-fill" style="background: #FF3B30; width: 0%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header"><span>二、極致持久力</span><span id="staVal" style="color: #34C759; font-weight: bold;"></span></div>
+                            <div class="bar-bg"><div id="staBar" class="bar-fill" style="background: #34C759; width: 0%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header"><span>三、防禦抗爆力</span><span id="defVal" style="color: #007AFF; font-weight: bold;"></span></div>
+                            <div class="bar-bg"><div id="defBar" class="bar-fill" style="background: #007AFF; width: 0%;"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header"><span>四、X-Dash 突襲率</span><span id="xdashVal" style="color: #FF9500; font-weight: bold;"></span></div>
+                            <div class="bar-bg"><div id="xdashBar" class="bar-fill" style="background: #FF9500; width: 0%;"></div></div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Single Part View Container -->
+                <div id="partContainer" style="display: none;">
+                    <div class="single-part-view">
+                        <img id="singlePartImg" class="single-part-img" src="" alt="部件圖片" onerror="this.style.display='none'">
+                        <div>
+                            <div id="singlePartBadge" class="badge"></div>
+                            <h3 id="singlePartTitle" style="color: var(--neon-gold); font-size: 20px; font-weight: bold; margin: 4px 0;"></h3>
+                            <div id="singlePartWeight" style="font-size: 13px; color: var(--neon-blue); font-weight: bold;"></div>
+                            <div id="singlePartDesc" style="font-size: 13px; color: var(--text-sub); margin-top: 6px; line-height: 1.5;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Coach Output Box -->
+                <div style="font-size: 13px; font-weight: bold; color: var(--neon-gold); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                    <span>🧠</span> 戰術教練深度復盤與選手指引
+                </div>
                 <div class="coach-review" id="coachText"></div>
             </div>
         </div>
@@ -430,10 +565,14 @@ LANDING_HTML = """<!DOCTYPE html>
             const btn = document.getElementById('analyzeBtn');
             const loading = document.getElementById('loading');
             const resultBox = document.getElementById('result-box');
+            const comboContainer = document.getElementById('comboContainer');
+            const partContainer = document.getElementById('partContainer');
 
             btn.disabled = true;
             loading.style.display = 'block';
             resultBox.style.display = 'none';
+            comboContainer.style.display = 'none';
+            partContainer.style.display = 'none';
 
             try {
                 const res = await fetch('/api/simulate', {
@@ -448,11 +587,42 @@ LANDING_HTML = """<!DOCTYPE html>
                 resultBox.style.display = 'block';
 
                 if (data.combo_stats) {
+                    comboContainer.style.display = 'block';
                     const s = data.combo_stats;
                     document.getElementById('comboName').textContent = s.combo_name;
-                    document.getElementById('comboSub').textContent = `${s.combo_name_zh} | 總配重：約 ${s.total_weight_g}g`;
-                    document.getElementById('comboImg').src = s.hero_image_url || '';
-                    document.getElementById('comboImg').style.display = s.hero_image_url ? 'block' : 'none';
+                    document.getElementById('comboWeightBadge').textContent = `約 ${s.total_weight_g}g`;
+                    document.getElementById('comboSub').textContent = `${s.combo_name_zh} | 物理實測總配重`;
+                    
+                    const heroImg = s.hero_image_url || (s.blade && s.blade.image_local) || '';
+                    const heroEl = document.getElementById('comboImg');
+                    if (heroImg) {
+                        heroEl.src = heroImg;
+                        heroEl.style.display = 'block';
+                    } else {
+                        heroEl.style.display = 'none';
+                    }
+
+                    if (s.blade) {
+                        const bImg = document.getElementById('bladeImg');
+                        bImg.src = s.blade.image_local || s.blade.card_image_url || '';
+                        bImg.style.display = bImg.src ? 'block' : 'none';
+                        document.getElementById('bladeName').textContent = s.blade.name_zh || s.blade.name;
+                        document.getElementById('bladeSpec').textContent = `${s.blade.weight_g}g | ${s.blade.type}`;
+                    }
+                    if (s.ratchet) {
+                        const rImg = document.getElementById('ratchetImg');
+                        rImg.src = s.ratchet.image_local || s.ratchet.image_url || '';
+                        rImg.style.display = rImg.src ? 'block' : 'none';
+                        document.getElementById('ratchetName').textContent = s.ratchet.name;
+                        document.getElementById('ratchetSpec').textContent = `${s.ratchet.weight_g}g | ${s.ratchet.blades_count}刃`;
+                    }
+                    if (s.bit) {
+                        const bitImg = document.getElementById('bitImg');
+                        bitImg.src = s.bit.image_local || s.bit.image_url || '';
+                        bitImg.style.display = bitImg.src ? 'block' : 'none';
+                        document.getElementById('bitName').textContent = s.bit.name;
+                        document.getElementById('bitSpec').textContent = `${s.bit.weight_g}g | ${s.bit.type}`;
+                    }
 
                     document.getElementById('atkVal').textContent = s.scores.attack + '/100';
                     document.getElementById('atkBar').style.width = s.scores.attack + '%';
@@ -462,6 +632,21 @@ LANDING_HTML = """<!DOCTYPE html>
                     document.getElementById('defBar').style.width = s.scores.defense + '%';
                     document.getElementById('xdashVal').textContent = s.scores.xdash + '/100';
                     document.getElementById('xdashBar').style.width = s.scores.xdash + '%';
+                } else if (data.part_info) {
+                    partContainer.style.display = 'block';
+                    const p = data.part_info;
+                    document.getElementById('singlePartBadge').textContent = (p._category || p.type || '部件').toUpperCase();
+                    document.getElementById('singlePartTitle').textContent = `${p.name} ${p.name_zh || ''}`;
+                    document.getElementById('singlePartWeight').textContent = `規格淨重：約 ${p.weight_g || 0}g | 階級評定：${p.tier || 'A'}`;
+                    document.getElementById('singlePartDesc').textContent = p.description || p.tactical_effect || '';
+                    const partImg = p.image_local || p.image_url || '';
+                    const partEl = document.getElementById('singlePartImg');
+                    if (partImg) {
+                        partEl.src = partImg;
+                        partEl.style.display = 'block';
+                    } else {
+                        partEl.style.display = 'none';
+                    }
                 }
 
                 document.getElementById('coachText').textContent = data.reply_text || '戰術分析完成。';

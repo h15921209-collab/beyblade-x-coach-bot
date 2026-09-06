@@ -14,8 +14,9 @@
       "tier": "S",
       "description": "當前聯賽頂級霸主金屬刃。重量逼近39克，金屬層極度向外圍延伸，造就毀滅性打擊慣性。無論搭配攻擊平軸還是持久球軸，都能在撞擊瞬間給予對手極限動量轉移。",
       "meta_analysis": "對戰 Wizard Rod 可透過重量優勢強行擊飛撞牆或 Over Finish；對戰其他攻擊型具備絕對的碰撞剛性優勢。",
-      "image_url": "https://m.media-amazon.com/images/I/71u9sJmE38L._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/d/d3/Phoenix_Wing_9-60GF.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2d/BladePhoenixWing.png/revision/latest?cb=20260809063447",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2d/BladePhoenixWing.png/revision/latest?cb=20260809063447",
+      "image_local": "/static/images/blade_phoenix_wing.png"
     },
     {
       "id": "wizard_rod",
@@ -31,8 +32,9 @@
       "tier": "S",
       "description": "Unique Line 劃時代持久神刃。採用幾乎正圓的外輪廓，金屬重心高度集中於最外圍外環，空氣阻力極低，旋轉慣性極大（Flywheel Effect），持久力稱霸整個 Meta。",
       "meta_analysis": "職業賽事絕對的核心持久標竿。搭配 9-60B 或 7-60B 能達成極長空轉時間，但需提防 Dran Buster 與 Phoenix Wing 的第一發極速爆裂擊飛。",
-      "image_url": "https://m.media-amazon.com/images/I/61r5qZ3f2RL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/9/91/Wizard_Rod_5-70DB.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a3/BladeWizardRod.png/revision/latest?cb=20260815024049",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a3/BladeWizardRod.png/revision/latest?cb=20260815024049",
+      "image_local": "/static/images/blade_wizard_rod.png"
     },
     {
       "id": "dran_buster",
@@ -48,8 +50,9 @@
       "tier": "S",
       "description": "UX 系列純攻擊殺手。將全身重量集中於單一特大金屬重擊刃角，具備瞬間將對手撞出擂台或打爆鎖扣的一擊必殺能力。極其依賴前兩次 X-Dash 軌道接觸。",
       "meta_analysis": "專門用於克制 Wizard Rod 站樁持久防禦的先鋒刺客，首發 X-Dash 若命中往往直接造成 Over 或 Burst Finish，但尾速持久極低。",
-      "image_url": "https://m.media-amazon.com/images/I/61D8o4iT3UL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/5/53/Dran_Buster_1-60A.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/d/db/BladeDranBuster.png/revision/latest?cb=20260815023129",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/d/db/BladeDranBuster.png/revision/latest?cb=20260815023129",
+      "image_local": "/static/images/blade_dran_buster.png"
     },
     {
       "id": "cobalt_dragoon",
@@ -65,8 +68,9 @@
       "tier": "S",
       "description": "BX 世代首款左迴旋重砲陀螺。38克重量級左迴旋刃，與右迴旋陀螺正面相撞時產生同向速度相加效應（逆向切入碰撞），具備極高碰撞破壞力與同轉吸收潛力。",
       "meta_analysis": "對戰主流右迴旋持久型（Wizard Rod）能以逆向切線破壞其平衡，逼迫其提早晃動傾斜。",
-      "image_url": "https://m.media-amazon.com/images/I/61Uj72G1wKL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a2/CobaltDragoon2-60C.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c2/BladeCobaltDragoon.png/revision/latest?cb=20260822063458",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c2/BladeCobaltDragoon.png/revision/latest?cb=20260822063458",
+      "image_local": "/static/images/blade_cobalt_dragoon.png"
     },
     {
       "id": "shark_edge",
@@ -82,8 +86,9 @@
       "tier": "A+",
       "description": "擁有全系列最鋒利的兩片陡峭上揚金屬切刃（Upper Blades）。擅長鑽入對手底盤墊片下方，利用抬升動能將敵方直接挑飛挑出極速線。",
       "meta_analysis": "搭配 3-60LF 或 1-60LF 時具備極佳突襲上挑效果，專門剋制底盤露出較多的高位陀螺。",
-      "image_url": "https://m.media-amazon.com/images/I/71YyM3L6ZSL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9f/SharkEdge3-60LF.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2e/BladeSharkEdge.png/revision/latest?cb=20260802062042",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2e/BladeSharkEdge.png/revision/latest?cb=20260802062042",
+      "image_local": "/static/images/blade_shark_edge.png"
     },
     {
       "id": "tyranno_beat",
@@ -99,8 +104,9 @@
       "tier": "A+",
       "description": "重量僅次於 Phoenix Wing 的重裝攻擊刃，周圍布滿鋸齒狀多段式粉碎打擊點。碰撞反震力巨大，能給予對手極強的持續減速震撼。",
       "meta_analysis": "在攻擊與擊退能力上極為突出，搭配 4-70 或 9-60 搭配平錐軸可展現霸道的中場壓制力。",
-      "image_url": "https://m.media-amazon.com/images/I/61c8v9K89-L._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/29/TyrannoBeat4-70Q.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/ff/BladeTyrannoBeat.png/revision/latest?cb=20260819065042",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/ff/BladeTyrannoBeat.png/revision/latest?cb=20260819065042",
+      "image_local": "/static/images/blade_tyranno_beat.png"
     },
     {
       "id": "hells_chain",
@@ -116,8 +122,9 @@
       "tier": "A+",
       "description": "具備上下高低兩層金屬接觸面。上層分散攻擊衝擊，下層抵禦對手墊片嚙合，防禦反彈表現極度均衡穩健。",
       "meta_analysis": "攻防一體的經典平衡萬用刃，改裝 5-60B 或 9-60O 能在抗擊飛與尾速之間取得極佳黃金比。",
-      "image_url": "https://m.media-amazon.com/images/I/71c6t4kR7YL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/0/05/HellsChain5-60HT.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/83/BladeHellsChain.png/revision/latest?cb=20260808045710",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/8/83/BladeHellsChain.png/revision/latest?cb=20260808045710",
+      "image_local": "/static/images/blade_hells_chain.png"
     },
     {
       "id": "dran_dagger",
@@ -133,8 +140,9 @@
       "tier": "A",
       "description": "具備 6 片細密銳利的金屬切割刃，相較於 Dran Sword 的單點爆發，Dran Dagger 專注於 X-Dash 衝刺時在半秒內施加多達 6-12 次連續敲擊，迅速削磨對手旋轉動能。",
       "meta_analysis": "搭配 4-60R 或 3-60F 時能在入軌後連續刮擊敵方外圈，逼迫對手失衡。",
-      "image_url": "https://m.media-amazon.com/images/I/71i0k3Yw7DL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/1/13/DranDagger4-60R.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c8/BladeDranDagger.png/revision/latest?cb=20260808045217",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c8/BladeDranDagger.png/revision/latest?cb=20260808045217",
+      "image_local": "/static/images/blade_dran_dagger.png"
     },
     {
       "id": "unicorn_sting",
@@ -150,8 +158,9 @@
       "tier": "A",
       "description": "左右非對稱雙重刀刃設計。一面為流線圓潤的卸力防禦弧，另一面為銳角突出刺擊刃。受擊時能轉移偏角，自帶傾斜回正物理特性。",
       "meta_analysis": "防禦持久流的隱藏殺手，搭配 5-60P 或 9-60B 能在受到撞擊後自動借力反轉回中場。",
-      "image_url": "https://m.media-amazon.com/images/I/71oD4H0v3vL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5e/UnicornSting5-60GP.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/15/BladeUnicornSting.png/revision/latest?cb=20260813014525",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/1/15/BladeUnicornSting.png/revision/latest?cb=20260813014525",
+      "image_local": "/static/images/blade_unicorn_sting.png"
     },
     {
       "id": "silver_wolf",
@@ -167,8 +176,9 @@
       "tier": "S",
       "description": "UX 最新世代科技刃。外圍搭載自由旋轉卸力塑料/金屬複合環，當遭到強攻型陀螺正面暴擊時，外環空轉大幅抵消剪切扭力，保護內核不受爆裂衝擊。",
       "meta_analysis": "對戰純攻擊流（Phoenix Wing / Dran Buster）具備極強卸力保底，且外圍金屬保證了超高持久。",
-      "image_url": "https://m.media-amazon.com/images/I/61N+p7y1SBL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/d/df/SilverWolf3-80FB.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f1/BladeSilverWolf.png/revision/latest?cb=20240913034202",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f1/BladeSilverWolf.png/revision/latest?cb=20240913034202",
+      "image_local": "/static/images/blade_silver_wolf.png"
     },
     {
       "id": "dran_sword",
@@ -184,8 +194,9 @@
       "tier": "A",
       "description": "BEYBLADE X 開山之作。經典 3 刃大角度衝擊設計，能在初段衝刺中打出乾淨俐落的擊飛角度。",
       "meta_analysis": "極致攻擊入門標竿，搭配 3-60F 是最純粹的極速線獵殺者。",
-      "image_url": "https://m.media-amazon.com/images/I/71b2dZ6u-oL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e0/DranSword3-60F.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5f/BladeDranSword.png/revision/latest?cb=20250814202546",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5f/BladeDranSword.png/revision/latest?cb=20250814202546",
+      "image_local": "/static/images/blade_dran_sword.png"
     },
     {
       "id": "hells_scythe",
@@ -201,8 +212,9 @@
       "tier": "B+",
       "description": "早期四刃平衡神刃，受力均勻，圓滑度極高，持久與防禦表現優異。",
       "meta_analysis": "現環境因重量被 Phoenix Wing 與 Wizard Rod 拉開差距，但在輕量級平衡調試中仍具備指標意義。",
-      "image_url": "https://m.media-amazon.com/images/I/71a64m0aJ8L._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/6/6f/HellsScythe4-60T.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e4/BladeHellsScythe.png/revision/latest?cb=20250817035337",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e4/BladeHellsScythe.png/revision/latest?cb=20250817035337",
+      "image_local": "/static/images/blade_hells_scythe.png"
     },
     {
       "id": "knight_shield",
@@ -218,8 +230,9 @@
       "tier": "B",
       "description": "六片段差式盾牌輪廓，受力時透過階梯結構將衝擊力向上導流，保護墊片不被直擊。",
       "meta_analysis": "搭配高位防禦軸心可發揮緩衝效能，但面臨現行37g+超重金屬刃容易因質量落差被推開。",
-      "image_url": "https://m.media-amazon.com/images/I/71G1P5fK-YL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/3/36/KnightShield3-80N.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/BladeKnightShield.png/revision/latest?cb=20250609060142",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/BladeKnightShield.png/revision/latest?cb=20250609060142",
+      "image_local": "/static/images/blade_knight_shield.png"
     },
     {
       "id": "leon_crest",
@@ -235,8 +248,9 @@
       "tier": "A+",
       "description": "UX 世代重裝防禦王。金屬層厚度空前，7片密實盾刃呈收斂防禦姿態，重心深沉，抗擊退指數全系列前三。",
       "meta_analysis": "剋制各路攻擊型 X-Dash，搭配 7-60B 或 5-60HN 能穩如磐石鎮守擂台正中央。",
-      "image_url": "https://m.media-amazon.com/images/I/61N+p7y1SBL._AC_SL1500_.jpg",
-      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/23/LeonCrest7-60GN.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c7/BladeLeonCrest.png/revision/latest?cb=20260828064359",
+      "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c7/BladeLeonCrest.png/revision/latest?cb=20260828064359",
+      "image_local": "/static/images/blade_leon_crest.png"
     }
   ],
   "ratchets": [
@@ -251,7 +265,8 @@
       "tier": "S",
       "description": "當前職業賽事最泛用、最具統治力的 60 高度低重心墊片。9 刃齒輪狀結構將外來衝擊均勻分散，極大幅度降低被爆裂（Burst）機率，持久迴轉穩定度極佳。",
       "tactical_effect": "降至 60 低高度可有效保護卡榫，降低傾斜角，避免被對手鑽入底盤。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/6/63/Ratchet_9-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/af/Ratchet9-60.png/revision/latest?cb=20260809063523",
+      "image_local": "/static/images/ratchet_9-60.png"
     },
     {
       "id": "5-60",
@@ -264,7 +279,8 @@
       "tier": "S",
       "description": "五角近圓對稱設計，重量分配均勻厚實。相較於 9-60，5-60 的稜角較平緩，防禦與持久表現極度穩定，是各頂級改裝的黃金基底。",
       "tactical_effect": "提供陀螺極佳的垂直向穩定重心，大幅減少尾速晃動（Precession）。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/be/Ratchet_5-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f7/Ratchet5-60.png/revision/latest?cb=20260803013804",
+      "image_local": "/static/images/ratchet_5-60.png"
     },
     {
       "id": "3-60",
@@ -277,7 +293,8 @@
       "tier": "A+",
       "description": "經典三刃低重心墊片。外凸三刃可與 Dran Sword、Shark Edge、Phoenix Wing 等三刃特徵完全對齊隱藏，形成一體化攻擊線路。",
       "tactical_effect": "若與刃部凸點重合，可將底盤外露面積縮至最小；但若凸角朝向間隙，受擊可能承受較大槓桿力矩。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c5/Ratchet_3-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/1b/Ratchet3-60.png/revision/latest?cb=20240913063429",
+      "image_local": "/static/images/ratchet_3-60.png"
     },
     {
       "id": "7-60",
@@ -290,7 +307,8 @@
       "tier": "S",
       "description": "UX 世代引進的七角重型墊片。接近正圓的幾何構型讓對手難以抓住任何單點卡角進行撬爆，重量更達到 6.7g，是 Wizard Rod 與防禦流的絕配。",
       "tactical_effect": "最大化離心力與抗爆率，降低與地面接觸刮盤時的角速度損失。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/87/Ratchet_7-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/39/Ratchet7-60.png/revision/latest?cb=20260828064419",
+      "image_local": "/static/images/ratchet_7-60.png"
     },
     {
       "id": "1-60",
@@ -303,7 +321,8 @@
       "tier": "A",
       "description": "單刃偏心特化墊片。全身偏重集中於單一凸點，能將陀螺轉化為震盪攻擊模式，造成更具破壞力的跳躍下壓打擊。",
       "tactical_effect": "裝配於 Dran Buster 搭配一擊必殺戰術時，可將偏心力量與主刀刃重疊，引爆瞬間最高撞擊動能。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/1a/Ratchet_1-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/3a/Ratchet1-60.png/revision/latest?cb=20260815023207",
+      "image_local": "/static/images/ratchet_1-60.png"
     },
     {
       "id": "5-70",
@@ -316,7 +335,8 @@
       "tier": "A",
       "description": "70 中等高度規格。介於 60 與 80 之間，能在保持良好離地間隙的同時，避免 80 高度帶來的過度搖晃傾角。",
       "tactical_effect": "使刃部略微抬升 1mm，更容易由上往下砸擊 60 高度對手的金屬刃頂部。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5a/Ratchet_5-70.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/cc/Ratchet5-70.png/revision/latest?cb=20260815024128",
+      "image_local": "/static/images/ratchet_5-70.png"
     },
     {
       "id": "4-60",
@@ -329,7 +349,8 @@
       "tier": "B+",
       "description": "四點方正對稱結構，配重均衡，但四個直角面在被斜向攻擊時有一定受力槓桿，需注意裝配對稱角。",
       "tactical_effect": "提供中規中矩的低重心支撐。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/4/4c/Ratchet_4-60.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/4/46/Ratchet4-60.png/revision/latest?cb=20250317055414",
+      "image_local": "/static/images/ratchet_4-60.png"
     },
     {
       "id": "3-80",
@@ -342,7 +363,8 @@
       "tier": "B",
       "description": "80 高度代表性墊片。使陀螺金屬刃處於制高點，利於施展泰山壓頂般的俯衝下壓，但在防爆裂與抗傾斜性上對選手發射角度要求極為苛刻。",
       "tactical_effect": "增加傾斜角度極限，但若尾速晃動容易發生底盤刮盤（Scraping）。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/3b/Ratchet_3-80.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/6/69/Ratchet3-80.png/revision/latest?cb=20250609060206",
+      "image_local": "/static/images/ratchet_3-80.png"
     },
     {
       "id": "9-80",
@@ -355,7 +377,78 @@
       "tier": "A",
       "description": "80 高度中最重且防爆最優異者。提供高位打擊戰術所需的穩定支撐，適合下壓型戰術。",
       "tactical_effect": "有效維持高位打擊窗口，減輕 80 高度容易被直擊爆裂的宿命弱點。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/9/90/Ratchet_9-80.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/6/61/Ratchet9-80.png/revision/latest?cb=20260813014725",
+      "image_local": "/static/images/ratchet_9-80.png"
+    },
+    {
+      "id": "2-60",
+      "name": "2-60",
+      "height_mm": 6.0,
+      "blades_count": 2,
+      "weight_g": 6.4,
+      "cg": "Dual Thick Lower Wing (雙厚翼超低重心)",
+      "burst_resistance": "High (厚實雙凸塊，抗衝擊性極強)",
+      "tier": "S",
+      "description": "BX-34 蒼白龍騎士標配專用雙翼墊片。採用厚實的雙突起設計，大幅降低受擊破綻，重心低且平衡支撐性絕佳。",
+      "tactical_effect": "提供左迴旋時絕佳的同轉支撐與防擦地穩定性，有效抵抗逆向撞擊帶來的爆裂力道。",
+      "image_local": "/static/images/ratchet_2-60.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a6/Ratchet2-60.png/revision/latest?cb=20260822063539"
+    },
+    {
+      "id": "4-70",
+      "name": "4-70",
+      "height_mm": 7.0,
+      "blades_count": 4,
+      "weight_g": 6.6,
+      "cg": "Mid-Height Square (四角中位平衡重心)",
+      "burst_resistance": "Medium-High",
+      "tier": "A",
+      "description": "70 中等高度四刃墊片。提供比 60 墊片更高的離地間隙，避免底部擦地，適合中高度傾斜戰術。",
+      "tactical_effect": "增加傾斜旋轉時的迴旋空間，減少與地面的摩擦損耗。",
+      "image_local": "/static/images/ratchet_4-70.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/16/Ratchet4-70.png/revision/latest?cb=20260819065150"
+    },
+    {
+      "id": "4-80",
+      "name": "4-80",
+      "height_mm": 8.0,
+      "blades_count": 4,
+      "weight_g": 6.9,
+      "cg": "High Square (高位四角重心)",
+      "burst_resistance": "Medium",
+      "tier": "B+",
+      "description": "80 高位墊片，能從高角度對敵方施加向下壓制打擊，但需注意防範被下擊挑飛。",
+      "tactical_effect": "適合高位重壓戰術，剋制低位扁平陀螺。",
+      "image_local": "/static/images/ratchet_4-80.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/ae/Ratchet4-80.png/revision/latest?cb=20250608045210"
+    },
+    {
+      "id": "1-80",
+      "name": "1-80",
+      "height_mm": 8.0,
+      "blades_count": 1,
+      "weight_g": 7.1,
+      "cg": "Single Extreme Off-Center (單點極度偏心)",
+      "burst_resistance": "Medium",
+      "tier": "A",
+      "description": "單刃偏心高位墊片。配合偏心攻擊刃（如 Dran Buster）可產生劇烈的偏心跳躍式打擊動量。",
+      "tactical_effect": "極大化爆發衝擊力，造成對手劇烈震盪。",
+      "image_local": "/static/images/ratchet_1-80.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/4/46/Ratchet1-80.png/revision/latest?cb=20260822063140"
+    },
+    {
+      "id": "5-80",
+      "name": "5-80",
+      "height_mm": 8.0,
+      "blades_count": 5,
+      "weight_g": 7.0,
+      "cg": "High Pentagonal (高位五角均勻重心)",
+      "burst_resistance": "Medium-High",
+      "tier": "A",
+      "description": "高位五角均勻分配墊片，兼具高高度與五刃的多重防護。",
+      "tactical_effect": "提供穩定的高位旋轉支撐。",
+      "image_local": "/static/images/ratchet_5-80.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/4/42/Ratchet5-80.png/revision/latest?cb=20260803014049"
     }
   ],
   "bits": [
@@ -370,7 +463,8 @@
       "tier": "S",
       "description": "持久流世界標準軸心。全金屬圓球端面提供最低旋轉摩擦力，陀螺能自動滑入競技場中央漏斗區進行超長空轉，尾速衰減極慢。",
       "tactical_effect": "受撞擊後透過球面滑動迅速卸力並回正。搭配 9-60 或 7-60 可將被爆裂率降至最低，是 Wizard Rod 的神裝組合。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/Bit_Ball.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8c/BitBall.png/revision/latest?cb=20250608045235",
+      "image_local": "/static/images/bit_b.png"
     },
     {
       "id": "O",
@@ -383,7 +477,8 @@
       "tier": "S",
       "description": "球面曲率半徑小於 Ball 的微球軸。接地面積進一步微縮，空轉純持久上限甚至略勝 Ball 軸半籌，傾斜時的自體修正速度極快。",
       "tactical_effect": "搭配 Phoenix Wing 時能構成著名的「不死鳥持久重砲（Wing 9-60O）」，兼備39g撞擊力與全場最高終端尾速。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/22/Bit_Orb.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/17/BitOrb.png/revision/latest?cb=20260803014115",
+      "image_local": "/static/images/bit_o.png"
     },
     {
       "id": "F",
@@ -396,7 +491,8 @@
       "tier": "S",
       "description": "經典狂暴攻擊軸。寬平面塑膠底接觸競技場斜坡時產生極大抓地驅動力，外圈齒輪以極高頻率精準咬入 X-Line 齒軌，化為超越音速的極速突襲（X-Dash）。",
       "tactical_effect": "開局爆發力全場第一，極高機率在開局 5 秒內將對手撞出口袋區（Over Finish）。缺點是 15 秒後摩擦損耗巨大，無殘留持久。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/6/66/Bit_Flat.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/b0/BitFlat.png/revision/latest?cb=20240913063436",
+      "image_local": "/static/images/bit_f.png"
     },
     {
       "id": "T",
@@ -409,7 +505,8 @@
       "tier": "A+",
       "description": "圓錐與微平端的二段式神軸。發射初期傾斜時，外圍斜角抓地狂奔觸發 X-Dash 進行第一波壓制；當速度略降陀螺直立後，尖端落地自動巡航回中場保持持久。",
       "tactical_effect": "相較於純平軸 F，T 軸賦予攻擊型陀螺珍貴的尾速生機（Spin Finish 勝算），大幅改善打不飛就必輸的極端弱點。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/9/90/Bit_Taper.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/ad/BitTaper.png/revision/latest?cb=20250317055452",
+      "image_local": "/static/images/bit_t.png"
     },
     {
       "id": "P",
@@ -422,7 +519,8 @@
       "tier": "A+",
       "description": "中央突出微小錐針、外圈環繞平面階梯。直立時以錐針靜止於中央省電；一旦遭受對手重擊傾斜，外圍平環立即接觸場地暴走，咬入 X-Line 發動反擊突襲！",
       "tactical_effect": "職業選手最愛的防守反擊戰術軸，攻守切換如鬼魅般難以預測。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a4/Bit_Point.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/bf/BitPoint.png/revision/latest?cb=20260803013833",
+      "image_local": "/static/images/bit_p.png"
     },
     {
       "id": "LF",
@@ -435,7 +533,8 @@
       "tier": "A+",
       "description": "高度較傳統平軸降低 1mm 的攻擊特化軸。極限壓低整體重心，使陀螺能以銳利切角鑽入敵方墊片盲區，配合 Shark Edge 施展絕對上挑。",
       "tactical_effect": "壓制敵方下盤，但對選手的發射水平度要求極高，稍微傾斜可能刮地。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f6/Bit_LowFlat.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/0/0e/BitLowFlat.png/revision/latest?cb=20260802062128",
+      "image_local": "/static/images/bit_lf.png"
     },
     {
       "id": "GF",
@@ -448,7 +547,8 @@
       "tier": "A+",
       "description": "Phoenix Wing 專用狂怒軸心。齒輪齒數自 16 齒暴增至 24 齒，且齒槽向軸頂大幅延伸。一旦接觸 X-Line 即瞬間進入 Overdrive 超狂暴極速衝刺狀態！",
       "tactical_effect": "瞬間衝擊力道無人能擋，但高速消耗極為劇烈，若未在第一圈抓到對手，自爆或出界風險陡增。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/36/Bit_GearFlat.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/bd/BitGearFlat.png/revision/latest?cb=20260809063549",
+      "image_local": "/static/images/bit_gf.png"
     },
     {
       "id": "GP",
@@ -461,7 +561,8 @@
       "tier": "A",
       "description": "Point 軸與 24 齒 Gear 系統的究極融合。中場平靜站樁，一受衝擊傾斜立即引爆 24 齒超頻 X-Dash，兼具機關槍般的狂烈回擊速度。",
       "tactical_effect": "改善了普通 P 軸咬軌提速力道不足的問題，是極致反擊流的強力核心。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/be/Bit_GearPoint.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/36/BitGearPoint.png/revision/latest?cb=20260813014626",
+      "image_local": "/static/images/bit_gp.png"
     },
     {
       "id": "H",
@@ -474,7 +575,8 @@
       "tier": "A+",
       "description": "六角稜柱面底端。六個平面稜角在受到重擊時，能如千斤頂般頂住競技場底面，阻止陀螺進一步傾倒爆裂，抗擊飛指數在防禦軸中名列第一。",
       "tactical_effect": "針對 Dran Buster 與 Phoenix Wing 等重拳流派有絕佳的制動與立足能力。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/d/da/Bit_Hexa.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8c/BitHexa.png/revision/latest?cb=20260822062551",
+      "image_local": "/static/images/bit_h.png"
     },
     {
       "id": "HN",
@@ -487,7 +589,8 @@
       "tier": "A",
       "description": "尖細金屬/硬質塑膠尖端配合抬高軸身。以最小面積頂立於場地中央，受撞擊時能依靠高位擺動將側向力轉化為離心角動量。",
       "tactical_effect": "適合高位防禦型搭配，但極度害怕被平軸由下往上推挑。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/4/41/Bit_HighNeedle.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2f/BitHighNeedle.png/revision/latest?cb=20260802062012",
+      "image_local": "/static/images/bit_hn.png"
     },
     {
       "id": "E",
@@ -500,7 +603,8 @@
       "tier": "A",
       "description": "專為 Cobalt Dragoon 左迴旋或跳躍戰術打造的階梯型特殊軸。在 X-Line 入口處具備防倒扣導角，能有效防止左迴旋陀螺在順向軌道被卡死的物理缺陷。",
       "tactical_effect": "左迴旋必備軸心之一，能在高速衝刺時產生微幅浮動，使對手難以鎖定打擊點。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/25/Bit_Elevate.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/38/BitElevate.png/revision/latest?cb=20260828064711",
+      "image_local": "/static/images/bit_e.png"
     },
     {
       "id": "FB",
@@ -513,7 +617,8 @@
       "tier": "S",
       "description": "UX 最新軸心科技。球端具備獨立微型滾珠/空轉機構，接地受力時球體可自主打滑旋轉，幾乎將尾速地面滑動阻力降至絕對物理極限！",
       "tactical_effect": "Silver Wolf 標配神軸。在對局最後 5 秒的尾速微轉掙扎（Life After Death）中擁有全環境最高的同轉逆轉勝率。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/fc/Bit_FreeBall.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/7/78/BitFreeBall.png/revision/latest?cb=20240913034835",
+      "image_local": "/static/images/bit_fb.png"
     },
     {
       "id": "RA",
@@ -526,7 +631,92 @@
       "tier": "A+",
       "description": "底端鑲嵌高摩擦力彈性橡膠，發射觸地瞬間產生如同賽車熱熔胎般的強大抓地推進力，進入 X-Line 時咬合推進速度超越任何全塑膠軸心。",
       "tactical_effect": "爆發力令人屏息，能產生瞬間摧毀對手的極限撞擊，但持久力極度短暫，屬於 3 秒決勝負的敢死隊打法。",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/53/Bit_RubberAccel.png"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5a/BitRubberAccel.png/revision/latest?cb=20241015044738",
+      "image_local": "/static/images/bit_ra.png"
+    },
+    {
+      "id": "C",
+      "name": "Cyclone (旋風軸)",
+      "type": "Attack",
+      "weight_g": 2.3,
+      "burst_resistance": "High (高阻尼鎖扣)",
+      "gear_teeth": 16,
+      "x_dash_capability": "Extreme Vortex Dash (高速氣流衝刺)",
+      "tier": "S",
+      "description": "BX-34 蒼白龍騎士專用標配軸心。軸心外圍設有螺旋擾流翼，能借助旋轉氣流增加下壓力，兼具暴走入軌與中心戰術回旋能力。",
+      "tactical_effect": "專為左迴旋攻擊型量身打造，能完美發揮逆向切入與持續極速衝刺效果。",
+      "image_local": "/static/images/bit_c.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/fb/BitCyclone.png/revision/latest?cb=20260822063610"
+    },
+    {
+      "id": "A",
+      "name": "Accel (加速軸)",
+      "type": "Attack",
+      "weight_g": 2.2,
+      "burst_resistance": "Extreme (16齒厚平軸端)",
+      "gear_teeth": 16,
+      "x_dash_capability": "Very High Acceleration (瞬態急速衝刺)",
+      "tier": "S",
+      "description": "UX-01 Dran Buster 標配軸心。採用直徑較小但抓地力更強的平底設計，啟動反應極快，入軌瞬間加速度達到巔峰。",
+      "tactical_effect": "專門用於第一擊必殺與瞬間 Over Finish，爆發力無人能出其右。",
+      "image_local": "/static/images/bit_a.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8e/BitAccel.png/revision/latest?cb=20260815023830"
+    },
+    {
+      "id": "R",
+      "name": "Rush (衝刺軸)",
+      "type": "Attack",
+      "weight_g": 2.2,
+      "burst_resistance": "High (16齒細平軸端)",
+      "gear_teeth": 16,
+      "x_dash_capability": "Multiple Continuous Dashes (多段連續衝刺)",
+      "tier": "S",
+      "description": "採用細平切削端面的攻擊軸，摩擦阻力小於 F，能達成多次反覆觸碰極速線（X-Line）的連環衝刺。",
+      "tactical_effect": "避免一次衝刺後耗盡體力，適合中程纏鬥與多次突襲擊飛戰術。",
+      "image_local": "/static/images/bit_r.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e1/BitRush.png/revision/latest?cb=20260808045328"
+    },
+    {
+      "id": "N",
+      "name": "Needle (針軸)",
+      "type": "Defense",
+      "weight_g": 2.0,
+      "burst_resistance": "Low-Medium (標準防禦軸阻尼)",
+      "gear_teeth": 16,
+      "x_dash_capability": "Stationary Low (定點防守，不易入軌)",
+      "tier": "A",
+      "description": "尖錐狀針型軸心。將接觸面積縮減至極致單點，牢牢釘在競技場中央，承受外圍攻擊型撞擊時不易移位。",
+      "tactical_effect": "防守型陀螺的經典定點軸，利用微小摩擦力保持中心防守反擊。",
+      "image_local": "/static/images/bit_n.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/26/BitNeedle.png/revision/latest?cb=20250609060238"
+    },
+    {
+      "id": "DB",
+      "name": "Disc Ball (碟狀球軸)",
+      "type": "Stamina",
+      "weight_g": 2.4,
+      "burst_resistance": "High (UX 系列防禦鎖扣)",
+      "gear_teeth": 16,
+      "x_dash_capability": "Stable Smooth Glide (超平穩滑行)",
+      "tier": "S",
+      "description": "UX-03 Wizard Rod 標配持久軸。在球型軸端上方加裝外圍自由碟盤，大幅提升傾斜時的末端復原力，尾速幾近無損耗。",
+      "tactical_effect": "極限持久戰霸主，大幅延長旋轉時間並防止末段側翻擦地。",
+      "image_local": "/static/images/bit_db.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/10/BitDiskBall.png/revision/latest?cb=20260815024201"
+    },
+    {
+      "id": "HT",
+      "name": "High Taper (高錐軸)",
+      "type": "Balance",
+      "weight_g": 2.3,
+      "burst_resistance": "Medium-High",
+      "gear_teeth": 16,
+      "x_dash_capability": "Moderate-Controlled (控球中速入軌)",
+      "tier": "A+",
+      "description": "加高版本的錐形平衡軸，兼具中心定點與外圍機動性，重心高有利於向下壓制。",
+      "tactical_effect": "攻守兼備，提供寬廣的發射傾角容錯率。",
+      "image_local": "/static/images/bit_ht.png",
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/b5/BitHighTaper.png/revision/latest?cb=20260808045810"
     }
   ]
 }

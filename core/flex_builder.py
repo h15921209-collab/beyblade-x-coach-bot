@@ -68,11 +68,13 @@ class FlexMessageBuilder:
         combo_name_zh = combo_stats.get("combo_name_zh", "")
         total_weight = combo_stats.get("total_weight_g", 0.0)
         scores = combo_stats.get("scores", {"attack": 70, "stamina": 70, "defense": 70, "xdash": 70})
-        hero_img = combo_stats.get("hero_image_url") or "https://static.wikia.nocookie.net/beyblade/images/d/d3/Phoenix_Wing_9-60GF.png"
-        
         blade = combo_stats.get("blade", {})
         ratchet = combo_stats.get("ratchet", {})
         bit = combo_stats.get("bit", {})
+
+        hero_img = blade.get("card_image_url") or combo_stats.get("hero_image_url") or "https://beyblade-x-coach-bot.onrender.com/static/images/blade_phoenix_wing.png"
+        if hero_img.startswith("/"):
+            hero_img = f"https://beyblade-x-coach-bot.onrender.com{hero_img}"
 
         # Truncate coach text if too long for card preview
         display_analysis = coach_analysis[:350] + "..." if len(coach_analysis) > 350 else coach_analysis
@@ -278,7 +280,9 @@ class FlexMessageBuilder:
         name_zh = part.get("name_zh", "")
         category = part.get("_category") or part.get("type", "Component")
         weight = part.get("weight_g", 0.0)
-        img_url = part.get("image_url") or "https://static.wikia.nocookie.net/beyblade/images/d/d3/Phoenix_Wing_9-60GF.png"
+        img_url = part.get("card_image_url") or part.get("image_url") or part.get("image_local") or "https://beyblade-x-coach-bot.onrender.com/static/images/blade_phoenix_wing.png"
+        if img_url.startswith("/"):
+            img_url = f"https://beyblade-x-coach-bot.onrender.com{img_url}"
         desc = part.get("description") or part.get("tactical_effect", "")
 
         bubble = {
