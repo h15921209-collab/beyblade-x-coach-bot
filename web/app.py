@@ -818,7 +818,7 @@ def health():
     return {"status": "ok", "db_ready": len(db.blades) > 0}
 
 @app.post("/callback")
-async def line_callback(request: Request, x_line_signature: Optional[str] = Header(None)):
+async def line_callback(request: Request, background_tasks: BackgroundTasks, x_line_signature: Optional[str] = Header(None)):
     if not line_webhook_handler:
         raise HTTPException(status_code=500, detail="LINE Webhook Handler is not configured.")
     if not x_line_signature:
@@ -827,13 +827,25 @@ async def line_callback(request: Request, x_line_signature: Optional[str] = Head
     body = await request.body()
     body_str = body.decode("utf-8")
 
+    # 1. 快速校驗簽名，若非法立即拒絕
     try:
-        line_webhook_handler.handle(body_str, x_line_signature)
-    except Exception as e:
-        logger.error(f"Webhook handling error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        if not line_webhook_handler.parser.signature_validator.validate(body_str, x_line_signature):
+            logger.warning("Invalid LINE webhook signature detected.")
+            raise HTTPException(status_code=400, detail="Invalid signature")
+    except Exception as sig_err:
+        logger.warning(f"Signature validation error: {sig_err}")
+        raise HTTPException(status_code=400, detail="Signature validation failed")
 
-    return JSONResponse(content={"status": "handled"})
+    # 2. 透過 FastAPI BackgroundTasks 非同步處理事件與 Gemini 深度分析
+    # 確保 Webhook 於 50ms 內極速回傳 HTTP 200 給 LINE 伺服器，徹底杜絕 LINE 逾時斷線！
+    def safe_handle(payload: str, sig: str):
+        try:
+            line_webhook_handler.handle(payload, sig)
+        except Exception as handle_err:
+            logger.error(f"Error in background webhook processing: {handle_err}")
+
+    background_tasks.add_task(safe_handle, body_str, x_line_signature)
+    return JSONResponse(content={"status": "accepted"})
 
 class SimRequest(BaseModel):
     message: str
