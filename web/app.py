@@ -80,6 +80,17 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     quick_reply=qr
                 ))
 
+                # Attach curated tournament match videos
+                try:
+                    from core.youtube_search import search_beyblade_videos
+                    videos = search_beyblade_videos("戰鬥陀螺X 鳳凰羽翼 魔導權杖 實戰對決", max_results=3)
+                    if videos:
+                        vid_payload = FlexMessageBuilder.build_videos_carousel(videos, "賽事頂級王者實戰")
+                        vid_container = FlexContainer.from_dict(vid_payload["contents"])
+                        reply_messages.append(FlexMessage(alt_text="🎬 賽事熱門實戰影片推薦", contents=vid_container))
+                except Exception as ve:
+                    logger.warning(f"Video attachment error: {ve}")
+
             elif user_msg in ["【極限攻擊刺客】", "極限攻擊刺客", "攻擊推薦"]:
                 atk_combos = [("Dran Buster", "1-60", "F"), ("Shark Edge", "3-60", "LF"), ("Cobalt Dragoon", "2-60", "C")]
                 stats = get_combos_stats(atk_combos)
@@ -98,6 +109,17 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     quick_reply=qr
                 ))
 
+                # Attach attack tournament videos
+                try:
+                    from core.youtube_search import search_beyblade_videos
+                    videos = search_beyblade_videos("戰鬥陀螺X 龍之爆裂 鯊魚之刃 攻擊實戰", max_results=3)
+                    if videos:
+                        vid_payload = FlexMessageBuilder.build_videos_carousel(videos, "極限攻擊刺客實戰")
+                        vid_container = FlexContainer.from_dict(vid_payload["contents"])
+                        reply_messages.append(FlexMessage(alt_text="🎬 極限攻擊實戰影片推薦", contents=vid_container))
+                except Exception as ve:
+                    logger.warning(f"Video attachment error: {ve}")
+
             elif user_msg in ["【持久防禦要塞】", "持久防禦要塞", "持久推薦", "防禦推薦"]:
                 def_combos = [("Wizard Rod", "7-60", "B"), ("Hells Chain", "5-60", "HT"), ("Tyranno Beat", "4-70", "B")]
                 stats = get_combos_stats(def_combos)
@@ -115,6 +137,17 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     text="選手，持久防禦流講求外圍飛輪慣性、極致圓形減阻與承受衝擊穩定性！左右滑動查看要塞配置：",
                     quick_reply=qr
                 ))
+
+                # Attach stamina/defense videos
+                try:
+                    from core.youtube_search import search_beyblade_videos
+                    videos = search_beyblade_videos("戰鬥陀螺X 魔導權杖 地獄狂鏈 持久實戰", max_results=3)
+                    if videos:
+                        vid_payload = FlexMessageBuilder.build_videos_carousel(videos, "持久防禦鐵壁實戰")
+                        vid_container = FlexContainer.from_dict(vid_payload["contents"])
+                        reply_messages.append(FlexMessage(alt_text="🎬 持久防禦實戰影片推薦", contents=vid_container))
+                except Exception as ve:
+                    logger.warning(f"Video attachment error: {ve}")
 
             elif user_msg in ["【核心零件百科】", "核心零件百科", "零件庫"]:
                 qr = make_quick_reply([
@@ -161,7 +194,32 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     except Exception as flex_err:
                         logger.error(f"Error packing Flex Message: {flex_err}")
 
-                # 2. Add full detailed coach analysis text with dynamic Quick Reply
+                # 2. Add YouTube Video Recommendation Carousel (if tactical combo or part)
+                is_tactical = (
+                    result.get("combo_stats")
+                    or result.get("flex_message")
+                    or any(k in user_msg for k in ["羽翼", "權杖", "爆裂", "騎士", "之刃", "9-60", "7-60", "5-60", "3-60", "1-60", "2-60", "Ball", "Flat", "Dash", "軸", "墊片", "陀螺"])
+                )
+                if is_tactical:
+                    try:
+                        from core.youtube_search import search_beyblade_videos
+                        search_topic = user_msg
+                        if result.get("combo_stats"):
+                            search_topic = result["combo_stats"].get("combo_name", user_msg)
+                        videos = search_beyblade_videos(search_topic, max_results=3)
+                        if videos:
+                            video_payload = FlexMessageBuilder.build_videos_carousel(videos, search_topic)
+                            video_container = FlexContainer.from_dict(video_payload["contents"])
+                            reply_messages.append(
+                                FlexMessage(
+                                    alt_text=f"🎬 【實戰影片推薦】：{search_topic}",
+                                    contents=video_container
+                                )
+                            )
+                    except Exception as vid_err:
+                        logger.warning(f"Error packing video carousel: {vid_err}")
+
+                # 3. Add full detailed coach analysis text with dynamic Quick Reply
                 text_body = result.get("reply_text") or "選手，戰術分析完成。"
                 default_qr = make_quick_reply([
                     ("🔄 改裝 5-60 差異", f"如果把剛才討論的組合墊片改為 5-60，物理表現有何改變？"),
@@ -856,6 +914,17 @@ def simulate_coach_analysis(req: SimRequest):
     Endpoint for testing coach output and Flex message payloads directly via HTTP
     """
     result = coach_engine.analyze(req.message)
+    try:
+        from core.youtube_search import search_beyblade_videos
+        search_topic = req.message
+        if result.get("combo_stats"):
+            search_topic = result["combo_stats"].get("combo_name", req.message)
+        videos = search_beyblade_videos(search_topic, max_results=3)
+        result["videos"] = videos
+        if videos:
+            result["video_flex_message"] = FlexMessageBuilder.build_videos_carousel(videos, search_topic)
+    except Exception as v_err:
+        logger.warning(f"Error attaching videos to simulate output: {v_err}")
     return result
 
 @app.post("/api/admin/setup-rich-menu")

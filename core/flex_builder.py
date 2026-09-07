@@ -506,3 +506,123 @@ class FlexMessageBuilder:
                 "contents": bubbles
             }
         }
+
+    @classmethod
+    def build_videos_carousel(cls, videos: List[Dict[str, Any]], topic: str = "實戰精選") -> Dict[str, Any]:
+        """
+        Builds a horizontal carousel of YouTube video recommendation cards.
+        """
+        if not videos:
+            return {}
+
+        bubbles = []
+        for vid in videos[:5]:
+            title = vid.get("title", "戰鬥陀螺 X 實戰精華")
+            channel = vid.get("channel", "YouTube 精選")
+            duration = vid.get("duration", "精彩實況")
+            url = vid.get("url", "https://www.youtube.com")
+            thumb = vid.get("thumbnail", "https://img.youtube.com/vi/default/hqdefault.jpg")
+
+            bubble = {
+                "type": "bubble",
+                "size": "kilo",
+                "styles": {
+                    "body": {"backgroundColor": "#0B0F19"},
+                    "footer": {"backgroundColor": "#0B0F19"}
+                },
+                "hero": {
+                    "type": "image",
+                    "url": thumb,
+                    "size": "full",
+                    "aspectRatio": "16:9",
+                    "aspectMode": "cover",
+                    "action": {
+                        "type": "uri",
+                        "label": "Watch Video",
+                        "uri": url
+                    }
+                },
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "paddingAll": "12px",
+                    "contents": [
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "▶ YouTube 實戰",
+                                    "size": "xxs",
+                                    "color": "#FF0000",
+                                    "weight": "bold",
+                                    "flex": 3
+                                },
+                                {
+                                    "type": "text",
+                                    "text": duration,
+                                    "size": "xxs",
+                                    "color": "#A0AEC0",
+                                    "align": "end",
+                                    "flex": 2
+                                }
+                            ]
+                        },
+                        {
+                            "type": "text",
+                            "text": title,
+                            "weight": "bold",
+                            "size": "sm",
+                            "color": "#FFFFFF",
+                            "wrap": True,
+                            "maxLines": 2,
+                            "margin": "sm"
+                        },
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "margin": "sm",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": f"頻道：{channel}",
+                                    "size": "xxs",
+                                    "color": "#718096",
+                                    "wrap": False,
+                                    "flex": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "footer": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "paddingAll": "8px",
+                    "contents": [
+                        {
+                            "type": "button",
+                            "style": "primary",
+                            "color": "#FF0000",
+                            "height": "sm",
+                            "action": {
+                                "type": "uri",
+                                "label": "▶️ 立即在 YouTube 觀看",
+                                "uri": url
+                            }
+                        }
+                    ]
+                }
+            }
+            bubbles.append(bubble)
+
+        return {
+            "type": "flex",
+            "altText": f"🎬 【實戰影片推薦】：{topic}",
+            "contents": {
+                "type": "carousel",
+                "contents": bubbles
+            }
+        }
+
