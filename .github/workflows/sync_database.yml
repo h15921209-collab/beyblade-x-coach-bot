@@ -1,4 +1,4 @@
-name: "Auto Sync BeybladeHub Parts Database"
+name: "Auto Sync Parts Database & Community Insights"
 
 on:
   schedule:
@@ -35,16 +35,23 @@ jobs:
         run: |
           python scripts/sync_beybladehub.py
 
+      - name: Run Threads Community Insights Sync
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/sync_threads_insights.py
+
       - name: Check for Changes and Commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          if [ -n "$(git status --porcelain data/parts_db.json web/static/images)" ]; then
-            echo "New parts detected. Committing and pushing to repository..."
-            git add data/parts_db.json web/static/images/
-            git commit -m "chore(data): auto sync new parts from beybladehub.app [skip ci]"
+          if [ -n "$(git status --porcelain data/ web/static/images)" ]; then
+            echo "New parts or community insights detected. Committing and pushing..."
+            git add data/ web/static/images/
+            git commit -m "chore(data): auto sync parts & Threads insights [skip ci]"
             git push origin main
           else
-            echo "No new parts found. Working tree is clean."
+            echo "No changes found. Working tree is clean."
           fi
+

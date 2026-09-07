@@ -1,6 +1,8 @@
+import os
+import json
 import logging
 import requests
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional, Tuple, List
 from config import settings
 from core.database import db
 from core.flex_builder import FlexMessageBuilder
@@ -20,6 +22,7 @@ COACH_SYSTEM_PROMPT = """你現在是全球頂尖的《戰鬥陀螺 X》(Beyblad
 3. 【改裝建議與微調細節】：不要只說「這個很好」，要精確指出改動某個部件（例如將 9-60 改為 5-60，或將大平軸 F 改為錐形軸 T）後，對陀螺的重心高度、傾斜角（Tilt Angle）、衝刺加速度與離心穩定度會帶來什麼具體物理改變。
 4. 【發射戰術指引】：在分析最後，提供職業選手專屬的發射手勢與角度指引（如：Flat Launch 平射壓制、Banked Launch 斜射走位、入軌點選擇）。
 5. 【台灣代理官方標準名稱】：在提及陀螺時，請嚴格採用台灣代理商（麗嬰國際）官方正式名稱搭配原廠英文代碼（如：鳳凰飛翼 Phoenix Wing、蒼龍爆刃 Dran Buster、魔導神杖 Wizard Rod、蒼穹龍騎士 Cobalt Dragoon、鮫鯊鋒鰭 Shark Edge、暴龍霸擊 Tyranno Beat、惡魔鎖鏈 Hells Chain、蒼龍利刃 Dran Dagger、獨角刺心 Unicorn Sting、霜輝銀狼 Silver Wolf、蒼龍神劍 Dran Sword、惡魔紅鐮 Hells Scythe、騎士重盾 Knight Shield、雄獅巔峰 Leon Crest），切勿使用非官方俗稱或大陸翻譯。
+6. 【台灣社群與選手實戰情報】：當提供【台灣社群選手實戰情報（Threads）】時，請在分析或改裝建議中自然融入引用（例如引用 BeybladeHub 實秤數據：蒼龍神劍 2.0 版背面簍空填實增重至 37.42g、魔導神杖面對美版獨眼巨人 34.4g 的持久挑戰、台灣賽事選手用電子秤精準挑選 39.3g 公差等），展現與第一線頂尖賽事實戰同步的專業權威度。
 """
 
 class BeybladeCoachEngine:
@@ -88,6 +91,60 @@ class BeybladeCoachEngine:
             )
         return "選手，整備區隨時為你待命。請提供你目前想測試的「刃 (Blade)」、「墊片 (Ratchet)」與「軸點 (Bit)」組合，或指定攻擊/防禦/持久特化戰術！"
 
+    def _load_community_insights(self) -> List[Dict[str, Any]]:
+        insights_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "community_insights.json")
+        if os.path.exists(insights_path):
+            try:
+                with open(insights_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Failed to load community insights: {e}")
+        return []
+
+    def find_relevant_insights(self, query_text: str, parts: Optional[List[Dict[str, Any]]] = None) -> List[Dict[str, Any]]:
+        insights = self._load_community_insights()
+        if not insights:
+            return []
+
+        matched = []
+        search_terms = [query_text.lower()]
+        if parts:
+            for p in parts:
+                if isinstance(p, dict):
+                    if p.get("name"):
+                        search_terms.append(p["name"].lower())
+                    if p.get("name_zh"):
+                        search_terms.append(p["name_zh"].lower())
+
+        for item in insights:
+            target_parts = [t.lower() for t in item.get("target_parts", [])]
+            topic = item.get("topic", "").lower()
+            insight_text = item.get("insight", "").lower()
+
+            hit = False
+            for term in search_terms:
+                if any(term in tp or tp in term for tp in target_parts):
+                    hit = True
+                    break
+                if len(term) >= 2 and (term in topic or term in insight_text):
+                    hit = True
+                    break
+            if hit and item not in matched:
+                matched.append(item)
+
+        return matched[:3]
+
+    def _format_insights_context(self, insights: List[Dict[str, Any]]) -> str:
+        if not insights:
+            return ""
+        ctx = "\n【台灣社群選手實戰情報（Threads 社群實測與賽事實證）】：\n"
+        for ins in insights:
+            ctx += f"- 主題：{ins.get('topic')}\n"
+            ctx += f"  實戰觀察：{ins.get('insight')}\n"
+            if ins.get("quote"):
+                ctx += f"  選手原話：「{ins.get('quote')}」（來源：{ins.get('source')} {ins.get('author')}）\n"
+        return ctx
+
     def analyze(self, user_text: str) -> Dict[str, Any]:
         """
         Analyzes user input, queries database, invokes Gemini, and builds appropriate Flex card.
@@ -116,10 +173,15 @@ class BeybladeCoachEngine:
                 f"- 系統預估四維數值：攻擊力 {combo_stats['scores']['attack']}, 持久力 {combo_stats['scores']['stamina']}, 防禦力 {combo_stats['scores']['defense']}, X-Dash 突襲率 {combo_stats['scores']['xdash']}\n"
             )
 
+            # Community insights grounding
+            matched_insights = self.find_relevant_insights(user_text, [blade, ratchet, bit])
+            insights_context = self._format_insights_context(matched_insights)
+
             prompt = (
-                f"【實體遙測數據庫輸出】：\n{grounding_data}\n\n"
+                f"【實體遙測數據庫輸出】：\n{grounding_data}\n"
+                f"{insights_context}\n"
                 f"【選手戰術提問】：\n{user_text}\n\n"
-                f"請以世界大賽戰術教練與改裝大師的專業身分，根據上述真實規格數據，對此搭配執行四大維度的深度專業拆解，"
+                f"請以世界大賽戰術教練與改裝大師的專業身分，根據上述真實規格數據與社群情報，對此搭配執行四大維度的深度專業拆解，"
                 f"給出具體的改裝微調建議與發射戰術指引！"
             )
 
@@ -145,9 +207,13 @@ class BeybladeCoachEngine:
                     break
 
         if single_part:
+            matched_insights = self.find_relevant_insights(user_text, [single_part])
+            insights_context = self._format_insights_context(matched_insights)
+
             prompt = (
                 f"選手正在詢問部件：{single_part.get('name')} {single_part.get('name_zh', '')}\n"
                 f"規格資料：重量 {single_part.get('weight_g')}g, 類型 {single_part.get('type')}, 描述：{single_part.get('description', '')}\n"
+                f"{insights_context}\n"
                 f"選手原話：{user_text}\n"
                 f"請以改裝大師的身分深度剖析這個部件在現行賽事環境中的改裝適配性與戰術定位。"
             )
@@ -161,7 +227,10 @@ class BeybladeCoachEngine:
             }
 
         # Step 3: General strategic guidance or tactical inquiry
-        coach_text = self._call_gemini_api(user_text)
+        matched_insights = self.find_relevant_insights(user_text)
+        insights_context = self._format_insights_context(matched_insights)
+        prompt = f"{insights_context}\n選手原話：{user_text}\n請以世界大賽戰術教練身分給出專業戰術解答。" if insights_context else user_text
+        coach_text = self._call_gemini_api(prompt)
         return {
             "reply_text": coach_text,
             "flex_message": None,
