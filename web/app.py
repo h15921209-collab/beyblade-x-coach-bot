@@ -238,18 +238,22 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     except Exception as flex_err:
                         logger.error(f"Error packing Flex Message: {flex_err}")
 
-                # 2. Add YouTube Video Recommendation Carousel (if tactical combo or part)
+                # 2. Add YouTube Video Recommendation Carousel (if tactical combo or part, but NOT on deep analysis follow-up to keep chat clean)
+                is_deep_request = result.get("is_deep", False)
+                clean_query = user_msg.replace("深度分析:", "").replace("深度分析：", "").replace("深度分析", "").strip()
                 is_tactical = (
-                    result.get("combo_stats")
-                    or result.get("flex_message")
-                    or any(k in user_msg for k in ["飛翼", "神杖", "爆刃", "龍騎士", "鋒鰭", "霸擊", "鎖鏈", "利刃", "銀狼", "神劍", "紅鐮", "重盾", "雄獅", "9-60", "7-60", "5-60", "3-60", "1-60", "2-60", "Ball", "Flat", "Dash", "軸", "墊片", "陀螺"])
+                    not is_deep_request and (
+                        result.get("combo_stats")
+                        or result.get("flex_message")
+                        or any(k in user_msg for k in ["飛翼", "神杖", "爆刃", "龍騎士", "鋒鰭", "霸擊", "鎖鏈", "利刃", "銀狼", "神劍", "紅鐮", "重盾", "雄獅", "9-60", "7-60", "5-60", "3-60", "1-60", "2-60", "Ball", "Flat", "Dash", "軸", "墊片", "陀螺"])
+                    )
                 )
                 if is_tactical:
                     try:
                         from core.youtube_search import search_beyblade_videos
-                        search_topic = user_msg
+                        search_topic = clean_query if clean_query else user_msg
                         if result.get("combo_stats"):
-                            search_topic = result["combo_stats"].get("combo_name", user_msg)
+                            search_topic = result["combo_stats"].get("combo_name", search_topic)
                         videos = search_beyblade_videos(search_topic, max_results=3)
                         if videos:
                             video_payload = FlexMessageBuilder.build_videos_carousel(videos, search_topic)
@@ -263,19 +267,23 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     except Exception as vid_err:
                         logger.warning(f"Error packing video carousel: {vid_err}")
 
-                # 3. Add full detailed coach analysis text with dynamic Quick Reply (including VS shortcuts!)
+                # 3. Add coach analysis text with dynamic Quick Reply (including deep analysis expansion!)
                 text_body = result.get("reply_text") or "選手，戰術分析完成。"
-                target_combo_name = user_msg
+                target_combo_name = clean_query if clean_query else user_msg
                 if result.get("combo_stats"):
-                    target_combo_name = result["combo_stats"].get("combo_name_zh") or result["combo_stats"].get("combo_name", user_msg)
-                
-                default_qr = make_quick_reply([
+                    target_combo_name = result["combo_stats"].get("combo_name_zh") or result["combo_stats"].get("combo_name", target_combo_name)
+
+                qr_items = []
+                if not is_deep_request:
+                    qr_items.append(("📊 展開深度分析", f"深度分析: {target_combo_name}"))
+                qr_items.extend([
                     ("🎯 對決 魔導神杖 7-60B", f"{target_combo_name} VS 魔導神杖 7-60B"),
                     ("🎯 對決 鳳凰飛翼 9-60O", f"{target_combo_name} VS 鳳凰飛翼 9-60O"),
                     ("🎯 對決 蒼龍爆刃 1-60F", f"{target_combo_name} VS 蒼龍爆刃 1-60F"),
-                    ("🔄 改裝 5-60 差異", f"如果把剛才討論的組合墊片改為 5-60，物理表現有何改變？"),
-                    ("🚀 推薦發射手法", "請教練傳授這套搭配在世界大賽中的最佳發射手勢與進軌策略！")
+                    ("🔄 改裝 5-60 差異", f"如果把 {target_combo_name} 的墊片改為 5-60，物理表現有何改變？"),
+                    ("🚀 推薦發射手法", f"請教練傳授 {target_combo_name} 在世界大賽中的最佳發射手勢與進軌策略！")
                 ])
+                default_qr = make_quick_reply(qr_items)
                 reply_messages.append(TextMessage(text=text_body, quick_reply=default_qr))
 
             with ApiClient(configuration) as api_client:
