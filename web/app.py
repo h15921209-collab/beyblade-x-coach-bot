@@ -10,6 +10,7 @@ from typing import Optional, Dict, Any
 from config import settings
 from core.database import db
 from core.coach_engine import coach_engine
+from core.session_manager import session_manager
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("web.app")
@@ -67,11 +68,40 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
         @line_webhook_handler.add(MessageEvent, message=TextMessageContent)
         def handle_text_message(event):
             user_msg = event.message.text.strip()
-            logger.info(f"Received message from user: {user_msg}")
+            user_id = getattr(event.source, "user_id", "default_user") or "default_user"
+            logger.info(f"Received message from user ({user_id}): {user_msg}")
             reply_messages = []
+
+            # --- 0. Session Reset Keywords ---
+            reset_keywords = ["重置", "新話題", "重新開始", "清除紀錄", "清除記憶", "reset", "clear"]
+            if user_msg.lower() in reset_keywords:
+                session_manager.clear_session(user_id)
+                reset_text = (
+                    "選手，戰術對話記憶已完全重置！整備區已就緒。\n\n"
+                    "你可以隨時輸入陀螺搭配（如：`鳳凰飛翼 9-60O`）、單一零件（如：`Ball`）或點選下方功能開始全新戰術模擬："
+                    + WEB_APP_FOOTER
+                )
+                qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
+                    ("🔥 賽事頂級主流", "【賽事頂級主流】"),
+                    ("⚡ 極限攻擊刺客", "【極限攻擊刺客】"),
+                    ("🛡️ 持久防禦要塞", "【持久防禦要塞】"),
+                    ("🛠️ 自訂組合健檢", "【自訂組合健檢】")
+                ])
+                reply_messages.append(TextMessage(text=reset_text, quick_reply=qr))
+                with ApiClient(configuration) as api_client:
+                    line_bot = MessagingApi(api_client)
+                    line_bot.reply_message(
+                        ReplyMessageRequest(
+                            reply_token=event.reply_token,
+                            messages=reply_messages
+                        )
+                    )
+                return
 
             # --- A. Rich Menu Dedicated Handlers ---
             if user_msg in ["【賽事頂級主流】", "賽事頂級主流", "主流推薦"]:
+                session_manager.clear_session(user_id)
                 meta_combos = [("Phoenix Wing", "9-60", "O"), ("Wizard Rod", "7-60", "B"), ("Dran Buster", "1-60", "F")]
                 stats = get_combos_stats(meta_combos)
                 carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "賽事頂級主流王者")
@@ -103,6 +133,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     logger.warning(f"Video attachment error: {ve}")
 
             elif user_msg in ["【極限攻擊刺客】", "極限攻擊刺客", "攻擊推薦"]:
+                session_manager.clear_session(user_id)
                 atk_combos = [("Dran Buster", "1-60", "F"), ("Shark Edge", "3-60", "LF"), ("Cobalt Dragoon", "2-60", "C")]
                 stats = get_combos_stats(atk_combos)
                 carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "極限攻擊突襲配置")
@@ -133,6 +164,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     logger.warning(f"Video attachment error: {ve}")
 
             elif user_msg in ["【持久防禦要塞】", "持久防禦要塞", "持久推薦", "防禦推薦"]:
+                session_manager.clear_session(user_id)
                 def_combos = [("Wizard Rod", "7-60", "B"), ("Hells Chain", "5-60", "HT"), ("Tyranno Beat", "4-70", "B")]
                 stats = get_combos_stats(def_combos)
                 carousel_payload = FlexMessageBuilder.build_combos_carousel(stats, "持久防禦定點要塞")
@@ -163,6 +195,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     logger.warning(f"Video attachment error: {ve}")
 
             elif user_msg in ["【核心零件百科】", "核心零件百科", "零件庫"]:
+                session_manager.clear_session(user_id)
                 qr = make_quick_reply([
                     ("🌐 線上模擬器", WEB_APP_URL),
                     ("9-60 墊片", "9-60"),
@@ -178,6 +211,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 ))
 
             elif user_msg in ["【自訂組合健檢】", "自訂組合健檢", "健檢指引"]:
+                session_manager.clear_session(user_id)
                 qr = make_quick_reply([
                     ("🌐 線上模擬器", WEB_APP_URL),
                     ("鳳凰飛翼 9-60O", "鳳凰飛翼 9-60O"),
@@ -195,6 +229,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
             from core.matchup_simulator import simulate_matchup
             vs_res = simulate_matchup(user_msg)
             if vs_res:
+                session_manager.clear_session(user_id)
                 # 1. VS Arena Flex Card
                 vs_payload = FlexMessageBuilder.build_vs_dashboard(vs_res)
                 vs_container = FlexContainer.from_dict(vs_payload["contents"])
@@ -239,7 +274,14 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
 
             # --- C. Standard Combo Analysis / Single Part / AI Coach Inquiry ---
             else:
-                result = coach_engine.analyze(user_msg)
+                session = session_manager.get_session(user_id)
+                result = coach_engine.analyze(user_msg, session=session)
+                session_manager.update_session(
+                    user_id=user_id,
+                    user_text=user_msg,
+                    reply_text=result.get("reply_text") or "",
+                    combo=result.get("combo_tuple")
+                )
 
                 # 1. Add Flex Message card if combo or part was recognized
                 if result.get("flex_message"):
@@ -298,9 +340,9 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 qr_items.extend([
                     ("🎯 對決 魔導神杖 7-60B", f"{target_combo_name} VS 魔導神杖 7-60B"),
                     ("🎯 對決 鳳凰飛翼 9-60O", f"{target_combo_name} VS 鳳凰飛翼 9-60O"),
-                    ("🎯 對決 蒼龍爆刃 1-60F", f"{target_combo_name} VS 蒼龍爆刃 1-60F"),
-                    ("🔄 改裝 5-60 差異", f"如果把 {target_combo_name} 的墊片改為 5-60，物理表現有何改變？"),
-                    ("🚀 推薦發射手法", f"請教練傳授 {target_combo_name} 在世界大賽中的最佳發射手勢與進軌策略！")
+                    ("🔄 換 5-60 差異", f"那如果換成 5-60 呢？"),
+                    ("🔄 改用 Ball 軸", f"那如果改用 Ball 軸呢？"),
+                    ("🔄 重置話題", "重置")
                 ])
                 default_qr = make_quick_reply(qr_items)
                 reply_messages.append(TextMessage(text=text_body, quick_reply=default_qr))
@@ -983,16 +1025,24 @@ async def line_callback(request: Request, background_tasks: BackgroundTasks, x_l
 
 class SimRequest(BaseModel):
     message: str
+    user_id: Optional[str] = "web_user"
 
 @app.post("/api/simulate")
 def simulate_coach_analysis(req: SimRequest):
     """
     Endpoint for testing coach output, VS matchup, and Flex message payloads directly via HTTP
     """
+    user_id = req.user_id or "web_user"
+    clean_msg = req.message.strip().lower()
+    if clean_msg in ["重置", "reset", "clear", "重新開始"]:
+        session_manager.clear_session(user_id)
+        return {"reply_text": "選手，戰術對話記憶已完全重置！整備區已就緒。"}
+
     # 1. Check if this is a VS matchup query
     from core.matchup_simulator import simulate_matchup
     vs_res = simulate_matchup(req.message)
     if vs_res:
+        session_manager.clear_session(user_id)
         vs_payload = FlexMessageBuilder.build_vs_dashboard(vs_res)
         from core.youtube_search import search_beyblade_videos
         name_a = vs_res["combo_a"].get("combo_name_zh") or vs_res["combo_a"]["combo_name"]
@@ -1006,8 +1056,15 @@ def simulate_coach_analysis(req: SimRequest):
             "reply_text": f"⚔️ 對決推演完成：{name_a} VS {name_b}"
         }
 
-    # 2. Standard single combo / AI inquiry
-    result = coach_engine.analyze(req.message)
+    # 2. Standard single combo / AI inquiry with session
+    session = session_manager.get_session(user_id)
+    result = coach_engine.analyze(req.message, session=session)
+    session_manager.update_session(
+        user_id=user_id,
+        user_text=req.message,
+        reply_text=result.get("reply_text") or "",
+        combo=result.get("combo_tuple")
+    )
     try:
         from core.youtube_search import search_beyblade_videos
         search_topic = req.message

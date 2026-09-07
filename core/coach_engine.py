@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import logging
 import requests
@@ -6,6 +7,7 @@ from typing import Dict, Any, Optional, Tuple, List
 from config import settings
 from core.database import db
 from core.flex_builder import FlexMessageBuilder
+from core.session_manager import SessionState
 
 logger = logging.getLogger("coach_engine")
 
@@ -47,12 +49,12 @@ class BeybladeCoachEngine:
         self.api_key = settings.GEMINI_API_KEY
         self.models = ["gemini-flash-lite-latest", "gemini-3.6-flash", "gemini-flash-latest"]
 
-    def _call_gemini_api(self, prompt: str, system_prompt: Optional[str] = None, max_tokens: int = 550) -> str:
+    def _call_gemini_api(self, prompt: str, system_prompt: Optional[str] = None, max_tokens: int = 550, combo_tuple: Optional[Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]] = None) -> str:
         """
         Calls Gemini API with failover across available models.
         """
         if not self.api_key:
-            return "【戰術終端離線】尚未偵測到有效的 GEMINI_API_KEY，請在 .env 中填入金鑰。"
+            return self._generate_offline_tactical_report(prompt, combo_tuple=combo_tuple)
 
         if system_prompt is None:
             system_prompt = COACH_CONCISE_SYSTEM_PROMPT
@@ -86,13 +88,13 @@ class BeybladeCoachEngine:
                 logger.warning(f"Failed to query {model_name}: {e}")
 
         # Local fallback tactical analysis if offline or rate limited
-        return self._generate_offline_tactical_report(prompt)
+        return self._generate_offline_tactical_report(prompt, combo_tuple=combo_tuple)
 
-    def _generate_offline_tactical_report(self, user_msg: str, is_deep: bool = False) -> str:
+    def _generate_offline_tactical_report(self, user_msg: str, is_deep: bool = False, combo_tuple: Optional[Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]] = None) -> str:
         """
         Deterministic high-accuracy fallback report when API is unavailable.
         """
-        parsed = db.parse_combo_from_text(user_msg)
+        parsed = combo_tuple or db.parse_combo_from_text(user_msg)
         if parsed:
             b, r, bit = parsed
             stats = db.calculate_combo_stats(b, r, bit)
@@ -174,19 +176,96 @@ class BeybladeCoachEngine:
                 ctx += f"  選手原話：「{ins.get('quote')}」（來源：{ins.get('source')} {ins.get('author')}）\n"
         return ctx
 
-    def analyze(self, user_text: str, is_deep: bool = False) -> Dict[str, Any]:
+    def _detect_combo_swap(
+        self,
+        query_text: str,
+        last_combo: Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]
+    ) -> Optional[Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any], List[str]]]:
+        """
+        Detects if user is asking to swap a component in the last combo.
+        e.g. "那如果換成 5-60 呢？", "改用 Ball 軸呢？", "換成魔導神杖呢？"
+        Returns: (new_blade, new_ratchet, new_bit, list_of_swap_descriptions) or None
+        """
+        last_b, last_r, last_bit = last_combo
+        new_b, new_r, new_bit = last_b, last_r, last_bit
+        swaps = []
+
+        clean_text = query_text.strip()
+
+        # 1. Check Ratchet swap (e.g. 5-60, 3-60, 7-60, 1-60, 9-60, 4-70, 0-60, etc.)
+        ratchet_match = re.search(r"(?:^|[^\d])([0-9])[-_]?([5-8][05])(?=[a-zA-Z\s\-_.,?!、，。？！]|$)", clean_text, re.IGNORECASE)
+        if ratchet_match:
+            r_str = f"{ratchet_match.group(1)}-{ratchet_match.group(2)}"
+            found_r = db.find_ratchet(r_str)
+            if found_r and found_r["id"] != last_r["id"]:
+                new_r = found_r
+                swaps.append(f"墊片 (Ratchet)：{last_r['name']} ➔ {new_r['name']}")
+
+        # 2. Check Bit swap
+        found_bit = None
+        # Pattern A: matches "Ball軸", "B軸", "球軸", "Cyclone 軸", "F 軸", "LF 軸"
+        bit_suffix_match = re.search(r"([A-Za-z0-9\u4e00-\u9fff\-]+)\s*(?:軸|bit|Bit)", clean_text)
+        if bit_suffix_match:
+            candidate_token = bit_suffix_match.group(1).strip()
+            b_candidate = db.find_bit(candidate_token)
+            if b_candidate and b_candidate["id"] != last_bit["id"]:
+                found_bit = b_candidate
+
+        if not found_bit:
+            # Pattern B: matches "換成 Ball", "改用 F", "換 B", "如果用 Orb"
+            swap_prefix_match = re.search(r"(?:換成|改用|換|改為|改成|如果用|若是用|搭配)\s*([A-Za-z0-9\u4e00-\u9fff]+)", clean_text)
+            if swap_prefix_match:
+                candidate_token = swap_prefix_match.group(1).strip()
+                b_candidate = db.find_bit(candidate_token)
+                if b_candidate and b_candidate["id"] != last_bit["id"]:
+                    found_bit = b_candidate
+
+        if not found_bit:
+            # Pattern C: Check known bits by Chinese name or English name
+            sorted_bits = sorted(db.bits, key=lambda x: len(x.get("name", "")), reverse=True)
+            for b_cand in sorted_bits:
+                if b_cand.get("name_zh") and b_cand["name_zh"] in clean_text:
+                    if b_cand["id"] != last_bit["id"]:
+                        found_bit = b_cand
+                        break
+                name_en = b_cand.get("name", "").split()[0]
+                if len(name_en) >= 3 and re.search(rf"\b{re.escape(name_en)}\b", clean_text, re.IGNORECASE):
+                    if b_cand["id"] != last_bit["id"]:
+                        found_bit = b_cand
+                        break
+
+        if found_bit and found_bit["id"] != last_bit["id"]:
+            new_bit = found_bit
+            swaps.append(f"軸心 (Bit)：{last_bit['name']} ➔ {new_bit['name']}")
+
+        # 3. Check Blade swap (e.g. "換成魔導神杖", "改用蒼龍爆刃")
+        found_blade = None
+        for b_cand in db.blades:
+            if b_cand.get("name_zh") and b_cand["name_zh"] in clean_text:
+                if b_cand["id"] != last_b["id"]:
+                    found_blade = b_cand
+                    break
+            if any(alias in clean_text for alias in b_cand.get("aliases", [])):
+                if b_cand["id"] != last_b["id"]:
+                    found_blade = b_cand
+                    break
+            if len(b_cand.get("name", "")) >= 5 and b_cand["name"].lower() in clean_text.lower():
+                if b_cand["id"] != last_b["id"]:
+                    found_blade = b_cand
+                    break
+
+        if found_blade and found_blade["id"] != last_b["id"]:
+            new_b = found_blade
+            swaps.append(f"刃部 (Blade)：{last_b.get('name_zh') or last_b['name']} ➔ {new_b.get('name_zh') or new_b['name']}")
+
+        if swaps:
+            return (new_b, new_r, new_bit, swaps)
+        return None
+
+    def analyze(self, user_text: str, is_deep: bool = False, session: Optional[SessionState] = None) -> Dict[str, Any]:
         """
         Analyzes user input, queries database, invokes Gemini, and builds appropriate Flex card.
-        If is_deep is False (default), outputs concise 150-250 word mobile-optimized points.
-        If is_deep is True, outputs comprehensive multi-dimensional breakdown.
-        Returns:
-            {
-                "reply_text": str,
-                "flex_message": Optional[dict],
-                "combo_stats": Optional[dict],
-                "part_info": Optional[dict],
-                "is_deep": bool
-            }
+        Maintains conversational continuity and handles component swap if session is provided.
         """
         clean_text = user_text.strip()
         for prefix in ["深度分析:", "深度分析：", "深度分析 "]:
@@ -202,11 +281,34 @@ class BeybladeCoachEngine:
         system_prompt = COACH_DEEP_SYSTEM_PROMPT if is_deep else COACH_CONCISE_SYSTEM_PROMPT
         max_tokens = 1800 if is_deep else 550
 
+        # Multi-turn history context
+        history_context = ""
+        if session and session.history:
+            history_lines = []
+            for h in session.history:
+                role_label = "選手" if h["role"] == "user" else "教練"
+                history_lines.append(f"{role_label}：{h['text']}")
+            history_context = "【前面對話脈絡（Multi-turn Context，請保持教練連續性）】：\n" + "\n".join(history_lines) + "\n\n"
+
         # Step 1: Detect if user is submitting or asking about a full combo
         parsed_combo = db.parse_combo_from_text(query_text)
-        
-        if parsed_combo:
-            blade, ratchet, bit = parsed_combo
+
+        # Step 1.1: If not a full combo, check if user is asking to swap a part from previous session combo
+        swap_result = None
+        if not parsed_combo and session and session.last_combo:
+            swap_result = self._detect_combo_swap(query_text, session.last_combo)
+
+        if parsed_combo or swap_result:
+            is_swap = swap_result is not None
+            if is_swap:
+                blade, ratchet, bit, swaps = swap_result
+                old_b, old_r, old_bit = session.last_combo
+                old_stats = db.calculate_combo_stats(old_b, old_r, old_bit)
+            else:
+                blade, ratchet, bit = parsed_combo
+                swaps = []
+                old_stats = None
+
             combo_stats = db.calculate_combo_stats(blade, ratchet, bit)
 
             # Grounding context for Gemini
@@ -218,6 +320,20 @@ class BeybladeCoachEngine:
                 f"- 物理總重：{combo_stats['total_weight_g']}g\n"
                 f"- 系統預估四維數值：攻擊力 {combo_stats['scores']['attack']}, 持久力 {combo_stats['scores']['stamina']}, 防禦力 {combo_stats['scores']['defense']}, X-Dash 突襲率 {combo_stats['scores']['xdash']}\n"
             )
+
+            if is_swap:
+                diff_weight = round(combo_stats['total_weight_g'] - old_stats['total_weight_g'], 2)
+                weight_sign = "+" if diff_weight >= 0 else ""
+                swap_diff_context = (
+                    f"【部件改裝微調遙測紀錄】：\n"
+                    f"- 選手上一討論組合：{old_stats['combo_name']} ({old_stats['combo_name_zh']})，總重 {old_stats['total_weight_g']}g\n"
+                    f"- 本次改裝替換部件：{', '.join(swaps)}\n"
+                    f"- 微調後全新組合：{combo_stats['combo_name']} ({combo_stats['combo_name_zh']})，總重 {combo_stats['total_weight_g']}g\n"
+                    f"- 規格變化：總重變化 {weight_sign}{diff_weight}g\n"
+                    f"【戰術教練核心任務】：選手正在接續追問微調更換部件後的差異。請以世界大賽戰術教練身分，精準剖析更換此部件後在物理重心、防爆力、入軌速度（X-Dash）與實戰勝率上的關鍵質變！\n\n"
+                )
+            else:
+                swap_diff_context = ""
 
             # Community insights grounding
             matched_insights = self.find_relevant_insights(query_text, [blade, ratchet, bit])
@@ -235,13 +351,20 @@ class BeybladeCoachEngine:
                 )
 
             prompt = (
+                f"{history_context}"
+                f"{swap_diff_context}"
                 f"【實體遙測數據庫輸出】：\n{grounding_data}\n"
                 f"{insights_context}\n"
                 f"【選手戰術提問】：\n{query_text}\n\n"
                 f"{instruction}"
             )
 
-            coach_text = self._call_gemini_api(prompt, system_prompt=system_prompt, max_tokens=max_tokens)
+            coach_text = self._call_gemini_api(
+                prompt,
+                system_prompt=system_prompt,
+                max_tokens=max_tokens,
+                combo_tuple=(blade, ratchet, bit)
+            )
             flex_msg = FlexMessageBuilder.build_combo_dashboard(
                 combo_stats=combo_stats,
                 coach_analysis=coach_text
@@ -252,7 +375,9 @@ class BeybladeCoachEngine:
                 "flex_message": flex_msg,
                 "combo_stats": combo_stats,
                 "part_info": None,
-                "is_deep": is_deep
+                "combo_tuple": (blade, ratchet, bit),
+                "is_deep": is_deep,
+                "is_swap": is_swap
             }
 
         # Step 2: Check if user is asking about a single component
@@ -273,6 +398,7 @@ class BeybladeCoachEngine:
                 instruction = "請以改裝大師身分，嚴格在 150~250 字內，按【戰術定位】、【實戰亮點】、【推薦微調】、【發射指引】給出精簡重點短評。"
 
             prompt = (
+                f"{history_context}"
                 f"選手正在詢問部件：{single_part.get('name')} {single_part.get('name_zh', '')}\n"
                 f"規格資料：重量 {single_part.get('weight_g')}g, 類型 {single_part.get('type')}, 描述：{single_part.get('description', '')}\n"
                 f"{insights_context}\n"
@@ -286,24 +412,45 @@ class BeybladeCoachEngine:
                 "flex_message": flex_msg,
                 "combo_stats": None,
                 "part_info": single_part,
-                "is_deep": is_deep
+                "combo_tuple": None,
+                "is_deep": is_deep,
+                "is_swap": False
             }
 
-        # Step 3: General strategic guidance or tactical inquiry
+        # Step 3: General strategic guidance or tactical inquiry (maintain context of last combo if active)
         matched_insights = self.find_relevant_insights(query_text)
         insights_context = self._format_insights_context(matched_insights)
+
+        combo_context = ""
+        last_combo_tuple = None
+        if session and session.last_combo:
+            last_combo_tuple = session.last_combo
+            last_b, last_r, last_bit = session.last_combo
+            last_stats = db.calculate_combo_stats(last_b, last_r, last_bit)
+            combo_context = (
+                f"【選手目前討論中的陀螺配置】：{last_stats['combo_name']} ({last_stats['combo_name_zh']})\n"
+                f"- 規格：總重 {last_stats['total_weight_g']}g，攻擊 {last_stats['scores']['attack']} / 持久 {last_stats['scores']['stamina']} / 防禦 {last_stats['scores']['defense']} / X-Dash {last_stats['scores']['xdash']}\n\n"
+            )
+
         if is_deep:
-            prompt = f"{insights_context}\n選手原話：{query_text}\n請以世界大賽戰術教練身分給出深度詳盡戰術解答。" if insights_context else query_text
+            prompt = f"{history_context}{combo_context}{insights_context}\n選手原話：{query_text}\n請以世界大賽戰術教練身分給出深度詳盡戰術解答。"
         else:
-            prompt = f"{insights_context}\n選手原話：{query_text}\n請以世界大賽戰術教練身分，嚴格在 150~250 字內以四大重點格式給出精簡解答。" if insights_context else query_text
+            prompt = f"{history_context}{combo_context}{insights_context}\n選手原話：{query_text}\n請以世界大賽戰術教練身分，嚴格在 150~250 字內以四大重點格式給出精簡解答。"
         
-        coach_text = self._call_gemini_api(prompt, system_prompt=system_prompt, max_tokens=max_tokens)
+        coach_text = self._call_gemini_api(
+            prompt,
+            system_prompt=system_prompt,
+            max_tokens=max_tokens,
+            combo_tuple=last_combo_tuple
+        )
         return {
             "reply_text": coach_text,
             "flex_message": None,
             "combo_stats": None,
             "part_info": None,
-            "is_deep": is_deep
+            "combo_tuple": last_combo_tuple,
+            "is_deep": is_deep,
+            "is_swap": False
         }
 
 coach_engine = BeybladeCoachEngine()
