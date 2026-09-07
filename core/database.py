@@ -100,9 +100,9 @@ class BeybladeDatabase:
         """
         Parses combo like 'Phoenix Wing 9-60O', '魔導權杖 7-60 B', 'Dran Buster 1-60 F'
         """
-        # Look for ratchet pattern: 1-60, 3-60, 5-60, 9-60, 7-60, 3-80, 5-70, etc.
-        # Matches both separated '9-60 O' and attached '9-60O' or '1-60F'
-        ratchet_match = re.search(r"(?:^|[^\d])([1-9])[-_]?([678]0)(?=[a-zA-Z\s\-_.,?!]|$)", text, re.IGNORECASE)
+        # Look for ratchet pattern: 0-60, 1-60, 3-60, 5-60, 9-60, 7-60, 3-85, 9-65, 5-50, etc.
+        # Matches both separated '0-60 BS' and attached '0-60BS' or '9-60O'
+        ratchet_match = re.search(r"(?:^|[^\d])([0-9])[-_]?([5-8][05])(?=[a-zA-Z\s\-_.,?!]|$)", text, re.IGNORECASE)
         if not ratchet_match:
             return None
 
