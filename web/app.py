@@ -31,7 +31,8 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
             FlexContainer,
             QuickReply,
             QuickReplyItem,
-            MessageAction
+            MessageAction,
+            URIAction
         )
         from linebot.v3.webhooks import MessageEvent, TextMessageContent
         from core.flex_builder import FlexMessageBuilder
@@ -39,9 +40,18 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
         line_webhook_handler = WebhookHandler(settings.LINE_CHANNEL_SECRET)
         configuration = Configuration(access_token=settings.LINE_CHANNEL_ACCESS_TOKEN)
 
+        WEB_APP_URL = "https://beyblade-x-coach-bot.onrender.com/"
+        WEB_APP_FOOTER = "\n\n───────────────\n💻 線上對戰物理模擬器：\nhttps://beyblade-x-coach-bot.onrender.com/"
+
         def make_quick_reply(items_list):
-            """Creates a QuickReply object from a list of (label, text) tuples."""
-            items = [QuickReplyItem(action=MessageAction(label=lbl[:20], text=txt)) for lbl, txt in items_list]
+            """Creates a QuickReply object from a list of (label, text_or_url) tuples."""
+            items = []
+            for item in items_list:
+                lbl, val = item[0], item[1]
+                if isinstance(val, str) and (val.startswith("http://") or val.startswith("https://")):
+                    items.append(QuickReplyItem(action=URIAction(label=lbl[:20], uri=val)))
+                else:
+                    items.append(QuickReplyItem(action=MessageAction(label=lbl[:20], text=val)))
             return QuickReply(items=items)
 
         def get_combos_stats(combos_list):
@@ -69,6 +79,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="🔥 賽事頂級三大王者配置", contents=container))
                 
                 qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     ("🔥 鳳凰飛翼 9-60O", "鳳凰飛翼 9-60O"),
                     ("🛡️ 魔導神杖 7-60B", "魔導神杖 7-60B"),
                     ("⚡ 蒼龍爆刃 1-60F", "蒼龍爆刃 1-60F"),
@@ -76,7 +87,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     ("🛠️ 自訂組合健檢", "【自訂組合健檢】")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，這是當前台灣職業大賽勝率最高的三大上位王者配置！左右滑動上方圖卡查看四維雷達，點選下方泡泡或直接提問微調細節：",
+                    text="選手，這是當前台灣職業大賽勝率最高的三大上位王者配置！左右滑動上方圖卡查看四維雷達，點選下方泡泡或直接提問微調細節：" + WEB_APP_FOOTER,
                     quick_reply=qr
                 ))
 
@@ -99,13 +110,14 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="⚡ 極限攻擊流王者推薦", contents=container))
                 
                 qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     ("⚡ 蒼龍爆刃 1-60F", "蒼龍爆刃 1-60F"),
                     ("🦈 鮫鯊鋒鰭 3-60LF", "鮫鯊鋒鰭 3-60LF"),
                     ("🐉 蒼穹龍騎士 2-60C", "蒼穹龍騎士 2-60C"),
                     ("🎯 攻擊型發射角度", "極限攻擊型陀螺如何透過 Banked Launch 斜射發射壓制對手？")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，極限攻擊流核心在於前兩波 X-Dash 軌道衝刺與一擊【擊出出場 (Over Finish)】！左右滑動查看刺客配置：",
+                    text="選手，極限攻擊流核心在於前兩波 X-Dash 軌道衝刺與一擊【擊出出場 (Over Finish)】！左右滑動查看刺客配置：" + WEB_APP_FOOTER,
                     quick_reply=qr
                 ))
 
@@ -128,13 +140,14 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="🛡️ 持久防禦流配置推薦", contents=container))
                 
                 qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     ("🛡️ 魔導神杖 7-60B", "魔導神杖 7-60B"),
                     ("⛓️ 惡魔鎖鏈 5-60HT", "惡魔鎖鏈 5-60HT"),
                     ("🦖 暴龍霸擊 4-70B", "暴龍霸擊 4-70B"),
                     ("🌀 持久型防挑飛技巧", "持久型面對鮫鯊鋒鰭等低位挑擊，該如何防守化解？")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，持久防禦流講求外圍飛輪慣性、極致圓形減阻與承受衝擊穩定性！左右滑動查看要塞配置：",
+                    text="選手，持久防禦流講求外圍飛輪慣性、極致圓形減阻與承受衝擊穩定性！左右滑動查看要塞配置：" + WEB_APP_FOOTER,
                     quick_reply=qr
                 ))
 
@@ -151,6 +164,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
 
             elif user_msg in ["【核心零件百科】", "核心零件百科", "零件庫"]:
                 qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     ("9-60 墊片", "9-60"),
                     ("7-60 墊片", "7-60"),
                     ("2-60 墊片", "2-60"),
@@ -159,12 +173,13 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     ("魔導神杖 刃部", "魔導神杖")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，已開啟《戰鬥陀螺 X》核心零件資料庫！\n請直接點選下方快捷泡泡，或輸入任意零件名稱（例如：`9-60`、`Ball`、`Cyclone`、`魔導神杖`），教練立即調出官方物理規格、重量與改裝適配性：",
+                    text="選手，已開啟《戰鬥陀螺 X》核心零件資料庫！\n請直接點選下方快捷泡泡，或輸入任意零件名稱（例如：`9-60`、`Ball`、`Cyclone`、`魔導神杖`），教練立即調出官方物理規格、重量與改裝適配性：" + WEB_APP_FOOTER,
                     quick_reply=qr
                 ))
 
             elif user_msg in ["【自訂組合健檢】", "自訂組合健檢", "健檢指引"]:
                 qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     ("鳳凰飛翼 9-60O", "鳳凰飛翼 9-60O"),
                     ("魔導神杖 7-60B", "魔導神杖 7-60B"),
                     ("蒼龍爆刃 1-60F", "蒼龍爆刃 1-60F"),
@@ -172,7 +187,7 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     ("鮫鯊鋒鰭 3-60LF", "鮫鯊鋒鰭 3-60LF")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，想測試你的獨創改裝嗎？\n\n【發送格式範例】：\n• `鳳凰飛翼 9-60O`\n• `魔導神杖 7-60B`\n• `蒼龍爆刃 1-60F`\n• `鮫鯊鋒鰭 3-60LF`\n\n只要輸入「刃部 + 墊片 + 軸心」，教練立即啟動實體遙測，計算攻擊/持久/防禦/X-Dash 四維雷達與賽事勝率！點選下方範例立即實測：",
+                    text="選手，想測試你的獨創改裝嗎？\n\n【發送格式範例】：\n• `鳳凰飛翼 9-60O`\n• `魔導神杖 7-60B`\n• `蒼龍爆刃 1-60F`\n• `鮫鯊鋒鰭 3-60LF`\n\n只要輸入「刃部 + 墊片 + 軸心」，教練立即啟動實體遙測，計算攻擊/持久/防禦/X-Dash 四維雷達與賽事勝率！點選下方範例立即實測：" + WEB_APP_FOOTER,
                     quick_reply=qr
                 ))
 
@@ -211,8 +226,10 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     f"🌀 【迴轉終結 (Spin Finish)】機率：{finish['spin']}%\n\n"
                     f"🎯 【紅方關鍵手法】：\n{vs_res['tactical_advice']['corner_a']}\n\n"
                     f"🛡️ 【藍方反制策略】：\n{vs_res['tactical_advice']['corner_b']}"
+                    f"{WEB_APP_FOOTER}"
                 )
                 vs_qr = make_quick_reply([
+                    ("🌐 線上模擬器", WEB_APP_URL),
                     (f"🎯 對決 蒼龍爆刃 1-60F", f"{name_a} VS 蒼龍爆刃 1-60F"),
                     (f"🎯 對決 鮫鯊鋒鰭 3-60LF", f"{name_a} VS 鮫鯊鋒鰭 3-60LF"),
                     ("🔄 改裝 5-60 能反超嗎？", f"如果將剛才對決中的墊片改為 5-60，勝率會如何反轉？"),
@@ -267,13 +284,15 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     except Exception as vid_err:
                         logger.warning(f"Error packing video carousel: {vid_err}")
 
-                # 3. Add coach analysis text with dynamic Quick Reply (including deep analysis expansion!)
-                text_body = result.get("reply_text") or "選手，戰術分析完成。"
+                # 3. Add coach analysis text with dynamic Quick Reply (including deep analysis expansion & website link!)
+                text_body = (result.get("reply_text") or "選手，戰術分析完成。") + WEB_APP_FOOTER
                 target_combo_name = clean_query if clean_query else user_msg
                 if result.get("combo_stats"):
                     target_combo_name = result["combo_stats"].get("combo_name_zh") or result["combo_stats"].get("combo_name", target_combo_name)
 
-                qr_items = []
+                qr_items = [
+                    ("🌐 線上模擬器", WEB_APP_URL)
+                ]
                 if not is_deep_request:
                     qr_items.append(("📊 展開深度分析", f"深度分析: {target_combo_name}"))
                 qr_items.extend([
