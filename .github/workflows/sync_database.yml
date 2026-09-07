@@ -2,8 +2,8 @@ name: "Auto Sync Parts Database & Community Insights"
 
 on:
   schedule:
-    # Runs every Monday at 04:00 AM Taipei time (UTC Sunday 20:00)
-    - cron: '0 20 * * 0'
+    # Runs every day at 04:00 AM Taipei time (UTC 20:00)
+    - cron: '0 20 * * *'
   workflow_dispatch:
     # Allows manual trigger at any time from GitHub Actions web interface
 
@@ -42,6 +42,9 @@ jobs:
           python scripts/sync_threads_insights.py
 
       - name: Check for Changes and Commit
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          ADMIN_LINE_USER_ID: ${{ secrets.ADMIN_LINE_USER_ID }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -51,6 +54,7 @@ jobs:
             git add data/ web/static/images/
             git commit -m "chore(data): auto sync parts & Threads insights [skip ci]"
             git push origin main
+            python scripts/notify_sync.py
           else
             echo "No changes found. Working tree is clean."
           fi
