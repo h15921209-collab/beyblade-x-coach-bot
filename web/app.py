@@ -69,21 +69,21 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="🔥 賽事頂級三大王者配置", contents=container))
                 
                 qr = make_quick_reply([
-                    ("🔥 鳳凰羽翼 9-60O", "鳳凰羽翼 9-60O"),
-                    ("🛡️ 魔導權杖 7-60B", "魔導權杖 7-60B"),
-                    ("⚡ 龍之爆裂 1-60F", "龍之爆裂 1-60F"),
-                    ("🔄 改裝 5-60 差異", "若把鳳凰羽翼 9-60O 改為 5-60 有何差異？"),
+                    ("🔥 天翼鳳凰 9-60O", "天翼鳳凰 9-60O"),
+                    ("🛡️ 魔導神杖 7-60B", "魔導神杖 7-60B"),
+                    ("⚡ 爆裂神龍 1-60F", "爆裂神龍 1-60F"),
+                    ("🔄 改裝 5-60 差異", "若把天翼鳳凰 9-60O 改為 5-60 有何差異？"),
                     ("🛠️ 自訂組合健檢", "【自訂組合健檢】")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，這是當前職業大賽勝率最高的三大王者配置！左右滑動上方圖卡查看四維雷達，點選下方泡泡或直接提問微調細節：",
+                    text="選手，這是當前台灣職業大賽勝率最高的三大上位王者配置！左右滑動上方圖卡查看四維雷達，點選下方泡泡或直接提問微調細節：",
                     quick_reply=qr
                 ))
 
                 # Attach curated tournament match videos
                 try:
                     from core.youtube_search import search_beyblade_videos
-                    videos = search_beyblade_videos("戰鬥陀螺X 鳳凰羽翼 魔導權杖 實戰對決", max_results=3)
+                    videos = search_beyblade_videos("戰鬥陀螺X 天翼鳳凰 魔導神杖 實戰對決", max_results=3)
                     if videos:
                         vid_payload = FlexMessageBuilder.build_videos_carousel(videos, "賽事頂級王者實戰")
                         vid_container = FlexContainer.from_dict(vid_payload["contents"])
@@ -99,20 +99,20 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="⚡ 極限攻擊流王者推薦", contents=container))
                 
                 qr = make_quick_reply([
-                    ("⚡ 龍之爆裂 1-60F", "龍之爆裂 1-60F"),
-                    ("🦈 鯊魚之刃 3-60LF", "鯊魚之刃 3-60LF"),
-                    ("🐉 蒼白龍騎士 2-60C", "蒼白龍騎士 2-60C"),
+                    ("⚡ 爆裂神龍 1-60F", "爆裂神龍 1-60F"),
+                    ("🦈 銳鯊之刃 3-60LF", "銳鯊之刃 3-60LF"),
+                    ("🐉 鈷藍擊龍 2-60C", "鈷藍擊龍 2-60C"),
                     ("🎯 攻擊型發射角度", "極限攻擊型陀螺如何透過 Banked Launch 斜射發射壓制對手？")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，極限攻擊流核心在於前兩波 X-Dash 軌道衝刺與一擊 Over Finish！左右滑動查看刺客配置：",
+                    text="選手，極限攻擊流核心在於前兩波 X-Dash 軌道衝刺與一擊【擊出出場 (Over Finish)】！左右滑動查看刺客配置：",
                     quick_reply=qr
                 ))
 
                 # Attach attack tournament videos
                 try:
                     from core.youtube_search import search_beyblade_videos
-                    videos = search_beyblade_videos("戰鬥陀螺X 龍之爆裂 鯊魚之刃 攻擊實戰", max_results=3)
+                    videos = search_beyblade_videos("戰鬥陀螺X 爆裂神龍 銳鯊之刃 攻擊實戰", max_results=3)
                     if videos:
                         vid_payload = FlexMessageBuilder.build_videos_carousel(videos, "極限攻擊刺客實戰")
                         vid_container = FlexContainer.from_dict(vid_payload["contents"])
@@ -128,10 +128,10 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 reply_messages.append(FlexMessage(alt_text="🛡️ 持久防禦流配置推薦", contents=container))
                 
                 qr = make_quick_reply([
-                    ("🛡️ 魔導權杖 7-60B", "魔導權杖 7-60B"),
-                    ("⛓️ 地獄狂鐮 5-60HT", "地獄狂鐮 5-60HT"),
-                    ("🦖 暴龍重擊 4-70B", "暴龍重擊 4-70B"),
-                    ("🌀 持久型防被挑飛技巧", "持久型面對鯊魚之刃等低位挑擊，該如何防守化解？")
+                    ("🛡️ 魔導神杖 7-60B", "魔導神杖 7-60B"),
+                    ("⛓️ 鏈鋸地獄 5-60HT", "鏈鋸地獄 5-60HT"),
+                    ("🦖 重擊暴龍 4-70B", "重擊暴龍 4-70B"),
+                    ("🌀 持久型防挑飛技巧", "持久型面對銳鯊之刃等低位挑擊，該如何防守化解？")
                 ])
                 reply_messages.append(TextMessage(
                     text="選手，持久防禦流講求外圍飛輪慣性、極致圓形減阻與承受衝擊穩定性！左右滑動查看要塞配置：",
@@ -156,23 +156,23 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     ("2-60 墊片", "2-60"),
                     ("Ball (球軸)", "Ball"),
                     ("Cyclone (旋風軸)", "Cyclone"),
-                    ("魔導權杖 刃", "魔導權杖")
+                    ("魔導神杖 刃部", "魔導神杖")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，已開啟《戰鬥陀螺 X》核心零件資料庫！\n請直接點選下方快捷泡泡，或輸入任意零件名稱（例如：`9-60`、`Ball`、`Cyclone`、`魔導權杖`），教練立即調出官方物理規格、重量與改裝適配性：",
+                    text="選手，已開啟《戰鬥陀螺 X》核心零件資料庫！\n請直接點選下方快捷泡泡，或輸入任意零件名稱（例如：`9-60`、`Ball`、`Cyclone`、`魔導神杖`），教練立即調出官方物理規格、重量與改裝適配性：",
                     quick_reply=qr
                 ))
 
             elif user_msg in ["【自訂組合健檢】", "自訂組合健檢", "健檢指引"]:
                 qr = make_quick_reply([
-                    ("鳳凰羽翼 9-60O", "鳳凰羽翼 9-60O"),
-                    ("魔導權杖 7-60B", "魔導權杖 7-60B"),
-                    ("龍之爆裂 1-60F", "龍之爆裂 1-60F"),
-                    ("蒼白龍騎士 2-60C", "蒼白龍騎士 2-60C"),
-                    ("鯊魚之刃 3-60LF", "鯊魚之刃 3-60LF")
+                    ("天翼鳳凰 9-60O", "天翼鳳凰 9-60O"),
+                    ("魔導神杖 7-60B", "魔導神杖 7-60B"),
+                    ("爆裂神龍 1-60F", "爆裂神龍 1-60F"),
+                    ("鈷藍擊龍 2-60C", "鈷藍擊龍 2-60C"),
+                    ("銳鯊之刃 3-60LF", "銳鯊之刃 3-60LF")
                 ])
                 reply_messages.append(TextMessage(
-                    text="選手，想測試你的獨創改裝嗎？\n\n【發送格式範例】：\n• `鳳凰羽翼 9-60O`\n• `Wizard Rod 7-60B`\n• `龍之爆裂 1-60F`\n• `鯊魚之刃 3-60LF`\n\n只要輸入「刃 + 墊片 + 軸心」，教練立即啟動實體遙測，計算攻擊/持久/防禦/X-Dash 四維雷達與賽事勝率！點選下方範例立即實測：",
+                    text="選手，想測試你的獨創改裝嗎？\n\n【發送格式範例】：\n• `天翼鳳凰 9-60O`\n• `魔導神杖 7-60B`\n• `爆裂神龍 1-60F`\n• `銳鯊之刃 3-60LF`\n\n只要輸入「刃部 + 墊片 + 軸心」，教練立即啟動實體遙測，計算攻擊/持久/防禦/X-Dash 四維雷達與賽事勝率！點選下方範例立即實測：",
                     quick_reply=qr
                 ))
 
@@ -206,15 +206,15 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                 coach_text = (
                     f"選手，宿命對抗物理推演完成！\n\n"
                     f"🏆 【預測優勢方】：{win_lead}（預估勝率 {high_rate}%）\n"
-                    f"💥 擊出戰場 (Over) 機率：{finish['over']}%\n"
-                    f"⚡ 爆裂擊破 (Burst) 機率：{finish['burst']}%\n"
-                    f"🌀 迴轉持久 (Spin) 機率：{finish['spin']}%\n\n"
+                    f"💥 【擊出出場 (Over Finish)】機率：{finish['over']}%\n"
+                    f"⚡ 【爆裂擊破 (Burst Finish)】機率：{finish['burst']}%\n"
+                    f"🌀 【迴轉終結 (Spin Finish)】機率：{finish['spin']}%\n\n"
                     f"🎯 【紅方關鍵手法】：\n{vs_res['tactical_advice']['corner_a']}\n\n"
                     f"🛡️ 【藍方反制策略】：\n{vs_res['tactical_advice']['corner_b']}"
                 )
                 vs_qr = make_quick_reply([
-                    (f"🎯 對決 龍之爆裂 1-60F", f"{name_a} VS 龍之爆裂 1-60F"),
-                    (f"🎯 對決 鯊魚之刃 3-60LF", f"{name_a} VS 鯊魚之刃 3-60LF"),
+                    (f"🎯 對決 爆裂神龍 1-60F", f"{name_a} VS 爆裂神龍 1-60F"),
+                    (f"🎯 對決 銳鯊之刃 3-60LF", f"{name_a} VS 銳鯊之刃 3-60LF"),
                     ("🔄 改裝 5-60 能反超嗎？", f"如果將剛才對決中的墊片改為 5-60，勝率會如何反轉？"),
                     ("🔥 賽事頂級主流", "【賽事頂級主流】")
                 ])
@@ -270,9 +270,9 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     target_combo_name = result["combo_stats"].get("combo_name_zh") or result["combo_stats"].get("combo_name", user_msg)
                 
                 default_qr = make_quick_reply([
-                    ("🎯 對決 魔導權杖 7-60B", f"{target_combo_name} VS 魔導權杖 7-60B"),
-                    ("🎯 對決 鳳凰羽翼 9-60O", f"{target_combo_name} VS 鳳凰羽翼 9-60O"),
-                    ("🎯 對決 龍之爆裂 1-60F", f"{target_combo_name} VS 龍之爆裂 1-60F"),
+                    ("🎯 對決 魔導神杖 7-60B", f"{target_combo_name} VS 魔導神杖 7-60B"),
+                    ("🎯 對決 天翼鳳凰 9-60O", f"{target_combo_name} VS 天翼鳳凰 9-60O"),
+                    ("🎯 對決 爆裂神龍 1-60F", f"{target_combo_name} VS 爆裂神龍 1-60F"),
                     ("🔄 改裝 5-60 差異", f"如果把剛才討論的組合墊片改為 5-60，物理表現有何改變？"),
                     ("🚀 推薦發射手法", "請教練傳授這套搭配在世界大賽中的最佳發射手勢與進軌策略！")
                 ])

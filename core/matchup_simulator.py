@@ -1,4 +1,4 @@
-﻿import re
+import re
 import math
 from typing import Optional, Dict, Any, Tuple
 from core.database import db
@@ -132,16 +132,16 @@ def simulate_matchup(query_text: str) -> Optional[Dict[str, Any]]:
     r_name_a = stats_a["ratchet"]["name"]
 
     if type_a == "Attack":
-        advice_a = f"採 15°~20° Banked Launch (斜射進軌)！起手全力下壓咬合 X-Line 軌道發動加速衝撞，直接瞄準對手 {b_name_b} 墊片低位挑擊，力求前 25 秒內 Over Finish 擊出！"
+        advice_a = f"採 15°~20° Banked Launch (斜射進軌)！起手全力下壓咬合 X-Line 軌道發動極限加速衝撞，直接瞄準對手 {b_name_b} 墊片(軸環)低位挑擊，力求前 25 秒內達成【擊出出場 (Over Finish)】！"
     elif type_a == "Stamina":
-        advice_a = f"採標準 Flat Launch (微偏心平射定心)！適度控制拉線力量避免自爆出界，落地後迅速沉降於中央低阻力區，以 {b_zh_a} 的高外圈慣性耗盡對手轉速！"
+        advice_a = f"採標準 Flat Launch (微偏心平射定心)！適度控制拉線力量避免自爆出界，落地後迅速沉降於中央低阻力區，以【{b_zh_a}】的高外圈離心慣性耗盡對手轉速，力求【迴轉終結 (Spin Finish)】！"
     else:
-        advice_a = f"採 Parallel Launch (平行軌道切入)！手腕保持平穩鎖死中心，以 {r_name_a} 低重心抵抗對手撞擊，專注防守反擊！"
+        advice_a = f"採 Parallel Launch (平行軌道切入)！手腕保持平穩鎖死中心，以【{r_name_a}】低重心抵抗對手撞擊，專注防守反擊並尋求【爆裂擊破 (Burst Finish)】機會！"
 
     if type_b == "Attack":
-        advice_b = f"警戒對手第一波 X-Dash！發射時需微調落點偏離對手衝刺射線，避免開局正面硬碰硬。"
+        advice_b = f"警戒對手第一波 X-Dash 衝刺！發射時需微調落點偏離對手衝線角度，避免開局正面硬碰硬遭擊出出場。"
     else:
-        advice_b = f"注意防範對手持久消耗！若無法於前兩次衝刺重創對方，尾盤轉速將處於劣勢。"
+        advice_b = f"注意防範對手持久消耗！若無法於前兩次咬軌衝刺重創對方，尾盤轉速將處於迴轉劣勢。"
 
     return {
         "combo_a": stats_a,

@@ -203,7 +203,7 @@ class FlexMessageBuilder:
                                 "margin": "xs",
                                 "flex": 1,
                                 "contents": [
-                                    {"type": "text", "text": "軸點 BIT", "size": "xxs", "color": "#718096"},
+                                    {"type": "text", "text": "軸心 BIT", "size": "xxs", "color": "#718096"},
                                     {"type": "text", "text": f"{bit.get('name', '')}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"},
                                     {"type": "text", "text": f"{bit.get('weight_g', 0)}g", "size": "xxs", "color": "#A0AEC0"}
                                 ]
@@ -444,7 +444,7 @@ class FlexMessageBuilder:
                                     "margin": "xs",
                                     "flex": 1,
                                     "contents": [
-                                        {"type": "text", "text": "刃", "size": "xxs", "color": "#718096"},
+                                        {"type": "text", "text": "刃部", "size": "xxs", "color": "#718096"},
                                         {"type": "text", "text": f"{blade.get('name_zh', blade.get('name', ''))[:5]}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"}
                                     ]
                                 },
@@ -470,7 +470,7 @@ class FlexMessageBuilder:
                                     "margin": "xs",
                                     "flex": 1,
                                     "contents": [
-                                        {"type": "text", "text": "軸點", "size": "xxs", "color": "#718096"},
+                                        {"type": "text", "text": "軸心", "size": "xxs", "color": "#718096"},
                                         {"type": "text", "text": f"{bit.get('name', '').split()[0]}", "size": "xxs", "color": "#FFFFFF", "weight": "bold"}
                                     ]
                                 }
@@ -886,9 +886,9 @@ class FlexMessageBuilder:
                                 "color": "#FFD700",
                                 "weight": "bold"
                             },
-                            cls._create_bar("💥 擊出戰場 (Over/Extreme)", finish.get("over", 35), "#F59E0B"),
+                            cls._create_bar("💥 擊出出場 (Over Finish)", finish.get("over", 35), "#F59E0B"),
                             cls._create_bar("⚡ 爆裂擊破 (Burst Finish)", finish.get("burst", 20), "#EF4444"),
-                            cls._create_bar("🌀 迴轉持久 (Spin Finish)", finish.get("spin", 45), "#10B981")
+                            cls._create_bar("🌀 迴轉終結 (Spin Finish)", finish.get("spin", 45), "#10B981")
                         ]
                     },
                     # 4. Tactical Advice Box

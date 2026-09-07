@@ -30,10 +30,15 @@ class BeybladeDatabase:
         for b in self.blades:
             if clean_q == self._normalize(b["id"]) or clean_q == self._normalize(b["name"]) or clean_q == self._normalize(b["name_zh"]) or clean_q == self._normalize(b.get("code", "")):
                 return b
+        # 2. Check aliases (Taiwan former translations, colloquial names)
+        for b in self.blades:
+            for alias in b.get("aliases", []):
+                if clean_q == self._normalize(alias) or self._normalize(alias) in clean_q or clean_q in self._normalize(alias):
+                    return b
         for b in self.blades:
             if clean_q in self._normalize(b["name"]) or clean_q in self._normalize(b["name_zh"]) or clean_q in self._normalize(b["id"]):
                 return b
-        # Keyword partials (e.g. "phoenix", "鳳凰", "rod", "魔導", "buster", "爆裂")
+        # Keyword partials
         for b in self.blades:
             for part in [b["name"].lower().split(), b["name_zh"]]:
                 if isinstance(part, list):
@@ -116,7 +121,11 @@ class BeybladeDatabase:
         if not blade:
             # Try searching the entire text for any blade
             for candidate in self.blades:
-                if candidate["name"].lower() in text.lower() or candidate["name_zh"] in text:
+                if (
+                    candidate["name"].lower() in text.lower()
+                    or candidate["name_zh"] in text
+                    or any(alias in text for alias in candidate.get("aliases", []))
+                ):
                     blade = candidate
                     break
 
@@ -222,7 +231,7 @@ class BeybladeDatabase:
         xdash_score = min(99, int(base_xdash))
 
         combo_name = f"{blade['name']} {ratchet['name']}{bit['id']}"
-        combo_name_zh = f"{blade['name_zh']} {ratchet['name']}{bit['name']}"
+        combo_name_zh = f"{blade['name_zh']} {blade['name']} {ratchet['name']}{bit['id']}"
 
         return {
             "combo_name": combo_name,

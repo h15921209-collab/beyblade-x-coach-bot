@@ -3,7 +3,7 @@
     {
       "id": "phoenix_wing",
       "name": "Phoenix Wing",
-      "name_zh": "鳳凰羽翼",
+      "name_zh": "天翼鳳凰",
       "code": "BX-23",
       "series": "BX",
       "type": "Attack",
@@ -16,12 +16,16 @@
       "meta_analysis": "對戰 Wizard Rod 可透過重量優勢強行擊飛撞牆或 Over Finish；對戰其他攻擊型具備絕對的碰撞剛性優勢。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2d/BladePhoenixWing.png/revision/latest?cb=20260809063447",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2d/BladePhoenixWing.png/revision/latest?cb=20260809063447",
-      "image_local": "/static/images/blade_phoenix_wing.png"
+      "image_local": "/static/images/blade_phoenix_wing.png",
+      "aliases": [
+        "鳳凰羽翼",
+        "鳳凰"
+      ]
     },
     {
       "id": "wizard_rod",
       "name": "Wizard Rod",
-      "name_zh": "魔導權杖",
+      "name_zh": "魔導神杖",
       "code": "UX-03",
       "series": "UX",
       "type": "Stamina",
@@ -34,12 +38,17 @@
       "meta_analysis": "職業賽事絕對的核心持久標竿。搭配 9-60B 或 7-60B 能達成極長空轉時間，但需提防 Dran Buster 與 Phoenix Wing 的第一發極速爆裂擊飛。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a3/BladeWizardRod.png/revision/latest?cb=20260815024049",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a3/BladeWizardRod.png/revision/latest?cb=20260815024049",
-      "image_local": "/static/images/blade_wizard_rod.png"
+      "image_local": "/static/images/blade_wizard_rod.png",
+      "aliases": [
+        "魔導權杖",
+        "魔導",
+        "法杖"
+      ]
     },
     {
       "id": "dran_buster",
       "name": "Dran Buster",
-      "name_zh": "龍之爆裂",
+      "name_zh": "爆裂神龍",
       "code": "UX-01",
       "series": "UX",
       "type": "Attack",
@@ -52,12 +61,17 @@
       "meta_analysis": "專門用於克制 Wizard Rod 站樁持久防禦的先鋒刺客，首發 X-Dash 若命中往往直接造成 Over 或 Burst Finish，但尾速持久極低。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/d/db/BladeDranBuster.png/revision/latest?cb=20260815023129",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/d/db/BladeDranBuster.png/revision/latest?cb=20260815023129",
-      "image_local": "/static/images/blade_dran_buster.png"
+      "image_local": "/static/images/blade_dran_buster.png",
+      "aliases": [
+        "龍之爆裂",
+        "爆裂",
+        "龍爆"
+      ]
     },
     {
       "id": "cobalt_dragoon",
       "name": "Cobalt Dragoon",
-      "name_zh": "蒼白龍騎士",
+      "name_zh": "鈷藍擊龍",
       "code": "BX-34",
       "series": "BX",
       "type": "Attack",
@@ -70,12 +84,18 @@
       "meta_analysis": "對戰主流右迴旋持久型（Wizard Rod）能以逆向切線破壞其平衡，逼迫其提早晃動傾斜。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c2/BladeCobaltDragoon.png/revision/latest?cb=20260822063458",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c2/BladeCobaltDragoon.png/revision/latest?cb=20260822063458",
-      "image_local": "/static/images/blade_cobalt_dragoon.png"
+      "image_local": "/static/images/blade_cobalt_dragoon.png",
+      "aliases": [
+        "蒼白龍騎士",
+        "擊龍",
+        "左迴旋神龍",
+        "鈷藍神龍"
+      ]
     },
     {
       "id": "shark_edge",
       "name": "Shark Edge",
-      "name_zh": "鯊魚之刃",
+      "name_zh": "銳鯊之刃",
       "code": "BX-14",
       "series": "BX",
       "type": "Attack",
@@ -88,12 +108,18 @@
       "meta_analysis": "搭配 3-60LF 或 1-60LF 時具備極佳突襲上挑效果，專門剋制底盤露出較多的高位陀螺。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2e/BladeSharkEdge.png/revision/latest?cb=20260802062042",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2e/BladeSharkEdge.png/revision/latest?cb=20260802062042",
-      "image_local": "/static/images/blade_shark_edge.png"
+      "image_local": "/static/images/blade_shark_edge.png",
+      "aliases": [
+        "鯊魚之刃",
+        "角鯊狂麟",
+        "狂鯊之刃",
+        "鯊魚"
+      ]
     },
     {
       "id": "tyranno_beat",
       "name": "Tyranno Beat",
-      "name_zh": "暴龍重擊",
+      "name_zh": "重擊暴龍",
       "code": "BX-31",
       "series": "BX",
       "type": "Attack",
@@ -106,12 +132,17 @@
       "meta_analysis": "在攻擊與擊退能力上極為突出，搭配 4-70 或 9-60 搭配平錐軸可展現霸道的中場壓制力。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/ff/BladeTyrannoBeat.png/revision/latest?cb=20260819065042",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/ff/BladeTyrannoBeat.png/revision/latest?cb=20260819065042",
-      "image_local": "/static/images/blade_tyranno_beat.png"
+      "image_local": "/static/images/blade_tyranno_beat.png",
+      "aliases": [
+        "暴龍重擊",
+        "暴龍暴擊",
+        "暴龍"
+      ]
     },
     {
       "id": "hells_chain",
       "name": "Hells Chain",
-      "name_zh": "地獄鎖鏈",
+      "name_zh": "鏈鋸地獄",
       "code": "BX-21",
       "series": "BX",
       "type": "Balance",
@@ -124,12 +155,17 @@
       "meta_analysis": "攻防一體的經典平衡萬用刃，改裝 5-60B 或 9-60O 能在抗擊飛與尾速之間取得極佳黃金比。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/83/BladeHellsChain.png/revision/latest?cb=20260808045710",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/8/83/BladeHellsChain.png/revision/latest?cb=20260808045710",
-      "image_local": "/static/images/blade_hells_chain.png"
+      "image_local": "/static/images/blade_hells_chain.png",
+      "aliases": [
+        "地獄狂鏈",
+        "地獄鏈鋸",
+        "狂鏈"
+      ]
     },
     {
       "id": "dran_dagger",
       "name": "Dran Dagger",
-      "name_zh": "龍之匕首",
+      "name_zh": "鋼刃神龍",
       "code": "BX-20",
       "series": "BX",
       "type": "Attack",
@@ -142,12 +178,16 @@
       "meta_analysis": "搭配 4-60R 或 3-60F 時能在入軌後連續刮擊敵方外圈，逼迫對手失衡。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c8/BladeDranDagger.png/revision/latest?cb=20260808045217",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c8/BladeDranDagger.png/revision/latest?cb=20260808045217",
-      "image_local": "/static/images/blade_dran_dagger.png"
+      "image_local": "/static/images/blade_dran_dagger.png",
+      "aliases": [
+        "龍之短劍",
+        "鋼刃"
+      ]
     },
     {
       "id": "unicorn_sting",
       "name": "Unicorn Sting",
-      "name_zh": "獨角獸刺",
+      "name_zh": "刺針獨角",
       "code": "BX-26",
       "series": "BX",
       "type": "Balance",
@@ -160,12 +200,16 @@
       "meta_analysis": "防禦持久流的隱藏殺手，搭配 5-60P 或 9-60B 能在受到撞擊後自動借力反轉回中場。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/15/BladeUnicornSting.png/revision/latest?cb=20260813014525",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/1/15/BladeUnicornSting.png/revision/latest?cb=20260813014525",
-      "image_local": "/static/images/blade_unicorn_sting.png"
+      "image_local": "/static/images/blade_unicorn_sting.png",
+      "aliases": [
+        "獨角獸之刺",
+        "刺針"
+      ]
     },
     {
       "id": "silver_wolf",
       "name": "Silver Wolf",
-      "name_zh": "白銀之狼",
+      "name_zh": "銀光白狼",
       "code": "UX-08",
       "series": "UX",
       "type": "Stamina",
@@ -178,12 +222,16 @@
       "meta_analysis": "對戰純攻擊流（Phoenix Wing / Dran Buster）具備極強卸力保底，且外圍金屬保證了超高持久。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f1/BladeSilverWolf.png/revision/latest?cb=20240913034202",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f1/BladeSilverWolf.png/revision/latest?cb=20240913034202",
-      "image_local": "/static/images/blade_silver_wolf.png"
+      "image_local": "/static/images/blade_silver_wolf.png",
+      "aliases": [
+        "白銀之狼",
+        "銀狼"
+      ]
     },
     {
       "id": "dran_sword",
       "name": "Dran Sword",
-      "name_zh": "龍之劍",
+      "name_zh": "翔刃神龍",
       "code": "BX-01",
       "series": "BX",
       "type": "Attack",
@@ -196,12 +244,16 @@
       "meta_analysis": "極致攻擊入門標竿，搭配 3-60F 是最純粹的極速線獵殺者。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5f/BladeDranSword.png/revision/latest?cb=20250814202546",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5f/BladeDranSword.png/revision/latest?cb=20250814202546",
-      "image_local": "/static/images/blade_dran_sword.png"
+      "image_local": "/static/images/blade_dran_sword.png",
+      "aliases": [
+        "龍之神劍",
+        "翔刃"
+      ]
     },
     {
       "id": "hells_scythe",
       "name": "Hells Scythe",
-      "name_zh": "地獄鐮刀",
+      "name_zh": "死神地獄",
       "code": "BX-02",
       "series": "BX",
       "type": "Balance",
@@ -214,12 +266,16 @@
       "meta_analysis": "現環境因重量被 Phoenix Wing 與 Wizard Rod 拉開差距，但在輕量級平衡調試中仍具備指標意義。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e4/BladeHellsScythe.png/revision/latest?cb=20250817035337",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e4/BladeHellsScythe.png/revision/latest?cb=20250817035337",
-      "image_local": "/static/images/blade_hells_scythe.png"
+      "image_local": "/static/images/blade_hells_scythe.png",
+      "aliases": [
+        "地獄狂鐮",
+        "死神"
+      ]
     },
     {
       "id": "knight_shield",
       "name": "Knight Shield",
-      "name_zh": "騎士之盾",
+      "name_zh": "盾牌騎士",
       "code": "BX-04",
       "series": "BX",
       "type": "Defense",
@@ -232,12 +288,16 @@
       "meta_analysis": "搭配高位防禦軸心可發揮緩衝效能，但面臨現行37g+超重金屬刃容易因質量落差被推開。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/BladeKnightShield.png/revision/latest?cb=20250609060142",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/BladeKnightShield.png/revision/latest?cb=20250609060142",
-      "image_local": "/static/images/blade_knight_shield.png"
+      "image_local": "/static/images/blade_knight_shield.png",
+      "aliases": [
+        "騎士盾牌",
+        "盾牌"
+      ]
     },
     {
       "id": "leon_crest",
       "name": "Leon Crest",
-      "name_zh": "獅子紋章",
+      "name_zh": "冠頂雄獅",
       "code": "UX-06",
       "series": "UX",
       "type": "Defense",
@@ -250,7 +310,11 @@
       "meta_analysis": "剋制各路攻擊型 X-Dash，搭配 7-60B 或 5-60HN 能穩如磐石鎮守擂台正中央。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c7/BladeLeonCrest.png/revision/latest?cb=20260828064359",
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c7/BladeLeonCrest.png/revision/latest?cb=20260828064359",
-      "image_local": "/static/images/blade_leon_crest.png"
+      "image_local": "/static/images/blade_leon_crest.png",
+      "aliases": [
+        "雄獅之冠",
+        "雄獅"
+      ]
     }
   ],
   "ratchets": [
@@ -464,7 +528,8 @@
       "description": "持久流世界標準軸心。全金屬圓球端面提供最低旋轉摩擦力，陀螺能自動滑入競技場中央漏斗區進行超長空轉，尾速衰減極慢。",
       "tactical_effect": "受撞擊後透過球面滑動迅速卸力並回正。搭配 9-60 或 7-60 可將被爆裂率降至最低，是 Wizard Rod 的神裝組合。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8c/BitBall.png/revision/latest?cb=20250608045235",
-      "image_local": "/static/images/bit_b.png"
+      "image_local": "/static/images/bit_b.png",
+      "name_zh": "球軸"
     },
     {
       "id": "O",
@@ -478,7 +543,8 @@
       "description": "球面曲率半徑小於 Ball 的微球軸。接地面積進一步微縮，空轉純持久上限甚至略勝 Ball 軸半籌，傾斜時的自體修正速度極快。",
       "tactical_effect": "搭配 Phoenix Wing 時能構成著名的「不死鳥持久重砲（Wing 9-60O）」，兼備39g撞擊力與全場最高終端尾速。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/17/BitOrb.png/revision/latest?cb=20260803014115",
-      "image_local": "/static/images/bit_o.png"
+      "image_local": "/static/images/bit_o.png",
+      "name_zh": "球形軸"
     },
     {
       "id": "F",
@@ -492,7 +558,8 @@
       "description": "經典狂暴攻擊軸。寬平面塑膠底接觸競技場斜坡時產生極大抓地驅動力，外圈齒輪以極高頻率精準咬入 X-Line 齒軌，化為超越音速的極速突襲（X-Dash）。",
       "tactical_effect": "開局爆發力全場第一，極高機率在開局 5 秒內將對手撞出口袋區（Over Finish）。缺點是 15 秒後摩擦損耗巨大，無殘留持久。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/b0/BitFlat.png/revision/latest?cb=20240913063436",
-      "image_local": "/static/images/bit_f.png"
+      "image_local": "/static/images/bit_f.png",
+      "name_zh": "平軸"
     },
     {
       "id": "T",
@@ -506,7 +573,8 @@
       "description": "圓錐與微平端的二段式神軸。發射初期傾斜時，外圍斜角抓地狂奔觸發 X-Dash 進行第一波壓制；當速度略降陀螺直立後，尖端落地自動巡航回中場保持持久。",
       "tactical_effect": "相較於純平軸 F，T 軸賦予攻擊型陀螺珍貴的尾速生機（Spin Finish 勝算），大幅改善打不飛就必輸的極端弱點。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/a/ad/BitTaper.png/revision/latest?cb=20250317055452",
-      "image_local": "/static/images/bit_t.png"
+      "image_local": "/static/images/bit_t.png",
+      "name_zh": "錐形軸"
     },
     {
       "id": "P",
@@ -520,7 +588,8 @@
       "description": "中央突出微小錐針、外圈環繞平面階梯。直立時以錐針靜止於中央省電；一旦遭受對手重擊傾斜，外圍平環立即接觸場地暴走，咬入 X-Line 發動反擊突襲！",
       "tactical_effect": "職業選手最愛的防守反擊戰術軸，攻守切換如鬼魅般難以預測。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/bf/BitPoint.png/revision/latest?cb=20260803013833",
-      "image_local": "/static/images/bit_p.png"
+      "image_local": "/static/images/bit_p.png",
+      "name_zh": "點狀軸"
     },
     {
       "id": "LF",
@@ -534,7 +603,8 @@
       "description": "高度較傳統平軸降低 1mm 的攻擊特化軸。極限壓低整體重心，使陀螺能以銳利切角鑽入敵方墊片盲區，配合 Shark Edge 施展絕對上挑。",
       "tactical_effect": "壓制敵方下盤，但對選手的發射水平度要求極高，稍微傾斜可能刮地。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/0/0e/BitLowFlat.png/revision/latest?cb=20260802062128",
-      "image_local": "/static/images/bit_lf.png"
+      "image_local": "/static/images/bit_lf.png",
+      "name_zh": "低平軸"
     },
     {
       "id": "GF",
@@ -548,7 +618,8 @@
       "description": "Phoenix Wing 專用狂怒軸心。齒輪齒數自 16 齒暴增至 24 齒，且齒槽向軸頂大幅延伸。一旦接觸 X-Line 即瞬間進入 Overdrive 超狂暴極速衝刺狀態！",
       "tactical_effect": "瞬間衝擊力道無人能擋，但高速消耗極為劇烈，若未在第一圈抓到對手，自爆或出界風險陡增。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/bd/BitGearFlat.png/revision/latest?cb=20260809063549",
-      "image_local": "/static/images/bit_gf.png"
+      "image_local": "/static/images/bit_gf.png",
+      "name_zh": "齒輪平軸"
     },
     {
       "id": "GP",
@@ -562,7 +633,8 @@
       "description": "Point 軸與 24 齒 Gear 系統的究極融合。中場平靜站樁，一受衝擊傾斜立即引爆 24 齒超頻 X-Dash，兼具機關槍般的狂烈回擊速度。",
       "tactical_effect": "改善了普通 P 軸咬軌提速力道不足的問題，是極致反擊流的強力核心。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/36/BitGearPoint.png/revision/latest?cb=20260813014626",
-      "image_local": "/static/images/bit_gp.png"
+      "image_local": "/static/images/bit_gp.png",
+      "name_zh": "齒輪點軸"
     },
     {
       "id": "H",
@@ -576,7 +648,8 @@
       "description": "六角稜柱面底端。六個平面稜角在受到重擊時，能如千斤頂般頂住競技場底面，阻止陀螺進一步傾倒爆裂，抗擊飛指數在防禦軸中名列第一。",
       "tactical_effect": "針對 Dran Buster 與 Phoenix Wing 等重拳流派有絕佳的制動與立足能力。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8c/BitHexa.png/revision/latest?cb=20260822062551",
-      "image_local": "/static/images/bit_h.png"
+      "image_local": "/static/images/bit_h.png",
+      "name_zh": "六角軸"
     },
     {
       "id": "HN",
@@ -590,7 +663,8 @@
       "description": "尖細金屬/硬質塑膠尖端配合抬高軸身。以最小面積頂立於場地中央，受撞擊時能依靠高位擺動將側向力轉化為離心角動量。",
       "tactical_effect": "適合高位防禦型搭配，但極度害怕被平軸由下往上推挑。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2f/BitHighNeedle.png/revision/latest?cb=20260802062012",
-      "image_local": "/static/images/bit_hn.png"
+      "image_local": "/static/images/bit_hn.png",
+      "name_zh": "高針軸"
     },
     {
       "id": "E",
@@ -604,7 +678,8 @@
       "description": "專為 Cobalt Dragoon 左迴旋或跳躍戰術打造的階梯型特殊軸。在 X-Line 入口處具備防倒扣導角，能有效防止左迴旋陀螺在順向軌道被卡死的物理缺陷。",
       "tactical_effect": "左迴旋必備軸心之一，能在高速衝刺時產生微幅浮動，使對手難以鎖定打擊點。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/3/38/BitElevate.png/revision/latest?cb=20260828064711",
-      "image_local": "/static/images/bit_e.png"
+      "image_local": "/static/images/bit_e.png",
+      "name_zh": "升降軸"
     },
     {
       "id": "FB",
@@ -618,7 +693,8 @@
       "description": "UX 最新軸心科技。球端具備獨立微型滾珠/空轉機構，接地受力時球體可自主打滑旋轉，幾乎將尾速地面滑動阻力降至絕對物理極限！",
       "tactical_effect": "Silver Wolf 標配神軸。在對局最後 5 秒的尾速微轉掙扎（Life After Death）中擁有全環境最高的同轉逆轉勝率。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/7/78/BitFreeBall.png/revision/latest?cb=20240913034835",
-      "image_local": "/static/images/bit_fb.png"
+      "image_local": "/static/images/bit_fb.png",
+      "name_zh": "自由球軸"
     },
     {
       "id": "RA",
@@ -632,7 +708,8 @@
       "description": "底端鑲嵌高摩擦力彈性橡膠，發射觸地瞬間產生如同賽車熱熔胎般的強大抓地推進力，進入 X-Line 時咬合推進速度超越任何全塑膠軸心。",
       "tactical_effect": "爆發力令人屏息，能產生瞬間摧毀對手的極限撞擊，但持久力極度短暫，屬於 3 秒決勝負的敢死隊打法。",
       "image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5a/BitRubberAccel.png/revision/latest?cb=20241015044738",
-      "image_local": "/static/images/bit_ra.png"
+      "image_local": "/static/images/bit_ra.png",
+      "name_zh": "橡膠加速軸"
     },
     {
       "id": "C",
@@ -646,7 +723,8 @@
       "description": "BX-34 蒼白龍騎士專用標配軸心。軸心外圍設有螺旋擾流翼，能借助旋轉氣流增加下壓力，兼具暴走入軌與中心戰術回旋能力。",
       "tactical_effect": "專為左迴旋攻擊型量身打造，能完美發揮逆向切入與持續極速衝刺效果。",
       "image_local": "/static/images/bit_c.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/fb/BitCyclone.png/revision/latest?cb=20260822063610"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/f/fb/BitCyclone.png/revision/latest?cb=20260822063610",
+      "name_zh": "旋風軸"
     },
     {
       "id": "A",
@@ -660,7 +738,8 @@
       "description": "UX-01 Dran Buster 標配軸心。採用直徑較小但抓地力更強的平底設計，啟動反應極快，入軌瞬間加速度達到巔峰。",
       "tactical_effect": "專門用於第一擊必殺與瞬間 Over Finish，爆發力無人能出其右。",
       "image_local": "/static/images/bit_a.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8e/BitAccel.png/revision/latest?cb=20260815023830"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/8/8e/BitAccel.png/revision/latest?cb=20260815023830",
+      "name_zh": "加速軸"
     },
     {
       "id": "R",
@@ -674,7 +753,8 @@
       "description": "採用細平切削端面的攻擊軸，摩擦阻力小於 F，能達成多次反覆觸碰極速線（X-Line）的連環衝刺。",
       "tactical_effect": "避免一次衝刺後耗盡體力，適合中程纏鬥與多次突襲擊飛戰術。",
       "image_local": "/static/images/bit_r.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e1/BitRush.png/revision/latest?cb=20260808045328"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e1/BitRush.png/revision/latest?cb=20260808045328",
+      "name_zh": "衝刺軸"
     },
     {
       "id": "N",
@@ -688,7 +768,8 @@
       "description": "尖錐狀針型軸心。將接觸面積縮減至極致單點，牢牢釘在競技場中央，承受外圍攻擊型撞擊時不易移位。",
       "tactical_effect": "防守型陀螺的經典定點軸，利用微小摩擦力保持中心防守反擊。",
       "image_local": "/static/images/bit_n.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/26/BitNeedle.png/revision/latest?cb=20250609060238"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/2/26/BitNeedle.png/revision/latest?cb=20250609060238",
+      "name_zh": "針軸"
     },
     {
       "id": "DB",
@@ -702,7 +783,8 @@
       "description": "UX-03 Wizard Rod 標配持久軸。在球型軸端上方加裝外圍自由碟盤，大幅提升傾斜時的末端復原力，尾速幾近無損耗。",
       "tactical_effect": "極限持久戰霸主，大幅延長旋轉時間並防止末段側翻擦地。",
       "image_local": "/static/images/bit_db.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/10/BitDiskBall.png/revision/latest?cb=20260815024201"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/1/10/BitDiskBall.png/revision/latest?cb=20260815024201",
+      "name_zh": "碟狀球軸"
     },
     {
       "id": "HT",
@@ -716,7 +798,8 @@
       "description": "加高版本的錐形平衡軸，兼具中心定點與外圍機動性，重心高有利於向下壓制。",
       "tactical_effect": "攻守兼備，提供寬廣的發射傾角容錯率。",
       "image_local": "/static/images/bit_ht.png",
-      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/b5/BitHighTaper.png/revision/latest?cb=20260808045810"
+      "image_url": "https://static.wikia.nocookie.net/beyblade/images/b/b5/BitHighTaper.png/revision/latest?cb=20260808045810",
+      "name_zh": "高錐軸"
     }
   ]
 }
