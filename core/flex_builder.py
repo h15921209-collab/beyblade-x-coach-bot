@@ -626,3 +626,324 @@ class FlexMessageBuilder:
             }
         }
 
+    @classmethod
+    def build_vs_dashboard(cls, match_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Builds an esports arena-style VS Battle Dashboard Flex Message.
+        """
+        combo_a = match_data["combo_a"]
+        combo_b = match_data["combo_b"]
+        w_a = match_data["win_rate_a"]
+        w_b = match_data["win_rate_b"]
+        finish = match_data["finish_breakdown"]
+        advice = match_data["tactical_advice"]
+
+        name_a = combo_a.get("combo_name_zh") or combo_a["combo_name"]
+        name_b = combo_b.get("combo_name_zh") or combo_b["combo_name"]
+        weight_a = combo_a.get("total_weight_g", 43.0)
+        weight_b = combo_b.get("total_weight_g", 43.0)
+        img_a = combo_a.get("hero_image_url") or "https://beyblade-x-coach-bot.onrender.com/static/images/blades/phoenix_wing.png"
+        img_b = combo_b.get("hero_image_url") or "https://beyblade-x-coach-bot.onrender.com/static/images/blades/wizard_rod.png"
+
+        bubble = {
+            "type": "bubble",
+            "size": "giga",
+            "styles": {
+                "header": {"backgroundColor": "#0B0F19"},
+                "body": {"backgroundColor": "#0F172A"},
+                "footer": {"backgroundColor": "#0B0F19"}
+            },
+            "header": {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "⚔️ 戰鬥陀螺 X 宿命對決推演",
+                                "weight": "bold",
+                                "size": "md",
+                                "color": "#FFD700",
+                                "flex": 4
+                            },
+                            {
+                                "type": "text",
+                                "text": "VS ARENA",
+                                "size": "xxs",
+                                "color": "#00E5FF",
+                                "weight": "bold",
+                                "align": "end",
+                                "flex": 2
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "text": "PHYSICAL IMPACT & WIN RATE PREDICTION",
+                        "size": "xxs",
+                        "color": "#718096",
+                        "margin": "xs"
+                    }
+                ]
+            },
+            "body": {
+                "type": "box",
+                "layout": "vertical",
+                "paddingAll": "14px",
+                "contents": [
+                    # 1. Red Corner vs Blue Corner Cards
+                    {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "spacing": "sm",
+                        "contents": [
+                            # Red Corner
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "flex": 5,
+                                "backgroundColor": "#1E1B2E",
+                                "cornerRadius": "8px",
+                                "paddingAll": "8px",
+                                "borderColor": "#EF4444",
+                                "borderWidth": "1px",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": img_a,
+                                        "size": "full",
+                                        "aspectRatio": "1:1",
+                                        "aspectMode": "fit"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "🔴 紅角",
+                                        "size": "xxs",
+                                        "color": "#EF4444",
+                                        "weight": "bold",
+                                        "margin": "xs"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": name_a,
+                                        "size": "xs",
+                                        "color": "#FFFFFF",
+                                        "weight": "bold",
+                                        "wrap": True,
+                                        "maxLines": 2
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": f"⚖️ {weight_a}g",
+                                        "size": "xxs",
+                                        "color": "#A0AEC0",
+                                        "margin": "xs"
+                                    }
+                                ]
+                            },
+                            # VS Badge
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "flex": 2,
+                                "justifyContent": "center",
+                                "alignItems": "center",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": "VS",
+                                        "size": "xl",
+                                        "weight": "bold",
+                                        "color": "#FFD700"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "對決",
+                                        "size": "xxs",
+                                        "color": "#718096"
+                                    }
+                                ]
+                            },
+                            # Blue Corner
+                            {
+                                "type": "box",
+                                "layout": "vertical",
+                                "flex": 5,
+                                "backgroundColor": "#132338",
+                                "cornerRadius": "8px",
+                                "paddingAll": "8px",
+                                "borderColor": "#0284C7",
+                                "borderWidth": "1px",
+                                "contents": [
+                                    {
+                                        "type": "image",
+                                        "url": img_b,
+                                        "size": "full",
+                                        "aspectRatio": "1:1",
+                                        "aspectMode": "fit"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "🔵 藍角",
+                                        "size": "xxs",
+                                        "color": "#38BDF8",
+                                        "weight": "bold",
+                                        "margin": "xs"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": name_b,
+                                        "size": "xs",
+                                        "color": "#FFFFFF",
+                                        "weight": "bold",
+                                        "wrap": True,
+                                        "maxLines": 2
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": f"⚖️ {weight_b}g",
+                                        "size": "xxs",
+                                        "color": "#A0AEC0",
+                                        "margin": "xs"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    # 2. Win Rate Bar
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "margin": "lg",
+                        "contents": [
+                            {
+                                "type": "box",
+                                "layout": "horizontal",
+                                "contents": [
+                                    {
+                                        "type": "text",
+                                        "text": f"🔴 紅方勝率 {w_a}%",
+                                        "size": "xs",
+                                        "color": "#EF4444",
+                                        "weight": "bold",
+                                        "flex": 1
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": f"藍方勝率 {w_b}% 🔵",
+                                        "size": "xs",
+                                        "color": "#38BDF8",
+                                        "weight": "bold",
+                                        "align": "end",
+                                        "flex": 1
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "box",
+                                "layout": "horizontal",
+                                "margin": "sm",
+                                "height": "10px",
+                                "backgroundColor": "#1E293B",
+                                "cornerRadius": "5px",
+                                "contents": [
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "width": f"{w_a}%",
+                                        "backgroundColor": "#EF4444",
+                                        "cornerRadius": "5px",
+                                        "contents": []
+                                    },
+                                    {
+                                        "type": "box",
+                                        "layout": "vertical",
+                                        "width": f"{w_b}%",
+                                        "backgroundColor": "#0284C7",
+                                        "cornerRadius": "5px",
+                                        "contents": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    # 3. Finish Distribution Breakdown
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "margin": "md",
+                        "backgroundColor": "#182234",
+                        "cornerRadius": "6px",
+                        "paddingAll": "10px",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "📊 預估終結方式機率分佈",
+                                "size": "xs",
+                                "color": "#FFD700",
+                                "weight": "bold"
+                            },
+                            cls._create_bar("💥 擊出戰場 (Over/Extreme)", finish.get("over", 35), "#F59E0B"),
+                            cls._create_bar("⚡ 爆裂擊破 (Burst Finish)", finish.get("burst", 20), "#EF4444"),
+                            cls._create_bar("🌀 迴轉持久 (Spin Finish)", finish.get("spin", 45), "#10B981")
+                        ]
+                    },
+                    # 4. Tactical Advice Box
+                    {
+                        "type": "box",
+                        "layout": "vertical",
+                        "margin": "md",
+                        "backgroundColor": "#1E1B2E",
+                        "borderColor": "#A855F7",
+                        "borderWidth": "1px",
+                        "cornerRadius": "6px",
+                        "paddingAll": "10px",
+                        "contents": [
+                            {
+                                "type": "text",
+                                "text": "🎯 教練克敵發射手勢指引",
+                                "size": "xs",
+                                "color": "#C084FC",
+                                "weight": "bold"
+                            },
+                            {
+                                "type": "text",
+                                "text": advice.get("corner_a", ""),
+                                "size": "xs",
+                                "color": "#E2E8F0",
+                                "wrap": True,
+                                "margin": "xs"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "footer": {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                    {
+                        "type": "button",
+                        "style": "primary",
+                        "color": "#0284C7",
+                        "height": "sm",
+                        "action": {
+                            "type": "message",
+                            "label": f"🎬 觀看這場實戰對決影片",
+                            "text": f"請為我搜尋【{name_a} VS {name_b}】的最新實戰對戰影片！"
+                        }
+                    }
+                ]
+            }
+        }
+
+        return {
+            "type": "flex",
+            "altText": f"⚔️ 【對決推演】：{name_a} VS {name_b}",
+            "contents": bubble
+        }
+
+

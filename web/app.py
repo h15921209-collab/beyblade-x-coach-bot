@@ -176,7 +176,51 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     quick_reply=qr
                 ))
 
-            # --- B. Standard Combo Analysis / Single Part / AI Coach Inquiry ---
+            # --- B. Dual-Bey Head-to-Head Battle Simulator (VS Matchup) ---
+            from core.matchup_simulator import simulate_matchup
+            vs_res = simulate_matchup(user_msg)
+            if vs_res:
+                # 1. VS Arena Flex Card
+                vs_payload = FlexMessageBuilder.build_vs_dashboard(vs_res)
+                vs_container = FlexContainer.from_dict(vs_payload["contents"])
+                name_a = vs_res["combo_a"].get("combo_name_zh") or vs_res["combo_a"]["combo_name"]
+                name_b = vs_res["combo_b"].get("combo_name_zh") or vs_res["combo_b"]["combo_name"]
+                reply_messages.append(FlexMessage(alt_text=f"⚔️ 【宿命對決】：{name_a} VS {name_b}", contents=vs_container))
+
+                # 2. Matchup Videos Carousel
+                try:
+                    from core.youtube_search import search_beyblade_videos
+                    vid_query = f"戰鬥陀螺X {vs_res['combo_a']['blade']['name_zh']} {vs_res['combo_b']['blade']['name_zh']} 對決"
+                    videos = search_beyblade_videos(vid_query, max_results=3)
+                    if videos:
+                        vid_payload = FlexMessageBuilder.build_videos_carousel(videos, f"{name_a} VS {name_b}")
+                        vid_container = FlexContainer.from_dict(vid_payload["contents"])
+                        reply_messages.append(FlexMessage(alt_text="🎬 這場對決之實戰影片推薦", contents=vid_container))
+                except Exception as vid_err:
+                    logger.warning(f"Error attaching VS videos: {vid_err}")
+
+                # 3. AI Coach Strategic Text & Quick Replies
+                win_lead = name_a if vs_res["win_rate_a"] >= vs_res["win_rate_b"] else name_b
+                high_rate = max(vs_res["win_rate_a"], vs_res["win_rate_b"])
+                finish = vs_res["finish_breakdown"]
+                coach_text = (
+                    f"選手，宿命對抗物理推演完成！\n\n"
+                    f"🏆 【預測優勢方】：{win_lead}（預估勝率 {high_rate}%）\n"
+                    f"💥 擊出戰場 (Over) 機率：{finish['over']}%\n"
+                    f"⚡ 爆裂擊破 (Burst) 機率：{finish['burst']}%\n"
+                    f"🌀 迴轉持久 (Spin) 機率：{finish['spin']}%\n\n"
+                    f"🎯 【紅方關鍵手法】：\n{vs_res['tactical_advice']['corner_a']}\n\n"
+                    f"🛡️ 【藍方反制策略】：\n{vs_res['tactical_advice']['corner_b']}"
+                )
+                vs_qr = make_quick_reply([
+                    (f"🎯 對決 龍之爆裂 1-60F", f"{name_a} VS 龍之爆裂 1-60F"),
+                    (f"🎯 對決 鯊魚之刃 3-60LF", f"{name_a} VS 鯊魚之刃 3-60LF"),
+                    ("🔄 改裝 5-60 能反超嗎？", f"如果將剛才對決中的墊片改為 5-60，勝率會如何反轉？"),
+                    ("🔥 賽事頂級主流", "【賽事頂級主流】")
+                ])
+                reply_messages.append(TextMessage(text=coach_text, quick_reply=vs_qr))
+
+            # --- C. Standard Combo Analysis / Single Part / AI Coach Inquiry ---
             else:
                 result = coach_engine.analyze(user_msg)
 
@@ -219,13 +263,18 @@ if settings.LINE_CHANNEL_SECRET and settings.LINE_CHANNEL_ACCESS_TOKEN:
                     except Exception as vid_err:
                         logger.warning(f"Error packing video carousel: {vid_err}")
 
-                # 3. Add full detailed coach analysis text with dynamic Quick Reply
+                # 3. Add full detailed coach analysis text with dynamic Quick Reply (including VS shortcuts!)
                 text_body = result.get("reply_text") or "選手，戰術分析完成。"
+                target_combo_name = user_msg
+                if result.get("combo_stats"):
+                    target_combo_name = result["combo_stats"].get("combo_name_zh") or result["combo_stats"].get("combo_name", user_msg)
+                
                 default_qr = make_quick_reply([
+                    ("🎯 對決 魔導權杖 7-60B", f"{target_combo_name} VS 魔導權杖 7-60B"),
+                    ("🎯 對決 鳳凰羽翼 9-60O", f"{target_combo_name} VS 鳳凰羽翼 9-60O"),
+                    ("🎯 對決 龍之爆裂 1-60F", f"{target_combo_name} VS 龍之爆裂 1-60F"),
                     ("🔄 改裝 5-60 差異", f"如果把剛才討論的組合墊片改為 5-60，物理表現有何改變？"),
-                    ("🎯 對戰 Wizard Rod", "這套搭配面對賽事大熱門 Wizard Rod 9-60B 勝率與打法如何？"),
-                    ("🚀 推薦發射手法", "請教練傳授這套搭配在世界大賽中的最佳發射手勢與進軌策略！"),
-                    ("🔥 賽事頂級主流", "【賽事頂級主流】")
+                    ("🚀 推薦發射手法", "請教練傳授這套搭配在世界大賽中的最佳發射手勢與進軌策略！")
                 ])
                 reply_messages.append(TextMessage(text=text_body, quick_reply=default_qr))
 
@@ -911,8 +960,26 @@ class SimRequest(BaseModel):
 @app.post("/api/simulate")
 def simulate_coach_analysis(req: SimRequest):
     """
-    Endpoint for testing coach output and Flex message payloads directly via HTTP
+    Endpoint for testing coach output, VS matchup, and Flex message payloads directly via HTTP
     """
+    # 1. Check if this is a VS matchup query
+    from core.matchup_simulator import simulate_matchup
+    vs_res = simulate_matchup(req.message)
+    if vs_res:
+        vs_payload = FlexMessageBuilder.build_vs_dashboard(vs_res)
+        from core.youtube_search import search_beyblade_videos
+        name_a = vs_res["combo_a"].get("combo_name_zh") or vs_res["combo_a"]["combo_name"]
+        name_b = vs_res["combo_b"].get("combo_name_zh") or vs_res["combo_b"]["combo_name"]
+        videos = search_beyblade_videos(f"戰鬥陀螺X {vs_res['combo_a']['blade']['name_zh']} {vs_res['combo_b']['blade']['name_zh']} 對決", max_results=3)
+        return {
+            "mode": "vs_matchup",
+            "matchup_data": vs_res,
+            "vs_flex_message": vs_payload,
+            "videos": videos,
+            "reply_text": f"⚔️ 對決推演完成：{name_a} VS {name_b}"
+        }
+
+    # 2. Standard single combo / AI inquiry
     result = coach_engine.analyze(req.message)
     try:
         from core.youtube_search import search_beyblade_videos
