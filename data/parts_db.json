@@ -3,7 +3,7 @@
     {
       "id": "phoenix_wing",
       "name": "Phoenix Wing",
-      "name_zh": "天翼鳳凰",
+      "name_zh": "鳳凰飛翼",
       "code": "BX-23",
       "series": "BX",
       "type": "Attack",
@@ -18,8 +18,11 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2d/BladePhoenixWing.png/revision/latest?cb=20260809063447",
       "image_local": "/static/images/blade_phoenix_wing.png",
       "aliases": [
+        "鳳凰飛翼",
+        "天翼鳳凰",
         "鳳凰羽翼",
-        "鳳凰"
+        "鳳凰",
+        "Phoenix Wing"
       ]
     },
     {
@@ -40,15 +43,18 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/a/a3/BladeWizardRod.png/revision/latest?cb=20260815024049",
       "image_local": "/static/images/blade_wizard_rod.png",
       "aliases": [
+        "魔導神杖",
         "魔導權杖",
+        "魔導幻杖",
         "魔導",
-        "法杖"
+        "法杖",
+        "Wizard Rod"
       ]
     },
     {
       "id": "dran_buster",
       "name": "Dran Buster",
-      "name_zh": "爆裂神龍",
+      "name_zh": "蒼龍爆刃",
       "code": "UX-01",
       "series": "UX",
       "type": "Attack",
@@ -63,15 +69,18 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/d/db/BladeDranBuster.png/revision/latest?cb=20260815023129",
       "image_local": "/static/images/blade_dran_buster.png",
       "aliases": [
+        "蒼龍爆刃",
+        "爆裂神龍",
         "龍之爆裂",
         "爆裂",
-        "龍爆"
+        "龍爆",
+        "Dran Buster"
       ]
     },
     {
       "id": "cobalt_dragoon",
       "name": "Cobalt Dragoon",
-      "name_zh": "鈷藍擊龍",
+      "name_zh": "蒼穹龍騎士",
       "code": "BX-34",
       "series": "BX",
       "type": "Attack",
@@ -86,16 +95,19 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c2/BladeCobaltDragoon.png/revision/latest?cb=20260822063458",
       "image_local": "/static/images/blade_cobalt_dragoon.png",
       "aliases": [
+        "蒼穹龍騎士",
+        "鈷藍擊龍",
         "蒼白龍騎士",
         "擊龍",
         "左迴旋神龍",
-        "鈷藍神龍"
+        "鈷藍神龍",
+        "Cobalt Dragoon"
       ]
     },
     {
       "id": "shark_edge",
       "name": "Shark Edge",
-      "name_zh": "銳鯊之刃",
+      "name_zh": "鮫鯊鋒鰭",
       "code": "BX-14",
       "series": "BX",
       "type": "Attack",
@@ -110,16 +122,19 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/2/2e/BladeSharkEdge.png/revision/latest?cb=20260802062042",
       "image_local": "/static/images/blade_shark_edge.png",
       "aliases": [
+        "鮫鯊鋒鰭",
+        "鮫鯊狂鱗",
+        "銳鯊之刃",
         "鯊魚之刃",
-        "角鯊狂麟",
         "狂鯊之刃",
-        "鯊魚"
+        "鯊魚",
+        "Shark Edge"
       ]
     },
     {
       "id": "tyranno_beat",
       "name": "Tyranno Beat",
-      "name_zh": "重擊暴龍",
+      "name_zh": "暴龍霸擊",
       "code": "BX-31",
       "series": "BX",
       "type": "Attack",
@@ -134,15 +149,19 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/ff/BladeTyrannoBeat.png/revision/latest?cb=20260819065042",
       "image_local": "/static/images/blade_tyranno_beat.png",
       "aliases": [
+        "暴龍霸擊",
+        "重擊暴龍",
+        "暴龍狂嘯",
         "暴龍重擊",
         "暴龍暴擊",
-        "暴龍"
+        "暴龍",
+        "Tyranno Beat"
       ]
     },
     {
       "id": "hells_chain",
       "name": "Hells Chain",
-      "name_zh": "鏈鋸地獄",
+      "name_zh": "惡魔鎖鏈",
       "code": "BX-21",
       "series": "BX",
       "type": "Balance",
@@ -157,15 +176,19 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/8/83/BladeHellsChain.png/revision/latest?cb=20260808045710",
       "image_local": "/static/images/blade_hells_chain.png",
       "aliases": [
+        "惡魔鎖鏈",
+        "鏈鋸地獄",
+        "地獄鎖鏈",
         "地獄狂鏈",
         "地獄鏈鋸",
-        "狂鏈"
+        "狂鏈",
+        "Hells Chain"
       ]
     },
     {
       "id": "dran_dagger",
       "name": "Dran Dagger",
-      "name_zh": "鋼刃神龍",
+      "name_zh": "蒼龍利刃",
       "code": "BX-20",
       "series": "BX",
       "type": "Attack",
@@ -180,14 +203,18 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c8/BladeDranDagger.png/revision/latest?cb=20260808045217",
       "image_local": "/static/images/blade_dran_dagger.png",
       "aliases": [
+        "蒼龍利刃",
+        "鋼刃神龍",
+        "蒼龍匕首",
         "龍之短劍",
-        "鋼刃"
+        "鋼刃",
+        "Dran Dagger"
       ]
     },
     {
       "id": "unicorn_sting",
       "name": "Unicorn Sting",
-      "name_zh": "刺針獨角",
+      "name_zh": "獨角刺心",
       "code": "BX-26",
       "series": "BX",
       "type": "Balance",
@@ -202,14 +229,17 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/1/15/BladeUnicornSting.png/revision/latest?cb=20260813014525",
       "image_local": "/static/images/blade_unicorn_sting.png",
       "aliases": [
+        "獨角刺心",
+        "刺針獨角",
         "獨角獸之刺",
-        "刺針"
+        "刺針",
+        "Unicorn Sting"
       ]
     },
     {
       "id": "silver_wolf",
       "name": "Silver Wolf",
-      "name_zh": "銀光白狼",
+      "name_zh": "霜輝銀狼",
       "code": "UX-08",
       "series": "UX",
       "type": "Stamina",
@@ -224,14 +254,17 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/f/f1/BladeSilverWolf.png/revision/latest?cb=20240913034202",
       "image_local": "/static/images/blade_silver_wolf.png",
       "aliases": [
+        "霜輝銀狼",
+        "銀光白狼",
         "白銀之狼",
-        "銀狼"
+        "銀狼",
+        "Silver Wolf"
       ]
     },
     {
       "id": "dran_sword",
       "name": "Dran Sword",
-      "name_zh": "翔刃神龍",
+      "name_zh": "蒼龍神劍",
       "code": "BX-01",
       "series": "BX",
       "type": "Attack",
@@ -246,14 +279,18 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/5/5f/BladeDranSword.png/revision/latest?cb=20250814202546",
       "image_local": "/static/images/blade_dran_sword.png",
       "aliases": [
+        "蒼龍神劍",
+        "翔刃神龍",
+        "蒼龍之劍",
         "龍之神劍",
-        "翔刃"
+        "翔刃",
+        "Dran Sword"
       ]
     },
     {
       "id": "hells_scythe",
       "name": "Hells Scythe",
-      "name_zh": "死神地獄",
+      "name_zh": "惡魔紅鐮",
       "code": "BX-02",
       "series": "BX",
       "type": "Balance",
@@ -268,14 +305,18 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/e/e4/BladeHellsScythe.png/revision/latest?cb=20250817035337",
       "image_local": "/static/images/blade_hells_scythe.png",
       "aliases": [
+        "惡魔紅鐮",
+        "死神地獄",
+        "地獄紅鐮",
         "地獄狂鐮",
-        "死神"
+        "死神",
+        "Hells Scythe"
       ]
     },
     {
       "id": "knight_shield",
       "name": "Knight Shield",
-      "name_zh": "盾牌騎士",
+      "name_zh": "騎士重盾",
       "code": "BX-04",
       "series": "BX",
       "type": "Defense",
@@ -290,14 +331,17 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/9/9c/BladeKnightShield.png/revision/latest?cb=20250609060142",
       "image_local": "/static/images/blade_knight_shield.png",
       "aliases": [
+        "騎士重盾",
+        "盾牌騎士",
         "騎士盾牌",
-        "盾牌"
+        "盾牌",
+        "Knight Shield"
       ]
     },
     {
       "id": "leon_crest",
       "name": "Leon Crest",
-      "name_zh": "冠頂雄獅",
+      "name_zh": "雄獅巔峰",
       "code": "UX-06",
       "series": "UX",
       "type": "Defense",
@@ -312,8 +356,11 @@
       "card_image_url": "https://static.wikia.nocookie.net/beyblade/images/c/c7/BladeLeonCrest.png/revision/latest?cb=20260828064359",
       "image_local": "/static/images/blade_leon_crest.png",
       "aliases": [
+        "雄獅巔峰",
+        "冠頂雄獅",
         "雄獅之冠",
-        "雄獅"
+        "雄獅",
+        "Leon Crest"
       ]
     }
   ],

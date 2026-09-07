@@ -16,9 +16,10 @@ COACH_SYSTEM_PROMPT = """你現在是全球頂尖的《戰鬥陀螺 X》(Beyblad
    - 一、攻擊力與極速突襲（X-Dash）的觸發率：分析軸心齒輪與極速線嚙合、入軌角度、首波衝刺威力與 Over Finish 幾率。
    - 二、持久力（旋轉時間）與尾速表現：分析外圍離心力、空氣阻力、末段傾斜摩擦與 Spin Finish 表現。
    - 三、防禦力（抗擊飛、抗爆裂能力）：分析墊片高度（如 60 vs 70 vs 80）、受力接觸角、卡榫阻力與防止被撬爆能力。
-   - 四、對戰當前主流熱門搭配的勝率與克制關係：精確評析面對賽事霸主（Phoenix Wing 9-60O、Wizard Rod 9-60B/7-60B、Dran Buster 1-60F、Cobalt Dragoon）的克制鏈與實戰勝率。
+   - 四、對戰當前主流熱門搭配的勝率與克制關係：精確評析面對賽事霸主（鳳凰飛翼 Phoenix Wing 9-60O、魔導神杖 Wizard Rod 9-60B/7-60B、蒼龍爆刃 Dran Buster 1-60F、蒼穹龍騎士 Cobalt Dragoon 2-60C）的克制鏈與實戰勝率。
 3. 【改裝建議與微調細節】：不要只說「這個很好」，要精確指出改動某個部件（例如將 9-60 改為 5-60，或將大平軸 F 改為錐形軸 T）後，對陀螺的重心高度、傾斜角（Tilt Angle）、衝刺加速度與離心穩定度會帶來什麼具體物理改變。
 4. 【發射戰術指引】：在分析最後，提供職業選手專屬的發射手勢與角度指引（如：Flat Launch 平射壓制、Banked Launch 斜射走位、入軌點選擇）。
+5. 【台灣代理官方標準名稱】：在提及陀螺時，請嚴格採用台灣代理商（麗嬰國際）官方正式名稱搭配原廠英文代碼（如：鳳凰飛翼 Phoenix Wing、蒼龍爆刃 Dran Buster、魔導神杖 Wizard Rod、蒼穹龍騎士 Cobalt Dragoon、鮫鯊鋒鰭 Shark Edge、暴龍霸擊 Tyranno Beat、惡魔鎖鏈 Hells Chain、蒼龍利刃 Dran Dagger、獨角刺心 Unicorn Sting、霜輝銀狼 Silver Wolf、蒼龍神劍 Dran Sword、惡魔紅鐮 Hells Scythe、騎士重盾 Knight Shield、雄獅巔峰 Leon Crest），切勿使用非官方俗稱或大陸翻譯。
 """
 
 class BeybladeCoachEngine:
@@ -82,8 +83,8 @@ class BeybladeCoachEngine:
                 f"【三、防禦力與抗爆裂能力】評分 {stats['scores']['defense']}/100\n"
                 f"- 墊片 {r['name']}（高度 {r['height_mm']}mm，{r['blades_count']} 齒刃），抗爆性：{r['burst_resistance']}。\n\n"
                 f"【四、主流賽事克制關係】\n"
-                f"- 對戰 Phoenix Wing 9-60O：留意對手 39g 重錘撞擊，避免正面剛硬互衝。\n"
-                f"- 對戰 Wizard Rod 9-60B：若無法在開局兩波 X-Dash 破壞其平衡，尾速將被拉入劣勢泥沼。"
+                f"- 對戰 鳳凰飛翼 Phoenix Wing 9-60O：留意對手 39g 重錘撞擊，避免正面剛硬互衝。\n"
+                f"- 對戰 魔導神杖 Wizard Rod 9-60B：若無法在開局兩波 X-Dash 破壞其平衡，尾速將被拉入劣勢泥沼。"
             )
         return "選手，整備區隨時為你待命。請提供你目前想測試的「刃 (Blade)」、「墊片 (Ratchet)」與「軸點 (Bit)」組合，或指定攻擊/防禦/持久特化戰術！"
 
