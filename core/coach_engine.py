@@ -47,7 +47,7 @@ COACH_DEEP_SYSTEM_PROMPT = """你現在是全球頂尖的《戰鬥陀螺 X》(Be
 class BeybladeCoachEngine:
     def __init__(self):
         self.api_key = settings.GEMINI_API_KEY
-        self.models = ["gemini-flash-lite-latest", "gemini-3.6-flash", "gemini-flash-latest"]
+        self.models = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-flash-lite-latest"]
 
     def _call_gemini_api(self, prompt: str, system_prompt: Optional[str] = None, max_tokens: int = 550, combo_tuple: Optional[Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]] = None) -> str:
         """

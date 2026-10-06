@@ -70,7 +70,7 @@ def extract_insights_with_gemini(raw_markdown: str, author_info: str, api_key: s
   }}
 ]
 """
-    models = ["gemini-flash-lite-latest", "gemini-3.6-flash", "gemini-flash-latest"]
+    models = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-flash-lite-latest"]
     headers = {"Content-Type": "application/json"}
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
@@ -106,8 +106,13 @@ def extract_insights_with_gemini(raw_markdown: str, author_info: str, api_key: s
     return []
 
 def sync_threads():
-    from config import settings
-    api_key = settings.GEMINI_API_KEY or os.environ.get("GEMINI_API_KEY", "")
+    api_key = os.environ.get("GEMINI_API_KEY", "")
+    if not api_key:
+        try:
+            from config import settings
+            api_key = settings.GEMINI_API_KEY
+        except Exception:
+            pass
 
     existing_insights = []
     if os.path.exists(DATA_PATH):

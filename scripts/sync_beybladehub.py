@@ -59,7 +59,7 @@ def download_image(url: str, dest_path: Path) -> bool:
 def call_gemini_enrichment(prompt: str, api_key: str) -> Optional[Dict[str, Any]]:
     if not api_key:
         return None
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={api_key}'
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}'
     headers = {'Content-Type': 'application/json'}
     payload = {
         'contents': [{'parts': [{'text': prompt}]}],
