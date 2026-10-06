@@ -1672,6 +1672,21 @@
       "tactical_effect": "專屬 Z 特性軸心，優化 Balance 軌道接觸與迴旋平衡。",
       "image_url": "https://img.beybladehub.app/bits/Z.webp",
       "image_local": "/static/images/bit_z.webp"
+    },
+    {
+      "id": "LC",
+      "name": "Low Cyclone (LC軸)",
+      "name_zh": "Low Cyclone軸",
+      "type": "Attack",
+      "weight_g": 2.2,
+      "burst_resistance": "High",
+      "gear_teeth": 16,
+      "x_dash_capability": "High",
+      "tier": "A",
+      "description": "Low Cycloneローサイクロン平坦軸BX-52 光耀龍騎士 6-60LC 的原裝軸心。官方說明：設計成比 C（Cyclone）軸心低 1mm，左迴旋時提高與對戰盤的咬合，可做低重心高速攻擊。⚠️ 官方只給「比 C 低 1mm」這個相對值、沒公布絕對高度，故 height 欄留空不填推算值。官方性能標示：攻擊 45／防禦 5／持久 5／極限衝擊 45／爆裂耐性 80——官方註明這組數值是左迴旋時的表現。官方未公布重量與齒數。包含於BX-52",
+      "tactical_effect": "專屬 LC 特性軸心，優化 Attack 軌道接觸與迴旋平衡。",
+      "image_url": "https://img.beybladehub.app/bits/LC_z5m.webp",
+      "image_local": "/static/images/bit_lc.webp"
     }
   ]
 }
