@@ -1687,6 +1687,36 @@
       "tactical_effect": "專屬 LC 特性軸心，優化 Attack 軌道接觸與迴旋平衡。",
       "image_url": "https://img.beybladehub.app/bits/LC_z5m.webp",
       "image_local": "/static/images/bit_lc.webp"
+    },
+    {
+      "id": "LP",
+      "name": "Low Point (LP軸)",
+      "name_zh": "Low Point軸",
+      "type": "Balance",
+      "weight_g": 2.2,
+      "burst_resistance": "Medium",
+      "gear_teeth": 16,
+      "x_dash_capability": "Controlled",
+      "tier": "A",
+      "description": "Low Pointローポイント球形軸重量2+GEAR12tSHAFT94高度114比 P 軸心低 1mm 的設計，提高 X Dash 性能與防禦性能（官方：攻擊 30／防禦 15／持久 30／衝刺 25／爆裂耐性 80）。BX-54 凱旋巨神 0-70LP 原裝軸心（2026/11/21）。",
+      "tactical_effect": "專屬 LP 特性軸心，優化 Balance 軌道接觸與迴旋平衡。",
+      "image_url": "https://img.beybladehub.app/bits/LP.webp",
+      "image_local": "/static/images/bit_lp.webp"
+    },
+    {
+      "id": "MT",
+      "name": "Metal Taper (MT軸)",
+      "name_zh": "Metal Taper軸",
+      "type": "Balance",
+      "weight_g": 2.2,
+      "burst_resistance": "Medium",
+      "gear_teeth": 16,
+      "x_dash_capability": "Controlled",
+      "tier": "A",
+      "description": "Metal Taperメタルテーパー平坦軸GEAR12tSHAFT94高度123T 軸心的軸端改為金屬材質，兼具有重量的攻擊與黏著的持久力（官方：攻擊 40／防禦 22／持久 18／衝刺 20／爆裂耐性 80，搭配 M-65 固鎖時爆裂耐性為 30）。CX-20 鳳凰武力改造組初出（2026/11/21），鳳凰武力 WH M-65MT 原裝軸心。",
+      "tactical_effect": "專屬 MT 特性軸心，優化 Balance 軌道接觸與迴旋平衡。",
+      "image_url": "https://img.beybladehub.app/bits/MT.webp",
+      "image_local": "/static/images/bit_mt.webp"
     }
   ]
 }
