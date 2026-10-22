@@ -384,6 +384,28 @@
         "蒼龍神劍 2.0",
         "Dran Sword 2.0"
       ]
+    },
+    {
+      "id": "drigerslash",
+      "name": "Driger Slash",
+      "name_zh": "銀牙烈虎S",
+      "code": "",
+      "series": "BX",
+      "type": "Balance",
+      "weight_g": 28.5,
+      "cg": "Balanced Center (標準平衡重心)",
+      "burst_resistance": "High",
+      "x_dash_capability": "High",
+      "tier": "A",
+      "description": "Driger Slashドライガースラッシュ右旋 R重量28.5g代碼BXG-04玩家實測 3 筆爆轉陀螺世代「銀牙烈虎S」的 BEYBLADE X 復刻上蓋。圓形兩枚刃平衡攻擊與防禦性能，官方性能數值為攻擊 40、防禦 35、持久 25。",
+      "meta_analysis": "具備 28.5g 良好重量分佈，在 Balance 流派中具備改裝潛力。",
+      "image_url": "https://img.beybladehub.app/blades-db/DrSl.webp",
+      "card_image_url": "https://img.beybladehub.app/blades-db/DrSl.webp",
+      "image_local": "/static/images/blade_drigerslash.webp",
+      "aliases": [
+        "銀牙烈虎S",
+        "Driger Slash"
+      ]
     }
   ],
   "ratchets": [
