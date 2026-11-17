@@ -1739,6 +1739,21 @@
       "tactical_effect": "專屬 MT 特性軸心，優化 Balance 軌道接觸與迴旋平衡。",
       "image_url": "https://img.beybladehub.app/bits/MT.webp",
       "image_local": "/static/images/bit_mt.webp"
+    },
+    {
+      "id": "MO",
+      "name": "Metal Orb (MO軸)",
+      "name_zh": "Metal Orb軸",
+      "type": "Stamina",
+      "weight_g": 2.2,
+      "burst_resistance": "Medium",
+      "gear_teeth": 16,
+      "x_dash_capability": "Controlled",
+      "tier": "A",
+      "description": "Metal Orbメタルオーブ球形軸把 O（Orb）軸心的軸尖換成金屬材質，以帶重量的半圓形軸尖提高持久性能（官方：攻擊 5／防禦 30／持久 55／衝刺 10／爆裂耐性 30）。BX-55 隨機強化組 Vol.12（2026/12/26 發售預定）新軸心，籤王荷魯斯碎擊 3-85MO 原裝（依目前情報，06 時鐘幻象 4-55MO 也附這顆，官方說明書公開後核對）。包含於BX-55",
+      "tactical_effect": "專屬 MO 特性軸心，優化 Stamina 軌道接觸與迴旋平衡。",
+      "image_url": "https://img.beybladehub.app/bits/MO.webp",
+      "image_local": "/static/images/bit_mo.webp"
     }
   ]
 }
